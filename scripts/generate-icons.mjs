@@ -11,6 +11,8 @@ const names = [
   'translate-2',
   'linkedin-box-line',
   'arrow-left-line',
+  'arrow-down-s-line',
+  'arrow-up-s-line',
   'arrow-right-line',
   'arrow-right-up-line',
   'pause-line',

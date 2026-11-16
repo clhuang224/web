@@ -15,19 +15,8 @@ const types = {
   '.wasm': 'application/wasm',
   '.bundle': 'application/octet-stream',
 }
-const routes = new Set([
-  '/',
-  '/portfolio',
-  '/about',
-  '/en',
-  '/en/',
-  '/en/portfolio',
-  '/en/about',
-  '/ja',
-  '/ja/',
-  '/ja/portfolio',
-  '/ja/about',
-])
+const route =
+  /^(?:\/(?:en|ja))?(?:\/|\/(?:portfolio|drawings|about)|\/portfolio\/[\w-]+|\/drawing\/\d{2})?$/
 createServer(async (request, response) => {
   try {
     const path = decodeURIComponent(
@@ -51,7 +40,7 @@ createServer(async (request, response) => {
         return
       }
       target = resolve(directory, 'index.html')
-      if (!routes.has(path.replace(/\/$/, '') || '/')) status = 404
+      if (!route.test(path.replace(/\/$/, ''))) status = 404
     }
     response.writeHead(status, {
       'Content-Type': types[extname(target)] || 'application/octet-stream',

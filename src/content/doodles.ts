@@ -88,9 +88,13 @@ const illustrations = [
 ] as const
 
 export const doodles: Doodle[] = illustrations.map(
-  ([slug, zh, en, ja], index) => ({
-    id: `doodle-${String(index + 1).padStart(2, '0')}`,
-    src: `/images/doodles/doodle-${String(index + 1).padStart(2, '0')}-${slug}.png`,
-    alt: { 'zh-TW': zh, en, ja },
-  }),
+  ([slug, zh, en, ja], index) => {
+    const id = String(index + 1).padStart(2, '0')
+    return {
+      id,
+      number: index + 1,
+      src: `/images/doodles/doodle-${id}-${slug}.png`,
+      alt: { 'zh-TW': zh, en, ja },
+    }
+  },
 )

@@ -5,12 +5,10 @@ interface SiteCopy {
   portfolio: string
   about: string
   blog: string
-  eyebrow: string
   greeting: string
   introduction: string
   projectsTitle: string
   projectsIntro: string
-  allProjects: string
   openProject: string
   source: string
   readBlog: string
@@ -22,6 +20,18 @@ interface SiteCopy {
   carousel: string
   language: string
   madeWith: string
+  drawings: string
+  drawingsIntro: string
+  drawingLabel: string
+  backToPortfolio: string
+  backToDrawings: string
+  previousDrawing: string
+  nextDrawing: string
+  repositoryLanguage: string
+  repositoryStars: string
+  repositoryUpdated: string
+  showMore: string
+  copyright: string
 }
 
 export const copy = {
@@ -30,12 +40,10 @@ export const copy = {
     portfolio: '作品',
     about: '關於',
     blog: '網誌',
-    eyebrow: '程式、塗鴉，還有一些小實驗',
     greeting: '嗨，我是 Lynn。',
     introduction: '前端工程師。喜歡把點子，慢慢做成看得見的東西。',
     projectsTitle: '精選作品',
     projectsIntro: '一些動手做出來的小世界。',
-    allProjects: '所有作品',
     openProject: '開啟作品',
     source: '原始碼',
     readBlog: '到網誌逛逛',
@@ -47,19 +55,29 @@ export const copy = {
     carousel: '塗鴉輪播',
     language: '語言',
     madeWith: '以 VueLynx 製作',
+    drawings: '塗鴉',
+    drawingsIntro: '2016–2023 年間畫的臉書封面塗鴉。',
+    drawingLabel: '塗鴉',
+    backToPortfolio: '回到作品',
+    backToDrawings: '回到塗鴉',
+    previousDrawing: '上一張',
+    nextDrawing: '下一張',
+    repositoryLanguage: '主要語言',
+    repositoryStars: '星星',
+    repositoryUpdated: '最後更新',
+    showMore: '看更多',
+    copyright: 'Copyright © Lynn Huang',
   },
   en: {
     home: 'Home',
     portfolio: 'Portfolio',
     about: 'About',
     blog: 'Blog',
-    eyebrow: 'CODE, DOODLES & LITTLE EXPERIMENTS',
     greeting: 'Hi, I’m Lynn.',
     introduction:
       'A frontend engineer turning little ideas into things you can see and use.',
     projectsTitle: 'Selected projects',
     projectsIntro: 'A few little worlds I’ve built.',
-    allProjects: 'All projects',
     openProject: 'Open project',
     source: 'Source',
     readBlog: 'Visit the blog',
@@ -71,19 +89,29 @@ export const copy = {
     carousel: 'Doodle carousel',
     language: 'Language',
     madeWith: 'Made with VueLynx',
+    drawings: 'Drawings',
+    drawingsIntro: 'Doodles drawn as Facebook covers between 2016 and 2023.',
+    drawingLabel: 'Drawing',
+    backToPortfolio: 'Back to portfolio',
+    backToDrawings: 'Back to drawings',
+    previousDrawing: 'Previous drawing',
+    nextDrawing: 'Next drawing',
+    repositoryLanguage: 'Main language',
+    repositoryStars: 'Stars',
+    repositoryUpdated: 'Last updated',
+    showMore: 'Show more',
+    copyright: 'Copyright © Lynn Huang',
   },
   ja: {
     home: 'ホーム',
     portfolio: '作品',
     about: '紹介',
     blog: 'ブログ',
-    eyebrow: 'コード、落書き、ちょっとした実験',
     greeting: 'こんにちは、Lynn です。',
     introduction:
       'フロントエンドエンジニアです。小さなアイデアを、見て使える形にしています。',
     projectsTitle: 'ピックアップ',
     projectsIntro: '自分の手でつくった、小さな世界たち。',
-    allProjects: 'すべての作品',
     openProject: '作品を開く',
     source: 'ソースコード',
     readBlog: 'ブログへ',
@@ -95,5 +123,17 @@ export const copy = {
     carousel: '落書きのスライドショー',
     language: '言語',
     madeWith: 'VueLynx で制作',
+    drawings: '落書き',
+    drawingsIntro: '2016〜2023 年に Facebook のカバー画像として描いた落書き。',
+    drawingLabel: '落書き',
+    backToPortfolio: '作品一覧へ',
+    backToDrawings: '落書き一覧へ',
+    previousDrawing: '前の落書き',
+    nextDrawing: '次の落書き',
+    repositoryLanguage: '主な言語',
+    repositoryStars: 'スター',
+    repositoryUpdated: '最終更新',
+    showMore: 'もっと見る',
+    copyright: 'Copyright © Lynn Huang',
   },
 } satisfies Localized<SiteCopy>

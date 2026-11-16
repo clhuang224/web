@@ -47,7 +47,11 @@ describe('published content resources', () => {
     expect(
       doodles.map((doodle) => doodle.src.split('/').at(-1)).sort(),
     ).toEqual(files)
-    expect(new Set(doodles.map((doodle) => doodle.id)).size).toBe(14)
+    expect(doodles.map((doodle) => doodle.id)).toEqual(
+      Array.from({ length: 14 }, (_, index) =>
+        String(index + 1).padStart(2, '0'),
+      ),
+    )
     for (const doodle of doodles) {
       const image = readFileSync(new URL(doodle.src.slice(1), publicRoot))
       expect([image.readUInt32BE(16), image.readUInt32BE(20)]).toEqual([

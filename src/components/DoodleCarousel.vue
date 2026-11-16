@@ -5,7 +5,7 @@ import { copy } from '../content/copy'
 import { doodles } from '../content/doodles'
 import { alignIndex, stepIndex, visibleCount } from '../domain/carousel'
 
-const { state } = useSite()
+const { state, navigate } = useSite()
 const text = computed(() => copy[state.value.locale])
 const count = computed(() => visibleCount(state.value.compact))
 const index = ref(0)
@@ -58,13 +58,15 @@ onUnmounted(() => clearInterval(timer))
 <template>
   <view class="carousel" :accessibility-label="text.carousel">
     <view class="carousel-frame">
-      <view v-for="doodle in visible" :key="doodle.id" class="doodle-panel">
-        <image
-          class="doodle-image"
-          :src="doodle.src"
-          mode="aspectFit"
-          :accessibility-label="doodle.alt[state.locale]"
-        />
+      <view
+        v-for="doodle in visible"
+        :key="doodle.id"
+        class="doodle-panel"
+        accessibility-role="link"
+        :accessibility-label="`${text.drawingLabel} ${doodle.id}: ${doodle.alt[state.locale]}`"
+        @tap="navigate('drawing', doodle.id)"
+      >
+        <image class="doodle-image" :src="doodle.src" mode="aspectFit" />
       </view>
     </view>
     <view class="carousel-controls flex items-center justify-between">

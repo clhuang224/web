@@ -1,5 +1,7 @@
 import { nextTick, onMounted, onUnmounted, shallowRef } from 'vue-lynx'
 import { isHostState } from '../domain/navigation'
+import { isRepositorySummary } from '../domain/repository'
+import type { RepositorySummary } from '../domain/repository'
 import type { HostState, Locale, Page, SiteHostModule } from '../domain/site'
 
 interface GlobalEventEmitter {
@@ -17,12 +19,20 @@ export function useHost() {
   const state = shallowRef<HostState>({
     locale: 'zh-TW',
     page: 'home',
+    id: null,
     compact: false,
     reducedMotion: false,
   })
 
+  const repositories = shallowRef<Record<string, RepositorySummary>>({})
+
   function receiveState(value: unknown) {
     if (isHostState(value)) state.value = { ...value }
+  }
+
+  function receiveRepository(value: unknown) {
+    if (isRepositorySummary(value))
+      repositories.value = { ...repositories.value, [value.name]: value }
   }
 
   function nativeHost() {
@@ -39,26 +49,43 @@ export function useHost() {
         ? undefined
         : lynx.getJSModule('GlobalEventEmitter')
     emitter?.addListener('host-state', receiveState)
+    emitter?.addListener('repository', receiveRepository)
     // Request initial state after subscribing so fast host updates cannot be lost.
     void nextTick(() => nativeHost()?.getState(null, receiveState))
   })
 
-  onUnmounted(() => emitter?.removeListener('host-state', receiveState))
+  onUnmounted(() => {
+    emitter?.removeListener('host-state', receiveState)
+    emitter?.removeListener('repository', receiveRepository)
+  })
 
-  function navigate(page: Page) {
+  function navigate(page: Page, id: string | null = null) {
     nativeHost()?.navigate(
-      { page, locale: state.value.locale },
+      { page, id, locale: state.value.locale },
       () => undefined,
     )
   }
 
   function setLocale(locale: Locale) {
-    nativeHost()?.navigate({ page: state.value.page, locale }, () => undefined)
+    const { page, id } = state.value
+    nativeHost()?.navigate({ page, id, locale }, () => undefined)
+  }
+
+  function requestRepository(name: string) {
+    if (!repositories.value[name])
+      nativeHost()?.getRepository({ name }, () => undefined)
   }
 
   function openExternal(url: string) {
     nativeHost()?.openExternal({ url }, () => undefined)
   }
 
-  return { state, navigate, setLocale, openExternal }
+  return {
+    state,
+    repositories,
+    navigate,
+    setLocale,
+    openExternal,
+    requestRepository,
+  }
 }

@@ -1,12 +1,26 @@
 export const locales = ['zh-TW', 'en', 'ja'] as const
 export type Locale = (typeof locales)[number]
-export const pages = ['home', 'portfolio', 'about'] as const
+export const pages = [
+  'home',
+  'portfolio',
+  'project',
+  'drawings',
+  'drawing',
+  'about',
+] as const
 export type Page = (typeof pages)[number]
+export const detailPages = ['project', 'drawing'] as const
+export type DetailPage = (typeof detailPages)[number]
+export type ListPage = Exclude<Page, DetailPage>
+
+export type SiteRoute =
+  { page: ListPage; id: null } | { page: DetailPage; id: string }
 export type Localized<T> = Record<Locale, T>
 
 export interface HostState {
   locale: Locale
   page: Page
+  id: string | null
   compact: boolean
   reducedMotion: boolean
 }
@@ -22,6 +36,7 @@ export interface Project {
 
 export interface Doodle {
   id: string
+  number: number
   src: string
   alt: Localized<string>
 }
@@ -35,6 +50,10 @@ export interface Platform {
 
 export interface SiteHostModule {
   getState(input: null, callback: (state: HostState) => void): void
-  navigate(input: { page: Page; locale: Locale }, callback: () => void): void
+  navigate(
+    input: { page: Page; id: string | null; locale: Locale },
+    callback: () => void,
+  ): void
+  getRepository(input: { name: string }, callback: () => void): void
   openExternal(input: { url: string }, callback: () => void): void
 }

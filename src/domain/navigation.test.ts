@@ -5,15 +5,25 @@ import {
   parseSitePath,
   pathForPage,
 } from './navigation'
-import { locales, pages } from './site'
+import type { RouteCatalog } from './navigation'
+import { detailPages, locales, pages } from './site'
+
+const catalog: RouteCatalog = {
+  project: ['queener'],
+  drawing: ['01', '14'],
+}
 
 describe('localized locations', () => {
   it('round-trips every supported page and locale', () => {
     for (const locale of locales) {
       for (const page of pages) {
-        expect(parseSitePath(pathForPage(locale, page))).toEqual({
+        const id = detailPages.some((detail) => detail === page)
+          ? catalog[page as 'project' | 'drawing'][0]
+          : null
+        expect(parseSitePath(pathForPage(locale, page, id), catalog)).toEqual({
           locale,
           page,
+          id,
           matched: true,
         })
       }
@@ -21,25 +31,37 @@ describe('localized locations', () => {
   })
 
   it.each([
-    ['/portfolio', 'zh-TW', 'portfolio'],
-    ['/en/about/', 'en', 'about'],
-    ['/ja', 'ja', 'home'],
+    ['/portfolio', 'zh-TW', 'portfolio', null],
+    ['/en/about/', 'en', 'about', null],
+    ['/ja', 'ja', 'home', null],
+    ['/drawings', 'zh-TW', 'drawings', null],
+    ['/en/portfolio/queener', 'en', 'project', 'queener'],
+    ['/ja/drawing/14', 'ja', 'drawing', '14'],
   ])(
     'reads explicit route %s independently of preferences',
-    (path, locale, page) => {
-      expect(parseSitePath(path)).toEqual({ locale, page, matched: true })
+    (path, locale, page, id) => {
+      expect(parseSitePath(path, catalog)).toEqual({
+        locale,
+        page,
+        id,
+        matched: true,
+      })
     },
   )
 
   it.each([
     '/unknown',
     '/en/unknown',
-    '/portfolio/extra',
+    '/portfolio/missing',
+    '/portfolio/queener/extra',
+    '/drawing/15',
+    '/drawing',
+    '/drawings/01',
     '//about',
     '/home',
     'about',
   ])('does not claim an unknown path is a valid page: %s', (path) =>
-    expect(parseSitePath(path).matched).toBe(false),
+    expect(parseSitePath(path, catalog).matched).toBe(false),
   )
 })
 
@@ -49,6 +71,7 @@ describe('host boundary', () => {
       isHostState({
         locale: 'ja',
         page: 'about',
+        id: null,
         compact: true,
         reducedMotion: false,
       }),
@@ -57,7 +80,26 @@ describe('host boundary', () => {
       isHostState({
         locale: 'fr',
         page: 'home',
+        id: null,
         compact: true,
+        reducedMotion: false,
+      }),
+    ).toBe(false)
+    expect(
+      isHostState({
+        locale: 'en',
+        page: 'drawing',
+        id: '01',
+        compact: false,
+        reducedMotion: false,
+      }),
+    ).toBe(true)
+    expect(
+      isHostState({
+        locale: 'en',
+        page: 'drawing',
+        id: null,
+        compact: false,
         reducedMotion: false,
       }),
     ).toBe(false)

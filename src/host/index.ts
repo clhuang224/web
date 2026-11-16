@@ -1,17 +1,26 @@
 import '@lynx-js/web-core/client'
 import type { LynxViewElement } from '@lynx-js/web-core/client'
+import { routeCatalog } from '../content/catalog'
+import { projects } from '../content/projects'
 import {
   isLocale,
   isPage,
+  isRouteId,
   isSafeExternalUrl,
   parseSitePath,
   pathForPage,
 } from '../domain/navigation'
-import type { HostState, Locale, Page } from '../domain/site'
+import { parseRepository, repositoryFromSource } from '../domain/repository'
+import type { RepositorySummary } from '../domain/repository'
+import type { HostState, ListPage, Locale } from '../domain/site'
 import { enableLynxAccessibility } from './accessibility'
 import './host.css'
 
 const localeStorageKey = 'lynns.locale'
+const knownRepositories = new Set(
+  projects.flatMap((project) => repositoryFromSource(project.source) ?? []),
+)
+const repositoryRequests = new Map<string, Promise<RepositorySummary | null>>()
 const compactQuery = window.matchMedia('(max-width: 767px)')
 const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
 const root = document.querySelector<HTMLElement>('#site-root')
@@ -30,13 +39,20 @@ let stopAccessibility: (() => void) | undefined
 
 const copy = {
   'zh-TW': {
-    pages: { home: '首頁', portfolio: '作品', about: '關於' },
+    pages: { home: '首頁', portfolio: '作品', drawings: '塗鴉', about: '關於' },
+    drawing: '塗鴉',
     description: "Lynn's 的作品、文章與創作入口。",
     notFound: '找不到這個頁面。您可以從首頁繼續瀏覽。',
     error: '網站暫時無法載入。您仍可以閱讀網誌，或重新整理後再試。',
   },
   en: {
-    pages: { home: 'Home', portfolio: 'Portfolio', about: 'About' },
+    pages: {
+      home: 'Home',
+      portfolio: 'Portfolio',
+      drawings: 'Drawings',
+      about: 'About',
+    },
+    drawing: 'Drawing',
     description: 'Projects, selected writing, and creative work by Lynn.',
     notFound:
       'This page could not be found. You can continue from the homepage.',
@@ -44,7 +60,13 @@ const copy = {
       'The site could not load. You can still read the blog, or refresh to try again.',
   },
   ja: {
-    pages: { home: 'ホーム', portfolio: '作品', about: 'プロフィール' },
+    pages: {
+      home: 'ホーム',
+      portfolio: '作品',
+      drawings: '落書き',
+      about: 'プロフィール',
+    },
+    drawing: '落書き',
     description: 'Lynn の作品、記事、創作活動を紹介するサイト。',
     notFound: 'ページが見つかりません。ホームからご覧ください。',
     error:
@@ -53,7 +75,8 @@ const copy = {
 } satisfies Record<
   Locale,
   {
-    pages: Record<Page, string>
+    pages: Record<ListPage, string>
+    drawing: string
     description: string
     notFound: string
     error: string
@@ -81,10 +104,11 @@ function restoreInitialLocale() {
 }
 
 function stateFromLocation(): HostState {
-  const location = parseSitePath(window.location.pathname)
+  const location = parseSitePath(window.location.pathname, routeCatalog)
   return {
     locale: location.locale,
     page: location.page,
+    id: location.id,
     compact: compactQuery.matches,
     reducedMotion: motionQuery.matches,
   }
@@ -97,10 +121,21 @@ function showError() {
   hostRoot.hidden = true
 }
 
-function updateMetadata(state: HostState) {
-  const location = parseSitePath(window.location.pathname)
+function pageTitle(state: HostState): string {
   const text = copy[state.locale]
-  const title = `${text.pages[state.page]} · Lynn's`
+  if (state.page === 'project')
+    return (
+      projects.find((project) => project.id === state.id)?.title ??
+      text.pages.portfolio
+    )
+  if (state.page === 'drawing') return `${text.drawing} ${state.id ?? ''}`
+  return text.pages[state.page]
+}
+
+function updateMetadata(state: HostState) {
+  const location = parseSitePath(window.location.pathname, routeCatalog)
+  const text = copy[state.locale]
+  const title = `${pageTitle(state)} · Lynn's`
   document.documentElement.lang = state.locale
   document.documentElement.dataset.routeStatus = location.matched
     ? 'found'
@@ -130,6 +165,26 @@ function sendState() {
   if (ready) view.sendGlobalEvent('host-state', [{ ...state }])
 }
 
+function fetchRepository(name: string): Promise<RepositorySummary | null> {
+  const cached = repositoryRequests.get(name)
+  if (cached) return cached
+  const request = fetch(`https://api.github.com/repos/${name}`, {
+    headers: { Accept: 'application/vnd.github+json' },
+  })
+    .then((response) => (response.ok ? response.json() : null))
+    .then(parseRepository)
+    .catch(() => null)
+  repositoryRequests.set(name, request)
+  return request
+}
+
+function sendRepository(name: string) {
+  void fetchRepository(name).then((repository) => {
+    if (repository && ready)
+      view.sendGlobalEvent('repository', [{ ...repository }])
+  })
+}
+
 function handleRequest(
   name: string,
   data: unknown,
@@ -151,14 +206,26 @@ function handleRequest(
     name === 'navigate' &&
     'page' in data &&
     isPage(data.page) &&
+    'id' in data &&
+    isRouteId(data.page, data.id) &&
     'locale' in data &&
     isLocale(data.locale)
   ) {
-    const path = pathForPage(data.locale, data.page)
+    const path = pathForPage(data.locale, data.page, data.id)
+    if (!parseSitePath(path, routeCatalog).matched) return null
     if (window.location.pathname !== path)
       window.history.pushState(null, '', path)
     rememberLocale(data.locale)
     sendState()
+  }
+
+  if (
+    name === 'getRepository' &&
+    'name' in data &&
+    typeof data.name === 'string' &&
+    knownRepositories.has(data.name)
+  ) {
+    sendRepository(data.name)
   }
 
   if (name === 'openExternal' && 'url' in data && isSafeExternalUrl(data.url)) {

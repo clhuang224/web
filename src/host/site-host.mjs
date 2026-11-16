@@ -7,6 +7,10 @@ export default function (_nativeModules, callHost) {
       await callHost('navigate', input)
       callback()
     },
+    async getRepository(input, callback) {
+      await callHost('getRepository', input)
+      callback()
+    },
     async openExternal(input, callback) {
       await callHost('openExternal', input)
       callback()
