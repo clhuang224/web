@@ -1,0 +1,9 @@
+node_modules
+dist
+public/images/doodles
+public/images/brand
+public/images/ui
+pnpm-lock.yaml
+src/styles/uno.css
+codex-talk.md
+user-to-agents.md

@@ -1,0 +1,56 @@
+{
+  "name": "lynns",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.6.0",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "dev:lynx": "rspeedy dev",
+    "dev:host": "rsbuild dev -c rsbuild.host.config.ts",
+    "build:styles": "unocss 'src/**/*.vue' -c uno.config.ts -o src/styles/uno.css",
+    "build:lynx": "rspeedy build",
+    "build:host": "rsbuild build -c rsbuild.host.config.ts",
+    "build": "pnpm run build:styles && pnpm run build:lynx && pnpm run build:host && node scripts/verify-build.mjs",
+    "preview": "node scripts/preview.mjs",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.json",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "check": "pnpm run lint && pnpm run typecheck && pnpm run test && pnpm run format:check",
+    "prepare": "husky",
+    "generate:icons": "node scripts/generate-icons.mjs"
+  },
+  "dependencies": {
+    "@lynx-js/web-core": "0.26.8",
+    "vue": "^3.5.0",
+    "vue-lynx": "0.5.1",
+    "vue-router": "^5.0.3",
+    "@lynx-js/lynx-core": "0.1.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@iconify-json/ri": "^1.2.8",
+    "@lynx-js/rspeedy": "0.13.5",
+    "@rsbuild/core": "1.7.3",
+    "@rsbuild/plugin-vue": "1.2.9",
+    "@types/node": "^24.0.0",
+    "@unocss/cli": "^66.5.0",
+    "eslint": "^10.15.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-vue": "^10.5.1",
+    "globals": "^17.14.0",
+    "husky": "^9.1.7",
+    "prettier": "^3.6.2",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.46.4",
+    "unocss": "^66.5.0",
+    "vitest": "^4.0.0",
+    "vue-eslint-parser": "^10.2.0",
+    "vue-tsc": "^3.1.2"
+  }
+}

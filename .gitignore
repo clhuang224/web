@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.rsbuild/
+.lynx/
+coverage/
+src/styles/uno.css
+*.tsbuildinfo
+.DS_Store

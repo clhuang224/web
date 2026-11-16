@@ -1,0 +1,4 @@
+if ! head -n 1 "$1" | grep -Eq '^(feat|fix|refactor|test|docs|chore|build|ci|style|perf)(\([a-zA-Z0-9_-]+\))?!?: .+'; then
+  echo "Use a Conventional Commits subject, for example: feat: add project navigation"
+  exit 1
+fi
