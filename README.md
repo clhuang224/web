@@ -1,0 +1,64 @@
+# Lynn's
+
+A personal home for a frontend engineer's projects, writing, drawings, and other creative interests, and an exploration of building a public website with Lynx. The site is intended to feel welcoming and expressive while making work and existing platforms easy to discover.
+
+## Status
+
+The first browser foundation is implemented with VueLynx: a responsive homepage, project listing, About page shell, three-language navigation, and a doodle carousel. The project is not deployed. About copy and curated article selections remain editorial work; the homepage links to the blog without inventing article cards.
+
+## Current Experience
+
+- A homepage with a short introduction, selected projects, and a six-second doodle carousel with previous/next and pause/resume controls. It displays and advances two drawings on desktop and one drawing at widths up to 767 pixels. Reduced-motion preferences disable automatic advancement.
+- Homepage project selections: Finding the Bus, Queener, and PrePrompt.
+- A portfolio listing within this site and a dedicated About page prepared for copy supplied by the maintainer.
+- Traditional Chinese, English, and Japanese interface and introductory content, with Traditional Chinese as the initial language.
+- A link to the independently hosted [blog](https://blog.lynns.me). The curated-article resource is empty until real posts are selected; full articles remain Chinese.
+- Links to music, translation contributions, professional profiles, and project destinations.
+
+The application uses Lynx elements and VueLynx components, with a small browser host for URLs, storage, metadata, and platform interaction. Learning this rendering and platform model is an explicit project goal. Existing articles and projects retain their own destinations. A native Lynx bundle is also produced, but no native application integration has been validated.
+
+## Documentation
+
+| Document                             | Responsibility                                                    |
+| ------------------------------------ | ----------------------------------------------------------------- |
+| [Product plan](docs/plan.md)         | Scope, decisions, rationale, design direction, and open questions |
+| [Architecture](docs/architecture.md) | Current repository structure and implementation boundaries        |
+| [Asset catalog](docs/assets.md)      | Asset provenance, descriptive filenames, and carousel ordering    |
+| [Contributor guide](AGENTS.md)       | Project conventions and documentation ownership                   |
+
+## Design Reference
+
+The visual direction continues the [2024 Figma design](https://www.figma.com/design/OzWLzG1nfBsVsRTJw029Y4?node-id=2-4): a white desktop sidebar, a light aqua content area, coral accents, a custom wordmark, and original hand-drawn artwork. The personal website idea dates to 2023.
+
+## Development
+
+Requires Node.js 22.12 or later and pnpm 11.6.0.
+
+```bash
+pnpm install
+pnpm run dev
+```
+
+The development command starts UnoCSS generation, Rspeedy on port 3001, and the browser host on [localhost:3000](http://localhost:3000). The host proxies `/lynx` to Rspeedy. To inspect the static build:
+
+```bash
+pnpm run build
+pnpm run preview
+```
+
+The preview serves `dist/` at [localhost:4173](http://localhost:4173), including localized deep links and the isolation headers used by the Web runtime. Set `PORT` to change its port.
+
+## Checks
+
+```bash
+pnpm run check
+pnpm run build
+```
+
+`check` runs ESLint, strict TypeScript checking, Vitest, and Prettier checking. Tests cover route parsing, bridge-state validation, carousel progression, and content resources. They do not establish keyboard, assistive-technology, native-runtime, or hosting compatibility; those require separate verification. Git hooks run the commit-time checks and tests before pushes; the GitHub Actions workflow runs `check` and `build`.
+
+## Build And Hosting
+
+The build combines a Rspeedy Web bundle with an Rsbuild browser host. Its verification step checks that the host HTML, Lynx Web bundle, bridge, and original wordmark exist. See [the architecture guide](docs/architecture.md) for the runtime boundary and compatibility pins.
+
+Production hosting must serve the complete `dist/` directory, its root-relative paths, JavaScript workers, and WASM files with appropriate MIME types. It must also support the localized page URLs and the `Cross-Origin-Opener-Policy: same-origin` and `Cross-Origin-Embedder-Policy: require-corp` headers used by the included preview. No deployment workflow or production host is configured.
