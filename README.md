@@ -4,13 +4,15 @@ A personal home for a frontend engineer's projects, writing, drawings, and other
 
 ## Status
 
-The first browser foundation is implemented with VueLynx: a responsive homepage, project listing, About page shell, three-language navigation, and a doodle carousel. The project is not deployed. About copy and curated article selections remain editorial work; the homepage links to the blog without inventing article cards.
+The first browser foundation is implemented with VueLynx: a responsive homepage, a portfolio with per-project pages, a drawings gallery with per-drawing pages, an About page shell, three-language navigation, and a doodle carousel. The project is not deployed. About copy and curated article selections remain editorial work; the homepage links to the blog without inventing article cards.
 
 ## Current Experience
 
 - A homepage with a short introduction, selected projects, and a six-second doodle carousel with previous/next and pause/resume controls. It displays and advances two drawings on desktop and one drawing at widths up to 767 pixels. Reduced-motion preferences disable automatic advancement.
 - Homepage project selections: Finding the Bus, Queener, and PrePrompt.
-- A portfolio listing within this site and a dedicated About page prepared for copy supplied by the maintainer.
+- A portfolio listing and a page per project with its summary, tags, live-site and source links, and public GitHub details (main language, stars, last update) when available.
+- A Drawings gallery of all 14 doodles and a page per drawing at `/drawing/{id}`; selecting a carousel image opens it.
+- A dedicated About page prepared for copy supplied by the maintainer.
 - Traditional Chinese, English, and Japanese interface and introductory content, with Traditional Chinese as the initial language.
 - A link to the independently hosted [blog](https://blog.lynns.me). The curated-article resource is empty until real posts are selected; full articles remain Chinese.
 - Links to music, translation contributions, professional profiles, and project destinations.
@@ -55,7 +57,7 @@ pnpm run check
 pnpm run build
 ```
 
-`check` runs ESLint, strict TypeScript checking, Vitest, and Prettier checking. Tests cover route parsing, bridge-state validation, carousel progression, and content resources. They do not establish keyboard, assistive-technology, native-runtime, or hosting compatibility; those require separate verification. Git hooks run the commit-time checks and tests before pushes; the GitHub Actions workflow runs `check` and `build`.
+`check` runs ESLint, strict TypeScript checking, Vitest, and Prettier checking. Tests cover route parsing (including detail pages), bridge-state validation, GitHub response parsing, carousel progression, and content resources. They do not establish keyboard, assistive-technology, native-runtime, or hosting compatibility; those require separate verification. Git hooks run the commit-time checks and tests before pushes; the GitHub Actions workflow runs `check` and `build`.
 
 ## Build And Hosting
 

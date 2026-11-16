@@ -4,7 +4,7 @@
 
 The fourteen raster illustrations are original doodles by the maintainer, previously used as Facebook covers during 2016–2023. Each supplied image is 851 × 315 pixels. Individual creation dates and official artwork titles have not been assigned.
 
-Filenames describe visible content for maintenance. The numeric prefixes preserve export order as stable catalog identifiers; they do not assert chronological order. The original image bytes, dimensions, colors, and SVG contents have been preserved.
+Filenames describe visible content for maintenance. The numeric prefixes preserve export order as stable catalog identifiers; they do not assert chronological order. The same two-digit numbers are the drawing IDs in page URLs such as `/drawing/04`, so renumbering a drawing changes its public URL. The original image bytes, dimensions, colors, and SVG contents have been preserved.
 
 ## Doodles
 
@@ -43,9 +43,9 @@ Mobile uses the same artwork ordering with one complete drawing at a time. Prese
 
 ## Interface Icons
 
-Nine locally generated SVGs in `public/images/icons/` come from the Remix Icon collection distributed by `@iconify-json/ri`. The installed collection metadata identifies Remix Design as the author and Apache-2.0 as the license: [collection source and license](https://github.com/cyberalien/RemixIcon/blob/master/License). The package metadata also declares Apache-2.0; this does not change ownership or licensing of the original personal artwork.
+Eleven locally generated SVGs in `public/images/icons/` come from the Remix Icon collection distributed by `@iconify-json/ri`. The installed collection metadata identifies Remix Design as the author and Apache-2.0 as the license: [collection source and license](https://github.com/cyberalien/RemixIcon/blob/master/License). The package metadata also declares Apache-2.0; this does not change ownership or licensing of the original personal artwork.
 
-`scripts/generate-icons.mjs` exports `github-line`, `soundcloud-line`, `translate-2`, `linkedin-box-line`, `arrow-left-line`, `arrow-right-line`, `arrow-right-up-line`, `pause-line`, and `play-line` as 24 × 24 SVGs with the interface ink color. Regenerate them with `node scripts/generate-icons.mjs` after intentionally changing the source selection or export styling. They are interface assets, not replacements for the custom wordmark or monogram.
+`scripts/generate-icons.mjs` exports `github-line`, `soundcloud-line`, `translate-2`, `linkedin-box-line`, `arrow-left-line`, `arrow-right-line`, `arrow-down-s-line`, `arrow-up-s-line`, `arrow-right-up-line`, `pause-line`, and `play-line` as 24 × 24 SVGs with the interface ink color. Regenerate them with `node scripts/generate-icons.mjs` after intentionally changing the source selection or export styling. They are interface assets, not replacements for the custom wordmark or monogram.
 
 ## Presentation And Content
 

@@ -52,6 +52,8 @@ The decisions guide the first release. Implemented functionality and remaining w
 
 The original design is the visual reference: [Figma design](https://www.figma.com/design/OzWLzG1nfBsVsRTJw029Y4?node-id=2-4).
 
+The interface follows the components in that file: a centered sidebar with the wordmark, icon links, text navigation, a language dropdown, and the copyright line; section titles in white lettering with a coral outline over a soft bar; white cards with a light shadow and purple/red tag pills; coral pill buttons; and a coral frame around the carousel. Varela Round is the Latin typeface. One deliberate deviation: coral buttons use dark text instead of white, because white on the coral fill is too low in contrast to read reliably.
+
 Keep the expressive artwork and recognizable color relationships. Text, navigation, buttons, tags, and focus states need distinct visual roles; decorative pastel colors should not carry essential text when they are difficult to read. Exact color adjustments require checking the source values and the resulting interface rather than inferring contrast from screenshots.
 
 The desktop layout should retain the left navigation and a main content area. The mobile layout should reorganize navigation and content for a narrow screen. Both layouts need room for longer English and Japanese text.
@@ -75,6 +77,8 @@ Visible controls and reduced-motion handling exist. Keyboard and assistive-techn
 The homepage and portfolio currently feature Finding the Bus, Queener, and PrePrompt, with translated summaries and live-site/source destinations. Additional portfolio entries and the selected article list remain editorial work. The article resource is deliberately empty; the homepage offers a blog link instead of placeholder article cards. Article-card rendering remains to be added with real selections.
 
 Article cards should support a title, concise summary, link, and clear indication that the full article is in Chinese. Project cards should explain what a project does before offering the available destinations, such as a live site or source repository.
+
+Each project has its own page under the portfolio, and each doodle has its own page under Drawings, so individual works can be linked and shared directly. Project pages add public GitHub details (main language, stars, last update). The site stays frontend-only, so this uses the unauthenticated public API without embedded tokens; if rate limits become a problem, the data can be generated at build time instead.
 
 The portfolio and About pages should share the homepage's visual language while serving their own content. The maintainer owns the About outline and original copy. Page structure can be prepared independently, but personal text must come from the author; translation and layout should preserve the supplied meaning.
 
@@ -107,7 +111,7 @@ The foundation uses VueLynx 0.5.1, Rspeedy 0.13.5, and Rsbuild 1.7.3. VueLynx's 
 
 pnpm, strict TypeScript, ESLint, Prettier, and Vitest are configured. Husky hooks check commit subjects, run lint, typecheck, and formatting before commits, and run tests before pushes. A GitHub Actions workflow runs the full check and build. Engineering conventions are adapted to Lynx rather than assuming a Vue DOM template or its Vite plugins can supply this application.
 
-UnoCSS runs as a build-time CLI and watch process. Semantic CSS variables and component styles live separately from generated utilities. The original brand SVGs and drawings are preserved; nine Remix Icon SVGs are exported locally for interface controls and platform links.
+UnoCSS runs as a build-time CLI and watch process. Semantic CSS variables and component styles live separately from generated utilities. The original brand SVGs and drawings are preserved; eleven Remix Icon SVGs are exported locally for interface controls and platform links.
 
 The browser host provides loading/error fallbacks and updates HTML language and page metadata from the URL. It does not prerender the Lynx page content. Search indexing and social share previews remain hosting/rendering work; client-side metadata updates alone do not establish those outcomes.
 
@@ -148,8 +152,6 @@ Implemented structure and data flow belong in [the architecture document](archit
 1. Complete browser checks for desktop/mobile layouts, navigation, language changes, carousel behavior, and keyboard access; address verified runtime gaps.
 2. Integrate the maintainer's About copy when supplied, prepare selected articles, and establish the editorial translation workflow.
 3. Confirm additional portfolio entries and verify external destinations before publication.
-4. Add a portfolio detail page for each project alongside the existing listing.
-5. Add a Drawings section to the sidebar with a listing and a detail page per doodle; selecting a carousel image opens that doodle's detail page at `drawing/{id}`.
-6. Evaluate supplementing portfolio metadata from the public GitHub API. The site is frontend-only, so it must not embed access tokens; use unauthenticated public endpoints or data generated at build time.
-7. Choose and validate production hosting, including headers, deep links, runtime assets, and metadata/share-preview behavior.
-8. Consider native application integration only as a separate validated target; producing a bundle alone does not establish support.
+4. Decide whether project pages need screenshots or longer write-ups beyond the summary and GitHub details.
+5. Choose and validate production hosting, including headers, deep links, runtime assets, and metadata/share-preview behavior.
+6. Consider native application integration only as a separate validated target; producing a bundle alone does not establish support.
