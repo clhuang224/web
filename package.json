@@ -26,11 +26,11 @@
     "generate:icons": "node scripts/generate-icons.mjs"
   },
   "dependencies": {
+    "@lynx-js/lynx-core": "0.1.4",
     "@lynx-js/web-core": "0.26.8",
     "vue": "^3.5.0",
     "vue-lynx": "0.5.1",
-    "vue-router": "^5.0.3",
-    "@lynx-js/lynx-core": "0.1.4"
+    "vue-router": "^4.6.5"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
