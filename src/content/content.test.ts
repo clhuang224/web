@@ -1,0 +1,74 @@
+import { existsSync, readFileSync, readdirSync } from 'node:fs'
+import { describe, expect, it } from 'vitest'
+import { locales } from '../domain/site'
+import { selectedArticles } from './articles'
+import { copy } from './copy'
+import { doodles } from './doodles'
+import { platforms, projects } from './projects'
+
+const publicRoot = new URL('../../public/', import.meta.url)
+
+describe('published content resources', () => {
+  it('provides the same complete interface vocabulary in all three languages', () => {
+    expect([...locales]).toEqual(['zh-TW', 'en', 'ja'])
+    const keys = Object.keys(copy['zh-TW']).sort()
+    for (const locale of locales) {
+      expect(Object.keys(copy[locale]).sort()).toEqual(keys)
+      expect(
+        Object.values(copy[locale]).every((value) => value.trim().length > 0),
+      ).toBe(true)
+    }
+  })
+
+  it('features the three selected projects with shared destinations and translated summaries', () => {
+    expect(projects.map((project) => project.title)).toEqual([
+      'Finding the Bus',
+      'Queener',
+      'PrePrompt',
+    ])
+    expect(new Set(projects.map((project) => project.id)).size).toBe(
+      projects.length,
+    )
+    for (const project of projects) {
+      expect(new URL(project.website).protocol).toBe('https:')
+      expect(new URL(project.source).hostname).toBe('github.com')
+      expect(Object.keys(project.summary).sort()).toEqual([...locales].sort())
+      for (const locale of locales)
+        expect(project.summary[locale].trim().length).toBeGreaterThan(0)
+    }
+  })
+
+  it('covers the actual fourteen original drawings with translated descriptions', () => {
+    const directory = new URL('images/doodles/', publicRoot)
+    const files = readdirSync(directory)
+      .filter((name) => name.endsWith('.png'))
+      .sort()
+    expect(doodles).toHaveLength(14)
+    expect(
+      doodles.map((doodle) => doodle.src.split('/').at(-1)).sort(),
+    ).toEqual(files)
+    expect(new Set(doodles.map((doodle) => doodle.id)).size).toBe(14)
+    for (const doodle of doodles) {
+      const image = readFileSync(new URL(doodle.src.slice(1), publicRoot))
+      expect([image.readUInt32BE(16), image.readUInt32BE(20)]).toEqual([
+        851, 315,
+      ])
+      expect(Object.keys(doodle.alt).sort()).toEqual([...locales].sort())
+      for (const locale of locales)
+        expect(doodle.alt[locale].trim().length).toBeGreaterThan(0)
+    }
+  })
+
+  it('resolves every platform icon to an existing SVG and uses secure external destinations', () => {
+    for (const platform of platforms) {
+      expect(
+        existsSync(new URL(`images/icons/${platform.icon}.svg`, publicRoot)),
+      ).toBe(true)
+      expect(new URL(platform.url).protocol).toBe('https:')
+    }
+  })
+
+  it('leaves curated articles empty until real posts are selected', () => {
+    expect(selectedArticles).toEqual([])
+  })
+})
