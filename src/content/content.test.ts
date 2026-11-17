@@ -72,7 +72,18 @@ describe('published content resources', () => {
     }
   })
 
-  it('leaves curated articles empty until real posts are selected', () => {
-    expect(selectedArticles).toEqual([])
+  it('links curated articles to published blog posts', () => {
+    expect(selectedArticles.length).toBeGreaterThan(0)
+    const ids = new Set(selectedArticles.map((article) => article.id))
+    expect(ids.size).toBe(selectedArticles.length)
+    for (const article of selectedArticles) {
+      const url = new URL(article.url)
+      expect(url.origin).toBe('https://blog.lynns.me')
+      expect(article.date).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+      for (const locale of locales) {
+        expect(article.title[locale].trim()).not.toBe('')
+        expect(article.summary[locale].trim()).not.toBe('')
+      }
+    }
   })
 })

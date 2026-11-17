@@ -74,7 +74,7 @@ Visible controls and reduced-motion handling exist. Keyboard and assistive-techn
 
 ### Content Presentation
 
-The homepage and portfolio currently feature Finding the Bus, Queener, and PrePrompt, with translated summaries and live-site/source destinations. Additional portfolio entries and the selected article list remain editorial work. The article resource is deliberately empty; the homepage offers a blog link instead of placeholder article cards. Article-card rendering remains to be added with real selections.
+The homepage and portfolio currently feature Finding the Bus, Queener, and PrePrompt, with translated summaries and live-site/source destinations. Additional portfolio entries remain editorial work. The homepage lists four selected posts from the blog, each with a localized title and summary, its publication date, tags, and a link to the original post. Revisit the selection as new posts are published.
 
 Article cards should support a title, concise summary, link, and clear indication that the full article is in Chinese. Project cards should explain what a project does before offering the available destinations, such as a live site or source repository.
 
@@ -139,7 +139,8 @@ Implemented structure and data flow belong in [the architecture document](archit
 
 ## Open Questions
 
-- Which articles should be selected at launch, and which additional projects should appear in the full portfolio?
+- Which additional projects should appear in the full portfolio?
+- Should the blog move into this site later, or remain an independent destination?
 - Should the export order after the opening carousel pair change, and do the six-second interval and 767-pixel breakpoint need adjustment after browser review?
 - Which color values and typography adjustments preserve the original identity with sufficient readability?
 - What editorial translation and review workflow should accompany new About and article content?

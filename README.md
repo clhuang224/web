@@ -4,7 +4,7 @@ A personal home for a frontend engineer's projects, writing, drawings, and other
 
 ## Status
 
-The first browser foundation is implemented with VueLynx: a responsive homepage, a portfolio with per-project pages, a drawings gallery with per-drawing pages, an About page shell, three-language navigation, and a doodle carousel. The project is not deployed. About copy and curated article selections remain editorial work; the homepage links to the blog without inventing article cards.
+The first browser foundation is implemented with VueLynx: a responsive homepage, a portfolio with per-project pages, a drawings gallery with per-drawing pages, an About page shell, three-language navigation, and a doodle carousel. The project is not deployed. About copy remains editorial work; the homepage lists selected blog posts.
 
 ## Current Experience
 
@@ -14,7 +14,7 @@ The first browser foundation is implemented with VueLynx: a responsive homepage,
 - A Drawings gallery of all 14 doodles and a page per drawing at `/drawing/{id}`; selecting a carousel image opens it.
 - A dedicated About page prepared for copy supplied by the maintainer.
 - Traditional Chinese, English, and Japanese interface and introductory content, with Traditional Chinese as the initial language.
-- A link to the independently hosted [blog](https://blog.lynns.me). The curated-article resource is empty until real posts are selected; full articles remain Chinese.
+- A link to the independently hosted [blog](https://blog.lynns.me). The homepage lists selected posts with localized titles and summaries; full articles remain Chinese.
 - Links to music, translation contributions, professional profiles, and project destinations.
 
 The application uses Lynx elements and VueLynx components, with a small browser host for URLs, storage, metadata, and platform interaction. Learning this rendering and platform model is an explicit project goal. Existing articles and projects retain their own destinations. A native Lynx bundle is also produced, but no native application integration has been validated.

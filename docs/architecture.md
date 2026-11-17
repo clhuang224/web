@@ -71,7 +71,7 @@ The host updates document language, title, description, and Open Graph title/des
 
 ## Content And Carousel
 
-Interface copy lives in `src/content/copy.ts`; project summaries and drawing descriptions have all three locale keys. The blog owns article bodies and original URLs. `selectedArticles` is currently empty, and the homepage shows a blog call to action without placeholder posts. The About page contains artwork and platform links while awaiting the maintainer's original copy.
+Interface copy lives in `src/content/copy.ts`; project summaries and drawing descriptions have all three locale keys. The blog owns article bodies and original URLs. `selectedArticles` holds the posts featured on the homepage; each card opens the original post and marks it as Chinese in other locales. The About page contains artwork and platform links while awaiting the maintainer's original copy.
 
 Project pages show the localized summary, tags, and links to the live site and source. When a project's source is a GitHub repository listed in `src/content/projects.ts`, the browser host requests the public repository endpoint without credentials and sends the main language, star count, and last push date to the page. Responses are validated in `src/domain/repository.ts`; failures and rate limits leave the facts hidden. The host only requests repositories that appear in the portfolio.
 

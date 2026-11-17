@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue-lynx'
 import { useSite } from '../app/context'
+import ArticleCard from '../components/ArticleCard.vue'
 import DoodleCarousel from '../components/DoodleCarousel.vue'
 import ProjectCard from '../components/ProjectCard.vue'
 import SectionTitle from '../components/SectionTitle.vue'
 import ShowMoreButton from '../components/ShowMoreButton.vue'
+import { selectedArticles } from '../content/articles'
 import { copy } from '../content/copy'
 import { projects } from '../content/projects'
 
@@ -35,5 +37,16 @@ const text = computed(() => copy[state.value.locale])
         :project="project"
     /></view>
     <ShowMoreButton :label="text.showMore" @tap="navigate('portfolio')" />
+    <SectionTitle :title="text.postsTitle" />
+    <view class="article-list"
+      ><ArticleCard
+        v-for="article in selectedArticles"
+        :key="article.id"
+        :article="article"
+    /></view>
+    <ShowMoreButton
+      :label="text.showMore"
+      @tap="openExternal('https://blog.lynns.me')"
+    />
   </view>
 </template>
