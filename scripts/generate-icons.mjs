@@ -17,6 +17,7 @@ const names = [
   'arrow-right-up-line',
   'pause-line',
   'play-line',
+  'close-line',
 ]
 await mkdir('public/images/icons', { recursive: true })
 for (const name of names) {

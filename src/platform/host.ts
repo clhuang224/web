@@ -39,6 +39,7 @@ export function useHost() {
   })
 
   const repositories = shallowRef<Record<string, RepositorySummary>>({})
+  const browserUrl = shallowRef<string | null>(null)
 
   function receiveState(value: unknown) {
     if (isHostState(value)) state.value = { ...value }
@@ -94,7 +95,12 @@ export function useHost() {
   }
 
   function openExternal(url: string) {
-    nativeHost()?.openExternal({ url }, () => undefined)
+    if (standalone) browserUrl.value = url
+    else nativeHost()?.openExternal({ url }, () => undefined)
+  }
+
+  function closeBrowser() {
+    browserUrl.value = null
   }
 
   return {
@@ -104,5 +110,7 @@ export function useHost() {
     setLocale,
     openExternal,
     requestRepository,
+    browserUrl,
+    closeBrowser,
   }
 }

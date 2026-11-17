@@ -43,9 +43,9 @@ Mobile uses the same artwork ordering with one complete drawing at a time. Prese
 
 ## Interface Icons
 
-Eleven locally generated SVGs in `public/images/icons/` come from the Remix Icon collection distributed by `@iconify-json/ri`. The installed collection metadata identifies Remix Design as the author and Apache-2.0 as the license: [collection source and license](https://github.com/cyberalien/RemixIcon/blob/master/License). The package metadata also declares Apache-2.0; this does not change ownership or licensing of the original personal artwork.
+Twelve locally generated SVGs in `public/images/icons/` come from the Remix Icon collection distributed by `@iconify-json/ri`. The installed collection metadata identifies Remix Design as the author and Apache-2.0 as the license: [collection source and license](https://github.com/cyberalien/RemixIcon/blob/master/License). The package metadata also declares Apache-2.0; this does not change ownership or licensing of the original personal artwork.
 
-`scripts/generate-icons.mjs` exports `github-line`, `soundcloud-line`, `translate-2`, `linkedin-box-line`, `arrow-left-line`, `arrow-right-line`, `arrow-down-s-line`, `arrow-up-s-line`, `arrow-right-up-line`, `pause-line`, and `play-line` as 24 × 24 SVGs with the interface ink color. Regenerate them with `node scripts/generate-icons.mjs` after intentionally changing the source selection or export styling. They are interface assets, not replacements for the custom wordmark or monogram.
+`scripts/generate-icons.mjs` exports `github-line`, `soundcloud-line`, `translate-2`, `linkedin-box-line`, `arrow-left-line`, `arrow-right-line`, `arrow-down-s-line`, `arrow-up-s-line`, `arrow-right-up-line`, `pause-line`, `play-line`, and `close-line` as 24 × 24 SVGs with the interface ink color. Regenerate them with `node scripts/generate-icons.mjs` after intentionally changing the source selection or export styling. They are interface assets, not replacements for the custom wordmark or monogram.
 
 ## Presentation And Content
 

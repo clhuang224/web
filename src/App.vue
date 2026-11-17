@@ -4,6 +4,7 @@ import { computed, provide, ref, watch } from 'vue-lynx'
 import { RouterView } from 'vue-router'
 import { siteContextKey } from './app/context'
 import { router } from './app/router'
+import InAppBrowser from './components/InAppBrowser.vue'
 import PlatformLinks from './components/PlatformLinks.vue'
 import { copy } from './content/copy'
 import { pathForPage } from './domain/navigation'
@@ -15,7 +16,7 @@ import './styles/site.css'
 
 const site = useHost()
 provide(siteContextKey, site)
-const { state, navigate, setLocale, openExternal } = site
+const { state, navigate, setLocale, openExternal, browserUrl } = site
 const text = computed(() => copy[state.value.locale])
 const languageNames: Record<Locale, string> = {
   'zh-TW': '繁體中文',
@@ -125,5 +126,6 @@ watch(
         ><text class="language-text">{{ languageNames[locale] }}</text></view
       >
     </view>
+    <InAppBrowser v-if="browserUrl" :url="browserUrl" />
   </view>
 </template>

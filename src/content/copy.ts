@@ -31,6 +31,7 @@ interface SiteCopy {
   repositoryStars: string
   repositoryUpdated: string
   showMore: string
+  closePage: string
   postsTitle: string
   articleLanguage: string
   copyright: string
@@ -68,6 +69,7 @@ export const copy = {
     repositoryStars: '星星',
     repositoryUpdated: '最後更新',
     showMore: '看更多',
+    closePage: '關閉',
     postsTitle: '精選文章',
     articleLanguage: '中文文章',
     copyright: 'Copyright © Lynn Huang',
@@ -104,6 +106,7 @@ export const copy = {
     repositoryStars: 'Stars',
     repositoryUpdated: 'Last updated',
     showMore: 'Show more',
+    closePage: 'Close',
     postsTitle: 'Selected posts',
     articleLanguage: 'Article in Chinese',
     copyright: 'Copyright © Lynn Huang',
@@ -140,6 +143,7 @@ export const copy = {
     repositoryStars: 'スター',
     repositoryUpdated: '最終更新',
     showMore: 'もっと見る',
+    closePage: '閉じる',
     postsTitle: 'ピックアップ記事',
     articleLanguage: '中国語の記事',
     copyright: 'Copyright © Lynn Huang',
