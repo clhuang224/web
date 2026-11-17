@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import VectorImage from './components/VectorImage.vue'
 import { computed, provide, ref, watch } from 'vue-lynx'
 import { RouterView } from 'vue-router'
 import { siteContextKey } from './app/context'
@@ -67,10 +68,7 @@ watch(
         accessibility-role="link"
         :accessibility-label="'Lynn’s · ' + text.home"
         @tap="navigate('home')"
-        ><image
-          class="wordmark"
-          src="/images/brand/lynns-wordmark.svg"
-          mode="aspectFit"
+        ><VectorImage class="wordmark" src="/images/brand/lynns-wordmark.svg"
       /></view>
       <view class="sidebar-platforms"><PlatformLinks /></view>
       <view class="navigation">
@@ -91,33 +89,18 @@ watch(
       </view>
       <view class="sidebar-bottom">
         <view class="language-select">
-          <view v-if="languageOpen" class="language-menu">
-            <view
-              v-for="locale in locales"
-              :key="locale"
-              class="language-option"
-              :class="{ 'language-option-active': state.locale === locale }"
-              accessibility-role="button"
-              :accessibility-label="languageNames[locale]"
-              :accessibility-selected="String(state.locale === locale)"
-              @tap="chooseLocale(locale)"
-              ><text class="language-text">{{
-                languageNames[locale]
-              }}</text></view
-            >
-          </view>
           <view
             class="language-trigger"
             :class="{ 'language-trigger-open': languageOpen }"
             accessibility-role="button"
             :accessibility-label="`${text.language}: ${languageNames[state.locale]}`"
             @tap="languageOpen = !languageOpen"
-            ><image
+            ><VectorImage
               class="small-icon"
               src="/images/icons/translate-2.svg" /><text
               class="language-current"
               >{{ languageNames[state.locale] }}</text
-            ><image
+            ><VectorImage
               class="small-icon"
               :src="`/images/icons/${languageOpen ? 'arrow-up-s-line' : 'arrow-down-s-line'}.svg`"
           /></view>
@@ -129,5 +112,18 @@ watch(
     <scroll-view class="main-scroll" scroll-orientation="vertical">
       <view class="main-content"><RouterView /></view>
     </scroll-view>
+    <view v-if="languageOpen" class="language-menu">
+      <view
+        v-for="locale in locales"
+        :key="locale"
+        class="language-option"
+        :class="{ 'language-option-active': state.locale === locale }"
+        accessibility-role="button"
+        :accessibility-label="languageNames[locale]"
+        :accessibility-selected="String(state.locale === locale)"
+        @tap="chooseLocale(locale)"
+        ><text class="language-text">{{ languageNames[locale] }}</text></view
+      >
+    </view>
   </view>
 </template>

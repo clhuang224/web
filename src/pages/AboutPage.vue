@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { asset } from '../platform/runtime'
 import { computed } from 'vue-lynx'
 import { useSite } from '../app/context'
 import PlatformLinks from '../components/PlatformLinks.vue'
@@ -16,7 +17,7 @@ const text = computed(() => copy[state.value.locale])
     <view v-if="illustration" class="drawing-frame about-frame"
       ><image
         class="drawing-full"
-        :src="illustration.src"
+        :src="asset(illustration.src)"
         mode="aspectFit"
         :accessibility-label="illustration.alt[state.locale]"
     /></view>

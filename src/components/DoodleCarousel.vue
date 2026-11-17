@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import VectorImage from './VectorImage.vue'
+import { asset } from '../platform/runtime'
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue-lynx'
 import { useSite } from '../app/context'
 import { copy } from '../content/copy'
@@ -66,7 +68,7 @@ onUnmounted(() => clearInterval(timer))
         :accessibility-label="`${text.drawingLabel} ${doodle.id}: ${doodle.alt[state.locale]}`"
         @tap="navigate('drawing', doodle.id)"
       >
-        <image class="doodle-image" :src="doodle.src" mode="aspectFit" />
+        <image class="doodle-image" :src="asset(doodle.src)" mode="aspectFit" />
       </view>
     </view>
     <view class="carousel-controls flex items-center justify-between">
@@ -79,14 +81,16 @@ onUnmounted(() => clearInterval(timer))
           accessibility-role="button"
           :accessibility-label="text.previous"
           @tap="manualAdvance(-1)"
-          ><image class="small-icon" src="/images/icons/arrow-left-line.svg"
+          ><VectorImage
+            class="small-icon"
+            src="/images/icons/arrow-left-line.svg"
         /></view>
         <view
           class="playback-button"
           accessibility-role="button"
           :accessibility-label="playing ? text.pause : text.play"
           @tap="togglePlayback"
-          ><image
+          ><VectorImage
             class="small-icon"
             :src="`/images/icons/${playing ? 'pause-line' : 'play-line'}.svg`"
           /><text class="control-text">{{
@@ -98,7 +102,9 @@ onUnmounted(() => clearInterval(timer))
           accessibility-role="button"
           :accessibility-label="text.next"
           @tap="manualAdvance(1)"
-          ><image class="small-icon" src="/images/icons/arrow-right-line.svg"
+          ><VectorImage
+            class="small-icon"
+            src="/images/icons/arrow-right-line.svg"
         /></view>
       </view>
     </view>

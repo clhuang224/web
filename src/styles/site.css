@@ -14,6 +14,7 @@
   --color-tag-purple: #9747ff;
   --color-tag-red: #de2a29;
 
+  position: relative;
   width: 100%;
   height: 100%;
   display: flex;
@@ -100,8 +101,7 @@
   padding-top: 20px;
 }
 .language-select {
-  position: relative;
-  width: 112px;
+  width: 124px;
 }
 .language-trigger {
   display: flex;
@@ -122,9 +122,9 @@
 }
 .language-menu {
   position: absolute;
-  left: 0px;
-  right: 0px;
-  bottom: 32px;
+  left: 38px;
+  width: 124px;
+  bottom: 99px;
   z-index: 2;
   display: flex;
   flex-direction: column;
@@ -571,8 +571,10 @@
   padding-top: 0px;
 }
 .site-shell-compact .language-menu {
+  left: auto;
+  right: 14px;
   bottom: auto;
-  top: 32px;
+  top: 48px;
 }
 .site-shell-compact .main-content {
   padding: 16px 16px 32px;

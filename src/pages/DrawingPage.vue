@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import VectorImage from '../components/VectorImage.vue'
+import { asset } from '../platform/runtime'
 import { computed } from 'vue-lynx'
 import { useSite } from '../app/context'
 import SectionTitle from '../components/SectionTitle.vue'
@@ -25,16 +27,16 @@ function step(direction: 1 | -1) {
       class="back-link"
       accessibility-role="link"
       @tap="navigate('drawings')"
-      ><image class="small-icon" src="/images/icons/arrow-left-line.svg" /><text
-        class="back-label"
-        >{{ text.backToDrawings }}</text
-      ></view
+      ><VectorImage
+        class="small-icon"
+        src="/images/icons/arrow-left-line.svg"
+      /><text class="back-label">{{ text.backToDrawings }}</text></view
     >
     <SectionTitle :title="`${text.drawingLabel} ${doodle.id}`" large />
     <view class="drawing-frame"
       ><image
         class="drawing-full"
-        :src="doodle.src"
+        :src="asset(doodle.src)"
         mode="aspectFit"
         :accessibility-label="doodle.alt[state.locale]"
     /></view>
@@ -47,7 +49,7 @@ function step(direction: 1 | -1) {
         accessibility-role="link"
         :accessibility-label="text.previousDrawing"
         @tap="step(-1)"
-        ><image
+        ><VectorImage
           class="small-icon"
           src="/images/icons/arrow-left-line.svg"
         /><text class="pill-label">{{ text.previousDrawing }}</text></view
@@ -61,7 +63,9 @@ function step(direction: 1 | -1) {
         :accessibility-label="text.nextDrawing"
         @tap="step(1)"
         ><text class="pill-label">{{ text.nextDrawing }}</text
-        ><image class="small-icon" src="/images/icons/arrow-right-line.svg"
+        ><VectorImage
+          class="small-icon"
+          src="/images/icons/arrow-right-line.svg"
       /></view>
     </view>
   </view>

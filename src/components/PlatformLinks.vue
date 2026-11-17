@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import VectorImage from './VectorImage.vue'
 import { useSite } from '../app/context'
 import { platforms } from '../content/projects'
 defineProps<{ labels?: boolean }>()
@@ -18,7 +19,7 @@ const { openExternal } = useSite()
       :accessibility-label="platform.label"
       @tap="openExternal(platform.url)"
     >
-      <image
+      <VectorImage
         class="platform-icon"
         :src="`/images/icons/${platform.icon}.svg`"
       />

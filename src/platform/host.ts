@@ -1,26 +1,40 @@
 import { nextTick, onMounted, onUnmounted, shallowRef } from 'vue-lynx'
-import { isHostState } from '../domain/navigation'
-import { isRepositorySummary } from '../domain/repository'
+import { routeCatalog } from '../content/catalog'
+import { isDetailPage, isHostState, isRouteId } from '../domain/navigation'
+import { fetchRepository, isRepositorySummary } from '../domain/repository'
 import type { RepositorySummary } from '../domain/repository'
-import type { HostState, Locale, Page, SiteHostModule } from '../domain/site'
+import type { HostState, Locale, Page } from '../domain/site'
+import { isStandalone, nativeHost } from './runtime'
 
 interface GlobalEventEmitter {
   addListener(name: string, callback: (value: unknown) => void): void
   removeListener(name: string, callback: (value: unknown) => void): void
 }
 
-// These ambient declarations describe only the bridge this application owns.
-declare const NativeModules: { SiteHost?: SiteHostModule }
 declare const lynx: {
   getJSModule(name: 'GlobalEventEmitter'): GlobalEventEmitter | undefined
 }
+declare const SystemInfo:
+  { pixelWidth?: number; pixelRatio?: number } | undefined
+
+function standaloneCompact() {
+  if (typeof SystemInfo === 'undefined') return false
+  const { pixelWidth, pixelRatio } = SystemInfo ?? {}
+  return !!pixelWidth && !!pixelRatio && pixelWidth / pixelRatio < 768
+}
+
+function isKnownRoute(page: Page, id: string | null) {
+  if (!isRouteId(page, id)) return false
+  return !isDetailPage(page) || routeCatalog[page].includes(id ?? '')
+}
 
 export function useHost() {
+  const standalone = isStandalone()
   const state = shallowRef<HostState>({
     locale: 'zh-TW',
     page: 'home',
     id: null,
-    compact: false,
+    compact: standalone && standaloneCompact(),
     reducedMotion: false,
   })
 
@@ -33,12 +47,6 @@ export function useHost() {
   function receiveRepository(value: unknown) {
     if (isRepositorySummary(value))
       repositories.value = { ...repositories.value, [value.name]: value }
-  }
-
-  function nativeHost() {
-    return typeof NativeModules === 'undefined'
-      ? undefined
-      : NativeModules.SiteHost
   }
 
   let emitter: GlobalEventEmitter | undefined
@@ -60,6 +68,10 @@ export function useHost() {
   })
 
   function navigate(page: Page, id: string | null = null) {
+    if (standalone) {
+      if (isKnownRoute(page, id)) state.value = { ...state.value, page, id }
+      return
+    }
     nativeHost()?.navigate(
       { page, id, locale: state.value.locale },
       () => undefined,
@@ -68,12 +80,17 @@ export function useHost() {
 
   function setLocale(locale: Locale) {
     const { page, id } = state.value
+    if (standalone) {
+      state.value = { ...state.value, locale }
+      return
+    }
     nativeHost()?.navigate({ page, id, locale }, () => undefined)
   }
 
   function requestRepository(name: string) {
-    if (!repositories.value[name])
-      nativeHost()?.getRepository({ name }, () => undefined)
+    if (repositories.value[name]) return
+    if (standalone) void fetchRepository(name).then(receiveRepository)
+    else nativeHost()?.getRepository({ name }, () => undefined)
   }
 
   function openExternal(url: string) {

@@ -10,7 +10,7 @@ import {
   parseSitePath,
   pathForPage,
 } from '../domain/navigation'
-import { parseRepository, repositoryFromSource } from '../domain/repository'
+import { fetchRepository, repositoryFromSource } from '../domain/repository'
 import type { RepositorySummary } from '../domain/repository'
 import type { HostState, ListPage, Locale } from '../domain/site'
 import { enableLynxAccessibility } from './accessibility'
@@ -165,21 +165,16 @@ function sendState() {
   if (ready) view.sendGlobalEvent('host-state', [{ ...state }])
 }
 
-function fetchRepository(name: string): Promise<RepositorySummary | null> {
+function cachedRepository(name: string): Promise<RepositorySummary | null> {
   const cached = repositoryRequests.get(name)
   if (cached) return cached
-  const request = fetch(`https://api.github.com/repos/${name}`, {
-    headers: { Accept: 'application/vnd.github+json' },
-  })
-    .then((response) => (response.ok ? response.json() : null))
-    .then(parseRepository)
-    .catch(() => null)
+  const request = fetchRepository(name)
   repositoryRequests.set(name, request)
   return request
 }
 
 function sendRepository(name: string) {
-  void fetchRepository(name).then((repository) => {
+  void cachedRepository(name).then((repository) => {
     if (repository && ready)
       view.sendGlobalEvent('repository', [{ ...repository }])
   })

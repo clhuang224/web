@@ -8,14 +8,8 @@ export interface RepositorySummary {
 const repositoryPattern = /^[\w.-]+\/[\w.-]+$/
 
 export function repositoryFromSource(source: string): string | null {
-  try {
-    const url = new URL(source)
-    if (url.hostname !== 'github.com') return null
-    const name = url.pathname.replace(/^\/|\/$/g, '')
-    return repositoryPattern.test(name) ? name : null
-  } catch {
-    return null
-  }
+  const match = /^https:\/\/github\.com\/([^/?#]+\/[^/?#]+?)\/?$/.exec(source)
+  return match && repositoryPattern.test(match[1]) ? match[1] : null
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -41,6 +35,17 @@ export function parseRepository(value: unknown): RepositorySummary | null {
     stars: stargazers_count,
     pushedAt: pushed_at,
   }
+}
+
+export function fetchRepository(
+  name: string,
+): Promise<RepositorySummary | null> {
+  return fetch(`https://api.github.com/repos/${name}`, {
+    headers: { Accept: 'application/vnd.github+json' },
+  })
+    .then((response) => (response.ok ? response.json() : null))
+    .then(parseRepository)
+    .catch(() => null)
 }
 
 export function isRepositorySummary(

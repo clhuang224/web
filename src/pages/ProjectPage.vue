@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import VectorImage from '../components/VectorImage.vue'
 import { computed, watch } from 'vue-lynx'
 import { useSite } from '../app/context'
 import SectionTitle from '../components/SectionTitle.vue'
@@ -40,10 +41,10 @@ watch(
       class="back-link"
       accessibility-role="link"
       @tap="navigate('portfolio')"
-      ><image class="small-icon" src="/images/icons/arrow-left-line.svg" /><text
-        class="back-label"
-        >{{ text.backToPortfolio }}</text
-      ></view
+      ><VectorImage
+        class="small-icon"
+        src="/images/icons/arrow-left-line.svg"
+      /><text class="back-label">{{ text.backToPortfolio }}</text></view
     >
     <SectionTitle :title="project.title" large />
     <view class="card detail-card">
@@ -74,10 +75,10 @@ watch(
           class="pill-button pill-button-outline"
           accessibility-role="link"
           @tap="openExternal(project.source)"
-          ><image class="small-icon" src="/images/icons/github-line.svg" /><text
-            class="pill-label"
-            >{{ text.source }}</text
-          ></view
+          ><VectorImage
+            class="small-icon"
+            src="/images/icons/github-line.svg"
+          /><text class="pill-label">{{ text.source }}</text></view
         >
       </view>
     </view>
