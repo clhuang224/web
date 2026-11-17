@@ -2,7 +2,7 @@
 
 ## Current State
 
-The site is a frontend-only VueLynx application with a browser host. Home, Portfolio with per-project pages, Drawings with per-drawing pages, and the About page shell exist in Traditional Chinese, English, and Japanese. There is no backend, CMS, deployment configuration, or validated native application integration.
+The site is a frontend-only VueLynx application with a browser host. Home, Portfolio with per-project pages, Drawings with per-drawing pages, and the About page shell exist in Traditional Chinese, English, and Japanese. There is no backend, CMS, deployment configuration, or dedicated native application; the native bundle has been checked only in Lynx Explorer.
 
 ## Repository Structure
 
@@ -48,6 +48,8 @@ The browser host creates `<lynx-view>` and loads `/lynx/main.web.bundle`. It own
 
 `src/host/site-host.mjs` exposes `getState`, `navigate`, `getRepository`, and `openExternal` as `NativeModules.SiteHost`. The host validates commands and the application validates received state. Initial `getState` establishes readiness; subsequent browser changes arrive as `host-state` events. The host displays a loading message and a usable blog link before readiness, and an error fallback on runtime failure or a 20-second loading timeout.
 
+Native Lynx shells such as Lynx Explorer have no browser host. `src/platform/runtime.ts` detects them through `SystemInfo.platform`, because `NativeModules.SiteHost` resolves to `null` rather than `undefined` there. In that standalone mode the application keeps route and locale state itself, derives the compact layout from the screen width, and requests GitHub data directly. Files from `public/` resolve against the bundle's asset prefix. The native `<image>` element does not render SVG, so `VectorImage` uses the native `<svg>` element in shells and `<image>` on the Web. GitHub source URLs are parsed with a regular expression because the native `URL` implementation lacks `hostname` and `pathname`. External links have no destination in Lynx Explorer, which loads any URL as a Lynx bundle.
+
 Vue Router uses memory history inside the Lynx application. It renders the selected page; the browser host remains the owner of public URLs and Back/Forward behavior. The shared route is a page (`home`, `portfolio`, `project`, `drawings`, `drawing`, or `about`) plus an ID for the two detail pages. `src/content/catalog.ts` lists the valid project and drawing IDs; the host rejects navigation to IDs outside it.
 
 Vue Router is pinned to the 4.x line. Version 5 compares rendered elements with `getRootNode()` after each route change, which Lynx elements do not implement, so it raised runtime errors.
@@ -92,9 +94,9 @@ The carousel uses the 14 cataloged drawings in manifest order. At widths above 7
 
 VueLynx 0.5.1 declares an Rsbuild 1 peer range, so the build uses the compatible Rspeedy/Rsbuild release line. `pnpm-workspace.yaml` also overrides Web Core to 0.26.8 and the CSS extraction plugin to 0.7.0 to keep transitive runtime and compiler packages aligned. Change these selections together and repeat build and browser checks.
 
-UnoCSS runs as a CLI before the build and watches during development. It has no runtime styling service or assumed Vite integration. `src/styles/site.css` owns semantic colors and component styles; `src/styles/uno.css` is generated. VueLynx's CSS variable and inheritance support is enabled in `lynx.config.ts`. The host page loads Varela Round from Google Fonts; Chinese and Japanese text falls back to Noto Sans or the system font. Section titles draw their coral outline with layered `text-shadow`, because the Lynx renderer is not relied on for text stroke.
+UnoCSS runs as a CLI before the build and watches during development. It has no runtime styling service or assumed Vite integration. `src/styles/site.css` owns semantic colors and component styles; `src/styles/uno.css` is generated. VueLynx's CSS variable and inheritance support is enabled in `lynx.config.ts`. The host page loads Varela Round from Google Fonts; Chinese and Japanese text falls back to Noto Sans or the system font. Section titles draw their coral outline with layered `text-shadow`, because the Lynx renderer is not relied on for text stroke. Native views clip absolutely positioned children, so the language menu is an overlay at the shell level rather than a child of the sidebar.
 
-The build first creates Lynx outputs under `dist/lynx`, then the host HTML, JavaScript, runtime chunks, and copied public assets under `dist/`. The host build preserves the first output. `scripts/verify-build.mjs` checks essential output paths. The native Lynx output is produced but has not been exercised in a native application.
+The build first creates Lynx outputs under `dist/lynx`, then the host HTML, JavaScript, runtime chunks, and copied public assets under `dist/`. The host build preserves the first output. `scripts/verify-build.mjs` checks essential output paths. The native Lynx output loads in Lynx Explorer 4.2 on Android. Set `LYNX_DEV_HOST=127.0.0.1` when running `pnpm run dev` so the bundle's asset prefix is reachable through `adb reverse tcp:3001 tcp:3001`. Production native builds still need an absolute asset prefix.
 
 ## Hosting And Verification Boundaries
 

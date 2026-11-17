@@ -17,7 +17,7 @@ The first browser foundation is implemented with VueLynx: a responsive homepage,
 - A link to the independently hosted [blog](https://blog.lynns.me). The homepage lists selected posts with localized titles and summaries; full articles remain Chinese.
 - Links to music, translation contributions, professional profiles, and project destinations.
 
-The application uses Lynx elements and VueLynx components, with a small browser host for URLs, storage, metadata, and platform interaction. Learning this rendering and platform model is an explicit project goal. Existing articles and projects retain their own destinations. A native Lynx bundle is also produced, but no native application integration has been validated.
+The application uses Lynx elements and VueLynx components, with a small browser host for URLs, storage, metadata, and platform interaction. Learning this rendering and platform model is an explicit project goal. Existing articles and projects retain their own destinations. The native Lynx bundle also runs in Lynx Explorer on Android, without external links; no dedicated native application exists.
 
 ## Documentation
 

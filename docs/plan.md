@@ -103,7 +103,7 @@ Published translations are local TypeScript resources with complete locale keys.
 
 Lynx is the preferred direction for the main website. Exploration is part of the product's purpose, so the implementation can accept additional learning and integration work. A complete native app distribution is not required for the first browser-accessible release.
 
-[VueLynx](https://vue.lynxjs.org/guide/introduction) is the selected framework binding. The application uses Lynx elements and event handling, with a small browser-host bridge for platform capabilities. The build also produces native Lynx output, but no native application integration has been validated.
+[VueLynx](https://vue.lynxjs.org/guide/introduction) is the selected framework binding. The application uses Lynx elements and event handling, with a small browser-host bridge for platform capabilities. The build also produces native Lynx output, which runs in Lynx Explorer on Android. Offering it to visitors through Lynx Explorer is planned alongside deployment; a dedicated native application is not.
 
 ### Build And Styling
 
