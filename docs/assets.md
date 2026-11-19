@@ -47,6 +47,10 @@ Twelve locally generated SVGs in `public/images/icons/` come from the Remix Icon
 
 `scripts/generate-icons.mjs` exports `github-line`, `soundcloud-line`, `translate-2`, `linkedin-box-line`, `arrow-left-line`, `arrow-right-line`, `arrow-down-s-line`, `arrow-up-s-line`, `arrow-right-up-line`, `pause-line`, `play-line`, and `close-line` as 24 × 24 SVGs with the interface ink color. Regenerate them with `node scripts/generate-icons.mjs` after intentionally changing the source selection or export styling. They are interface assets, not replacements for the custom wordmark or monogram.
 
+## Font
+
+`src/assets/fonts/jf-openhuninn-2.1.ttf` is jf open huninn 2.1, downloaded unmodified from the [justfont release](https://github.com/justfont/open-huninn-font/releases/tag/v2.1). It is licensed under the SIL Open Font License 1.1; `src/assets/fonts/OFL.txt` is the upstream license text, which also credits Kosugi Maru and Varela Round.
+
 ## Presentation And Content
 
 - Use the original wordmark and monogram as brand artwork; use Remix Icon for interface symbols.
