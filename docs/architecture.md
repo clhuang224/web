@@ -98,6 +98,12 @@ UnoCSS runs as a CLI before the build and watches during development. It has no 
 
 The build first creates Lynx outputs under `dist/lynx`, then the host HTML, JavaScript, runtime chunks, and copied public assets under `dist/`. The host build preserves the first output. `scripts/verify-build.mjs` checks essential output paths. The native Lynx output loads in Lynx Explorer 4.2 on Android. Set `LYNX_DEV_HOST=127.0.0.1` when running `pnpm run dev` so the bundle's asset prefix is reachable through `adb reverse tcp:3001 tcp:3001`. Production native builds still need an absolute asset prefix.
 
+## Public Guide
+
+The Traditional Chinese guide in `docs/guide/zh-TW/` is a separate VitePress 1.6.4 site configured in `docs/.vitepress/`. It builds with `base: '/guide/'` and clean URLs into `dist/guide/` after the application build, so neither build cleans the other's output. Local search splits Han text into single characters and requires every term to match. The theme uses the site's teal and coral and the bundled font. Its header and mobile menu link back to the main site outside the VitePress router.
+
+The sidebar's guide entry is not an application page. On the Web, the `openGuide` bridge call makes the browser host load `/guide/` in the same tab, so browser Back returns to the site. In native shells, the in-app browser opens `https://lynns.me/guide/`, or the development host's `/guide/` during development. In development, the browser host proxies `/guide` to VitePress on port 3002. `scripts/preview.mjs` resolves guide pages, directory indexes, and `.html` files before the application fallback, and serves the guide's 404 page for unknown guide paths.
+
 ## Hosting And Verification Boundaries
 
 The included preview serves the build with root-relative asset URLs, localized deep-route fallback, WASM MIME handling, and cross-origin isolation headers. A production host must provide the same capabilities; deployment remains unconfigured. Browser runtime loading, error fallbacks, keyboard access, external-window behavior, and the development-server composition need browser checks in addition to the pure tests.

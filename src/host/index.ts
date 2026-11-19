@@ -195,6 +195,10 @@ function handleRequest(
     updateMetadata(state)
     return { ...state }
   }
+  if (name === 'openGuide') {
+    window.location.assign('/guide/')
+    return null
+  }
   if (typeof data !== 'object' || data === null) return null
 
   if (

@@ -13,8 +13,19 @@ const types = {
   '.svg': 'image/svg+xml',
   '.png': 'image/png',
   '.wasm': 'application/wasm',
+  '.ttf': 'font/ttf',
+  '.woff2': 'font/woff2',
+  '.txt': 'text/plain; charset=utf-8',
   '.bundle': 'application/octet-stream',
 }
+async function isFile(path) {
+  try {
+    return (await stat(path)).isFile()
+  } catch {
+    return false
+  }
+}
+
 const route =
   /^(?:\/(?:en|ja))?(?:\/|\/(?:portfolio|drawings|about)|\/portfolio\/[\w-]+|\/drawing\/\d{2})?$/
 createServer(async (request, response) => {
@@ -31,6 +42,30 @@ createServer(async (request, response) => {
     response.setHeader('Cross-Origin-Embedder-Policy', 'require-corp')
     let target = file
     let status = 200
+    if (path === '/guide' || path.startsWith('/guide/')) {
+      const candidates = path.endsWith('/')
+        ? [resolve(file, 'index.html')]
+        : extname(path)
+          ? [file]
+          : [`${file}.html`, resolve(file, 'index.html')]
+      target = resolve(directory, 'guide/404.html')
+      status = 404
+      for (const candidate of candidates)
+        if (await isFile(candidate)) {
+          target = candidate
+          status = 200
+          break
+        }
+      if (status === 404 && extname(path)) {
+        response.writeHead(404).end('Not found')
+        return
+      }
+      response.writeHead(status, {
+        'Content-Type': types[extname(target)] || 'application/octet-stream',
+      })
+      response.end(await readFile(target))
+      return
+    }
     try {
       if (!(await stat(target)).isFile())
         target = resolve(directory, 'index.html')

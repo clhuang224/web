@@ -16,7 +16,7 @@ import './styles/site.css'
 
 const site = useHost()
 provide(siteContextKey, site)
-const { state, navigate, setLocale, openExternal, browserUrl } = site
+const { state, navigate, setLocale, openExternal, openGuide, browserUrl } = site
 const text = computed(() => copy[state.value.locale])
 const languageNames: Record<Locale, string> = {
   'zh-TW': '繁體中文',
@@ -25,13 +25,15 @@ const languageNames: Record<Locale, string> = {
 }
 const languageOpen = ref(false)
 
-type NavigationItem = 'home' | 'blog' | 'portfolio' | 'drawings' | 'about'
+type NavigationItem =
+  'home' | 'blog' | 'portfolio' | 'drawings' | 'about' | 'guide'
 const navigation: NavigationItem[] = [
   'home',
   'blog',
   'portfolio',
   'drawings',
   'about',
+  'guide',
 ]
 const sections: Record<Page, NavigationItem> = {
   home: 'home',
@@ -44,6 +46,7 @@ const sections: Record<Page, NavigationItem> = {
 
 function select(item: NavigationItem) {
   if (item === 'blog') openExternal('https://blog.lynns.me')
+  else if (item === 'guide') openGuide()
   else navigate(item)
 }
 
@@ -78,7 +81,11 @@ watch(
           :key="item"
           class="nav-link"
           accessibility-role="link"
-          :accessibility-label="text[item]"
+          :accessibility-label="
+            item === 'guide'
+              ? `${text.guide} (${text.guideLanguage})`
+              : text[item]
+          "
           :accessibility-selected="String(sections[state.page] === item)"
           @tap="select(item)"
           ><text

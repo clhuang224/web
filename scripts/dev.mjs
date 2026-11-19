@@ -18,6 +18,7 @@ const children = [
   ]),
   run(['run', 'dev:lynx']),
   run(['run', 'dev:host']),
+  run(['run', 'dev:guide']),
 ]
 function stop() {
   for (const child of children) child.kill('SIGTERM')

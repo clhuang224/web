@@ -18,3 +18,7 @@ export function isStandalone() {
 export function asset(path: string) {
   return isStandalone() ? `${import.meta.env.ASSET_PREFIX}${path}` : path
 }
+
+export const guideUrl = import.meta.env.DEV
+  ? 'http://127.0.0.1:3000/guide/'
+  : 'https://lynns.me/guide/'

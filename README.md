@@ -43,14 +43,14 @@ pnpm install
 pnpm run dev
 ```
 
-The development command starts UnoCSS generation, Rspeedy on port 3001, and the browser host on [localhost:3000](http://localhost:3000). The host proxies `/lynx` to Rspeedy. To inspect the static build:
+The development command starts UnoCSS generation, Rspeedy on port 3001, VitePress on port 3002, and the browser host on [localhost:3000](http://localhost:3000). The host proxies `/lynx` to Rspeedy and `/guide` to VitePress. To inspect the static build:
 
 ```bash
 pnpm run build
 pnpm run preview
 ```
 
-The preview serves `dist/` at [localhost:4173](http://localhost:4173), including localized deep links and the isolation headers used by the Web runtime. Set `PORT` to change its port.
+The preview serves `dist/` at [localhost:4173](http://localhost:4173), including localized deep links, the guide at `/guide/`, and the isolation headers used by the Web runtime. Set `PORT` to change its port.
 
 ## Checks
 

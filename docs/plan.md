@@ -27,7 +27,7 @@ The first application foundation is implemented: VueLynx pages, a browser host, 
 | Blog           | An external link to the existing blog; selected article cards link to their original posts.                                                                                  |
 | Platform links | Access to SoundCloud, Crowdin, LinkedIn, and GitHub profiles.                                                                                                                |
 | Drawings       | A gallery and per-drawing pages for the supplied original artwork.                                                                                                           |
-| Public guide   | A secondary sidebar entry into source-linked Traditional Chinese VueLynx learning material. Content exists; framework and hosting integration remain planned.                |
+| Public guide   | A secondary sidebar entry into source-linked Traditional Chinese VueLynx learning material. Built with VitePress and served at `/guide/`.                                    |
 | Languages      | Traditional Chinese, English, and Japanese for navigation, interface text, About content, and project and article metadata.                                                  |
 
 The first release does not include migrating the blog, translating full articles, a content-management backend, accounts, or a database. Project and drawing detail pages are implemented. General site search, filtering, and additional collections remain outside the committed scope; documentation search is a separate planned capability.
@@ -164,4 +164,4 @@ Implemented structure and data flow belong in [the architecture document](archit
 
 The [Traditional Chinese guide](guide/zh-TW/index.md) is authored as sixteen linked pages for visitors and Vue developers. It covers current implementation, maintenance exercises, and native exploration, with source links and explicit verification boundaries. Developer reference remains in the architecture and asset documents.
 
-VitePress remains the recommended independent documentation build; installation, sidebar navigation, combined output, and deployment are not implemented. The [integration contract](site-integration.md) reserves `/guide/`, defines locale labels and native/Web navigation, and identifies the preview and hosting changes required.
+VitePress builds the guide independently into `dist/guide/`, and the sidebar links to it as described in the [integration contract](site-integration.md). It is not deployed yet.

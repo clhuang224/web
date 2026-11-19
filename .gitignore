@@ -6,3 +6,4 @@ coverage/
 src/styles/uno.css
 *.tsbuildinfo
 .DS_Store
+docs/.vitepress/cache

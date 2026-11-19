@@ -1,6 +1,6 @@
 # Public Guide Integration
 
-Status: authored Markdown and a proposed integration contract. The application sidebar, documentation framework, combined build, and deployment wiring described here are not implemented by the documentation changes.
+Status: implemented except deployment. VitePress 1.6.4 builds the guide from `docs/.vitepress/config.mts`, the sidebar has the entry below, and the preview server resolves guide pages. The architecture guide describes the implemented behavior.
 
 ## Reader Experience
 

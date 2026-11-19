@@ -56,4 +56,5 @@ export interface SiteHostModule {
   ): void
   getRepository(input: { name: string }, callback: () => void): void
   openExternal(input: { url: string }, callback: () => void): void
+  openGuide(input: null, callback: () => void): void
 }

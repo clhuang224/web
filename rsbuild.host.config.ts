@@ -12,6 +12,7 @@ export default defineConfig({
     port: 3000,
     strictPort: true,
     proxy: {
+      '/guide': { target: 'http://127.0.0.1:3002', ws: true },
       '/lynx': {
         target: 'http://127.0.0.1:3001',
         changeOrigin: true,

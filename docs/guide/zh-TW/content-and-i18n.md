@@ -13,7 +13,7 @@
 
 檔案連結見[原始碼地圖](source-map.md)。資料負責內容，頁面負責組合；因此調整摘要通常不需要修改整個卡片 template。
 
-## Localized<T> 是什麼？
+## `Localized<T>` 是什麼？
 
 [site.ts](https://github.com/clhuang224/web/blob/main/src/domain/site.ts) 定義：
 

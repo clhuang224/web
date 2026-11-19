@@ -48,8 +48,9 @@ The doodle numbers are stable catalog identifiers, not creation years. Do not in
 
 Inspect any future starter or generator output in a separate directory and merge deliberately without overwriting existing work.
 
-- `pnpm run dev`: generate/watch UnoCSS and run Rspeedy plus the browser host.
-- `pnpm run build`: generate styles, build Lynx and the host, and verify essential static output.
+- `pnpm run dev`: generate/watch UnoCSS and run Rspeedy, the VitePress guide, and the browser host.
+- `pnpm run build`: generate styles, build Lynx, the host, and the guide, and verify essential static output.
+- `pnpm run check:guide`: check the guide's chapters, local links, and source references.
 - `pnpm run preview`: serve `dist/` on port 4173 with runtime headers and deep-route handling.
 - `pnpm run lint`: run ESLint.
 - `pnpm run typecheck`: run strict Vue/TypeScript checking.
