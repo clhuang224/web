@@ -6,7 +6,7 @@ Lynn's is a personal home on the web: a place to introduce Lynn, share selected 
 
 The site idea dates to 2023, and the original visual design dates to 2024. The first release will carry that design forward while improving readability, responsive behavior, and multilingual content.
 
-The first application foundation is implemented: VueLynx pages, a browser host, three-language resources and URLs, a responsive doodle carousel, and local build/check commands. The site is not deployed. Original About copy, curated articles, broader browser/accessibility verification, and production hosting remain unfinished. Concrete module and build details are documented in [the architecture guide](architecture.md).
+The first application foundation is implemented: VueLynx pages, a browser host, three-language resources and URLs, a responsive doodle carousel, and local build/check commands. The site is not deployed. Original About copy, broader browser/accessibility verification, production hosting, and public guide integration remain unfinished. Selected article resources and the Traditional Chinese guide content exist. Concrete module and build details are documented in [the architecture guide](architecture.md).
 
 ## Goals
 
@@ -22,29 +22,32 @@ The first application foundation is implemented: VueLynx pages, a browser host, 
 | Area           | Planned behavior                                                                                                                                                             |
 | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Home           | Personal introduction, a paired-doodle carousel with automatic and manual playback, selected articles, and Finding the Bus, Queener, and PrePrompt as the featured projects. |
-| Portfolio      | A dedicated page listing projects, with summaries and relevant external links.                                                                                               |
+| Portfolio      | A dedicated listing with per-project pages, summaries, live-site and source links, and optional public GitHub details.                                                       |
 | About          | A standalone page with original content supplied by the maintainer for the personal website.                                                                                 |
 | Blog           | An external link to the existing blog; selected article cards link to their original posts.                                                                                  |
 | Platform links | Access to SoundCloud, Crowdin, LinkedIn, and GitHub profiles.                                                                                                                |
+| Drawings       | A gallery and per-drawing pages for the supplied original artwork.                                                                                                           |
+| Public guide   | A secondary sidebar entry into source-linked Traditional Chinese VueLynx learning material. Content exists; framework and hosting integration remain planned.                |
 | Languages      | Traditional Chinese, English, and Japanese for navigation, interface text, About content, and project and article metadata.                                                  |
 
-The first release does not include migrating the blog, translating full articles, a content-management backend, accounts, or a database. Project detail pages, search, filtering, and additional creative-work collections remain outside the committed scope.
+The first release does not include migrating the blog, translating full articles, a content-management backend, accounts, or a database. Project and drawing detail pages are implemented. General site search, filtering, and additional collections remain outside the committed scope; documentation search is a separate planned capability.
 
 ## Decisions
 
-| Topic                | Direction and reason                                                                                                                                                                                   |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Rendering platform   | Use Lynx as the exploratory direction for the personal website itself. Its different rendering and interaction model provides a new learning focus.                                                    |
-| Framework binding    | Use VueLynx to retain familiar Vue authoring while exploring the Lynx runtime. The foundation uses the compatible VueLynx/Rspeedy/Rsbuild release line described in the architecture guide.            |
-| Application boundary | Start with a frontend-only site. The existing Hexo blog and individual projects retain their own hosting and content.                                                                                  |
-| Writing selection    | Show curated articles rather than a latest-post feed, so the homepage reflects deliberate selections without implying automatic updates.                                                               |
-| Portfolio            | Provide a listing within this site so visitors can browse projects from one place. The homepage features Finding the Bus, Queener, and PrePrompt; the portfolio can include additional entries.        |
-| Carousel playback    | Combine automatic advancement with manual previous/next and pause/resume controls. Display and advance two images on desktop and one image on mobile, preserving readable artwork at each screen size. |
-| Initial language     | Start in Traditional Chinese without a saved choice. Respect the language encoded in page URLs; only bare `/` restores a remembered deliberate language selection.                                     |
-| About                | Use original copy supplied by the maintainer for this site. Its scope and personal detail remain an editorial decision for the author.                                                                 |
-| Visual identity      | Preserve the original sidebar composition, pale aqua and coral accents, outlined logo, and hand-drawn character. Adjust their application where readability or responsive layouts require it.          |
-| Icons                | Use Remix Icon for interface icons alongside the supplied brand artwork.                                                                                                                               |
-| Article languages    | Localize titles and summaries on this site, while keeping linked article bodies in Chinese. Make the destination language clear before opening an article.                                             |
+| Topic                 | Direction and reason                                                                                                                                                                                                                      |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Rendering platform    | Use Lynx as the exploratory direction for the personal website itself. Its different rendering and interaction model provides a new learning focus.                                                                                       |
+| Framework binding     | Use VueLynx to retain familiar Vue authoring while exploring the Lynx runtime. The foundation uses the compatible VueLynx/Rspeedy/Rsbuild release line described in the architecture guide.                                               |
+| Application boundary  | Start with a frontend-only site. The existing Hexo blog and individual projects retain their own hosting and content.                                                                                                                     |
+| Writing selection     | Show curated articles rather than a latest-post feed, so the homepage reflects deliberate selections without implying automatic updates.                                                                                                  |
+| Portfolio             | Provide a listing within this site so visitors can browse projects from one place. The homepage features Finding the Bus, Queener, and PrePrompt; the portfolio can include additional entries.                                           |
+| Carousel playback     | Combine automatic advancement with manual previous/next and pause/resume controls. Display and advance two images on desktop and one image on mobile, preserving readable artwork at each screen size.                                    |
+| Initial language      | Start in Traditional Chinese without a saved choice. Respect the language encoded in page URLs; only bare `/` restores a remembered deliberate language selection.                                                                        |
+| About                 | Use original copy supplied by the maintainer for this site. Its scope and personal detail remain an editorial decision for the author.                                                                                                    |
+| Visual identity       | Preserve the original sidebar composition, pale aqua and coral accents, outlined logo, and hand-drawn character. Adjust their application where readability or responsive layouts require it.                                             |
+| Icons                 | Use Remix Icon for interface icons alongside the supplied brand artwork.                                                                                                                                                                  |
+| Public learning guide | Explain the website through its real features, decisions, platform boundaries, and verification limits. Start in Traditional Chinese and expose it through a secondary sidebar entry; do not imply translated chapters that do not exist. |
+| Article languages     | Localize titles and summaries on this site, while keeping linked article bodies in Chinese. Make the destination language clear before opening an article.                                                                                |
 
 The decisions guide the first release. Implemented functionality and remaining work are distinguished below and in the architecture guide.
 
@@ -151,8 +154,14 @@ Implemented structure and data flow belong in [the architecture document](archit
 ## Next Steps
 
 1. Complete browser checks for desktop/mobile layouts, navigation, language changes, carousel behavior, and keyboard access; address verified runtime gaps.
-2. Integrate the maintainer's About copy when supplied, prepare selected articles, and establish the editorial translation workflow.
+2. Integrate the maintainer's About copy when supplied, review selected article metadata, and establish the editorial translation workflow.
 3. Confirm additional portfolio entries and verify external destinations before publication.
 4. Decide whether project pages need screenshots or longer write-ups beyond the summary and GitHub details.
 5. Choose and validate production hosting, including headers, deep links, runtime assets, and metadata/share-preview behavior.
 6. Consider native application integration only as a separate validated target; producing a bundle alone does not establish support.
+
+## Public Guide
+
+The [Traditional Chinese guide](guide/zh-TW/index.md) is authored as sixteen linked pages for visitors and Vue developers. It covers current implementation, maintenance exercises, and native exploration, with source links and explicit verification boundaries. Developer reference remains in the architecture and asset documents.
+
+VitePress remains the recommended independent documentation build; installation, sidebar navigation, combined output, and deployment are not implemented. The [integration contract](site-integration.md) reserves `/guide/`, defines locale labels and native/Web navigation, and identifies the preview and hosting changes required.

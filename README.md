@@ -21,12 +21,14 @@ The application uses Lynx elements and VueLynx components, with a small browser 
 
 ## Documentation
 
-| Document                             | Responsibility                                                    |
-| ------------------------------------ | ----------------------------------------------------------------- |
-| [Product plan](docs/plan.md)         | Scope, decisions, rationale, design direction, and open questions |
-| [Architecture](docs/architecture.md) | Current repository structure and implementation boundaries        |
-| [Asset catalog](docs/assets.md)      | Asset provenance, descriptive filenames, and carousel ordering    |
-| [Contributor guide](AGENTS.md)       | Project conventions and documentation ownership                   |
+| Document                                             | Responsibility                                                     |
+| ---------------------------------------------------- | ------------------------------------------------------------------ |
+| [Product plan](docs/plan.md)                         | Scope, decisions, rationale, design direction, and open questions  |
+| [Architecture](docs/architecture.md)                 | Current repository structure and implementation boundaries         |
+| [Asset catalog](docs/assets.md)                      | Asset provenance, descriptive filenames, and carousel ordering     |
+| [Behind-the-scenes guide](docs/guide/zh-TW/index.md) | Traditional Chinese feature walkthroughs and maintenance exercises |
+| [Guide integration](docs/site-integration.md)        | Proposed sidebar, documentation build, and hosting contract        |
+| [Contributor guide](AGENTS.md)                       | Project conventions and documentation ownership                    |
 
 ## Design Reference
 

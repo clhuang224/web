@@ -1,0 +1,64 @@
+# 原始碼地圖
+
+下列連結指向 GitHub 的 main 分支，適合打開檔案對照；本指南主要閱讀基準為 `4350530`。若 main 已改動，可以在 repository 中切換版本再比較。路徑相同不保證每個版本行為相同。
+
+## 畫面與應用程式
+
+| 原始碼                                                                                              | 找什麼                                  |
+| --------------------------------------------------------------------------------------------------- | --------------------------------------- |
+| [src/index.ts](https://github.com/clhuang224/web/blob/main/src/index.ts)                            | createApp、安裝 Router 和掛載。         |
+| [src/App.vue](https://github.com/clhuang224/web/blob/main/src/App.vue)                              | 共用狀態、側欄、語言選擇與 RouterView。 |
+| [src/app/context.ts](https://github.com/clhuang224/web/blob/main/src/app/context.ts)                | 型別化 provide/inject 與 useSite。      |
+| [src/app/router.ts](https://github.com/clhuang224/web/blob/main/src/app/router.ts)                  | memory history 和頁面元件。             |
+| [HomePage.vue](https://github.com/clhuang224/web/blob/main/src/pages/HomePage.vue)                  | 輪播、精選作品與文章的組合。            |
+| [ProjectPage.vue](https://github.com/clhuang224/web/blob/main/src/pages/ProjectPage.vue)            | 作品資料、GitHub 資訊和外連。           |
+| [DrawingPage.vue](https://github.com/clhuang224/web/blob/main/src/pages/DrawingPage.vue)            | 單張塗鴉與前後導航。                    |
+| [DoodleCarousel.vue](https://github.com/clhuang224/web/blob/main/src/components/DoodleCarousel.vue) | 播放狀態、計時器和可見圖片。            |
+| [VectorImage.vue](https://github.com/clhuang224/web/blob/main/src/components/VectorImage.vue)       | SVG 的平台分支。                        |
+| [InAppBrowser.vue](https://github.com/clhuang224/web/blob/main/src/components/InAppBrowser.vue)     | 原生 webview 與關閉控制。               |
+
+## 規則、資料與平台
+
+| 原始碼                                                                                             | 找什麼                                |
+| -------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| [src/domain/site.ts](https://github.com/clhuang224/web/blob/main/src/domain/site.ts)               | 頁面、語言、內容和 bridge 型別。      |
+| [src/domain/navigation.ts](https://github.com/clhuang224/web/blob/main/src/domain/navigation.ts)   | 路徑產生、解析和狀態驗證。            |
+| [src/domain/carousel.ts](https://github.com/clhuang224/web/blob/main/src/domain/carousel.ts)       | 張數、換組與對齊。                    |
+| [src/domain/repository.ts](https://github.com/clhuang224/web/blob/main/src/domain/repository.ts)   | GitHub 來源解析、回應驗證與請求。     |
+| [src/content/catalog.ts](https://github.com/clhuang224/web/blob/main/src/content/catalog.ts)       | 從內容產生有效詳情 ID。               |
+| [src/content/copy.ts](https://github.com/clhuang224/web/blob/main/src/content/copy.ts)             | 三語介面文案。                        |
+| [src/content/projects.ts](https://github.com/clhuang224/web/blob/main/src/content/projects.ts)     | 作品與平台目的地。                    |
+| [src/content/articles.ts](https://github.com/clhuang224/web/blob/main/src/content/articles.ts)     | 首頁精選文章。                        |
+| [src/content/doodles.ts](https://github.com/clhuang224/web/blob/main/src/content/doodles.ts)       | 塗鴉清單與描述。                      |
+| [src/platform/host.ts](https://github.com/clhuang224/web/blob/main/src/platform/host.ts)           | 狀態訂閱、操作和 standalone 路徑。    |
+| [src/platform/runtime.ts](https://github.com/clhuang224/web/blob/main/src/platform/runtime.ts)     | 平台判斷與資源前綴。                  |
+| [src/host/index.ts](https://github.com/clhuang224/web/blob/main/src/host/index.ts)                 | 瀏覽器網址、bridge、載入與 metadata。 |
+| [src/host/site-host.mjs](https://github.com/clhuang224/web/blob/main/src/host/site-host.mjs)       | NativeModule 呼叫的轉送。             |
+| [src/host/accessibility.ts](https://github.com/clhuang224/web/blob/main/src/host/accessibility.ts) | Web 的語意與鍵盤轉接。                |
+
+## 建置、樣式與檢查
+
+| 原始碼                                                                                           | 找什麼                             |
+| ------------------------------------------------------------------------------------------------ | ---------------------------------- |
+| [package.json](https://github.com/clhuang224/web/blob/main/package.json)                         | 實際存在的 scripts 和依賴。        |
+| [lynx.config.ts](https://github.com/clhuang224/web/blob/main/lynx.config.ts)                     | Lynx/Web 目標與 CSS 支援設定。     |
+| [rsbuild.host.config.ts](https://github.com/clhuang224/web/blob/main/rsbuild.host.config.ts)     | 瀏覽器入口、代理、複製與 headers。 |
+| [uno.config.ts](https://github.com/clhuang224/web/blob/main/uno.config.ts)                       | Utility CSS 的掃描和 preset。      |
+| [src/styles/site.css](https://github.com/clhuang224/web/blob/main/src/styles/site.css)           | 元件樣式與語意色彩。               |
+| [scripts/dev.mjs](https://github.com/clhuang224/web/blob/main/scripts/dev.mjs)                   | 多個開發程序的啟停。               |
+| [scripts/preview.mjs](https://github.com/clhuang224/web/blob/main/scripts/preview.mjs)           | 靜態預覽、路徑和 MIME。            |
+| [scripts/verify-build.mjs](https://github.com/clhuang224/web/blob/main/scripts/verify-build.mjs) | 必要輸出檢查。                     |
+| [carousel.test.ts](https://github.com/clhuang224/web/blob/main/src/domain/carousel.test.ts)      | 一輪換組、前後與版面對齊。         |
+| [navigation.test.ts](https://github.com/clhuang224/web/blob/main/src/domain/navigation.test.ts)  | 路徑與狀態條件。                   |
+| [repository.test.ts](https://github.com/clhuang224/web/blob/main/src/domain/repository.test.ts)  | 外部資料解析案例。                 |
+| [content.test.ts](https://github.com/clhuang224/web/blob/main/src/content/content.test.ts)       | 翻譯鍵、清單和素材條件。           |
+| [.github/workflows/ci.yml](https://github.com/clhuang224/web/blob/main/.github/workflows/ci.yml) | 主站 CI 執行哪些檢查。             |
+
+## 維護文件
+
+- [README](https://github.com/clhuang224/web/blob/main/README.md)：目前狀態、設定與命令。
+- [Architecture](https://github.com/clhuang224/web/blob/main/docs/architecture.md)：已實作的結構和邊界。
+- [Plan](https://github.com/clhuang224/web/blob/main/docs/plan.md)：方向、取捨與未完成項目。
+- [Assets](https://github.com/clhuang224/web/blob/main/docs/assets.md)：來源、檔名映射與順序。
+
+指南負責帶讀與學習路線；上述文件各自維護自己的事實。實作更新時，應一起核對兩邊，避免舊說明看起來仍然合理卻已不符合程式。
