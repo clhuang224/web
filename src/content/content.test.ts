@@ -5,6 +5,7 @@ import { selectedArticles } from './articles'
 import { copy } from './copy'
 import { doodles } from './doodles'
 import { platforms, projects } from './projects'
+import { tagColors } from './tags'
 
 const publicRoot = new URL('../../public/', import.meta.url)
 
@@ -85,5 +86,14 @@ describe('published content resources', () => {
         expect(article.summary[locale].trim()).not.toBe('')
       }
     }
+  })
+
+  it('gives every published tag its own color', () => {
+    const tags = new Set(
+      [...projects, ...selectedArticles].flatMap((item) => item.tags),
+    )
+    for (const tag of tags) expect(tagColors[tag]).toMatch(/^#[0-9a-f]{6}$/)
+    const colors = Object.values(tagColors)
+    expect(new Set(colors).size).toBe(colors.length)
   })
 })

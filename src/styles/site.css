@@ -16,8 +16,6 @@
   --color-accent-ink: #1a6b6b;
   --color-selected: rgba(37, 149, 149, 0.2);
   --color-highlight: #e5e5e5;
-  --color-tag-purple: #9747ff;
-  --color-tag-red: #de2a29;
 
   position: relative;
   width: 100%;
@@ -378,12 +376,6 @@
   color: #ffffff;
   padding: 0px 11px;
   border-radius: 11px;
-}
-.tag-purple {
-  background-color: var(--color-tag-purple);
-}
-.tag-red {
-  background-color: var(--color-tag-red);
 }
 .drawing-card {
   width: 48%;

@@ -1,14 +1,16 @@
 <script setup lang="ts">
+import { tagColor } from '../content/tags'
+
 defineProps<{ tags: readonly string[] }>()
 </script>
 
 <template>
   <view class="tags"
     ><text
-      v-for="(tag, index) in tags"
+      v-for="tag in tags"
       :key="tag"
       class="tag"
-      :class="index % 2 === 0 ? 'tag-purple' : 'tag-red'"
+      :style="{ backgroundColor: tagColor(tag) }"
       >{{ tag }}</text
     ></view
   >
