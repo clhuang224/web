@@ -5,6 +5,7 @@ interface SiteCopy {
   portfolio: string
   about: string
   guide: string
+  navigation: string
   guideLanguage: string
   blog: string
   greeting: string
@@ -45,6 +46,7 @@ export const copy = {
     portfolio: '作品',
     about: '關於',
     guide: '幕後',
+    navigation: '主要導覽',
     guideLanguage: '繁體中文教學',
     blog: '網誌',
     greeting: '嗨，我是 Lynn。',
@@ -83,6 +85,7 @@ export const copy = {
     portfolio: 'Portfolio',
     about: 'About',
     guide: 'Behind the scenes',
+    navigation: 'Main navigation',
     guideLanguage: 'Guide in Traditional Chinese',
     blog: 'Blog',
     greeting: 'Hi, I’m Lynn.',
@@ -122,6 +125,7 @@ export const copy = {
     portfolio: '作品',
     about: '紹介',
     guide: '舞台裏',
+    navigation: 'メインナビゲーション',
     guideLanguage: '繁体字中国語のガイド',
     blog: 'ブログ',
     greeting: 'こんにちは、Lynn です。',

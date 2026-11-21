@@ -18,7 +18,13 @@ const text = computed(() => copy[state.value.locale])
   <view class="page home-page">
     <DoodleCarousel />
     <view class="introduction">
-      <text class="greeting">{{ text.greeting }}</text>
+      <text
+        class="greeting"
+        accessibility-role="heading"
+        :accessibility-label="text.greeting"
+        accessibility-heading-level="1"
+        >{{ text.greeting }}</text
+      >
       <text class="intro-copy">{{ text.introduction }}</text>
       <view class="hero-actions">
         <view

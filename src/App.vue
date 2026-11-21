@@ -97,7 +97,11 @@ watch(
         ><VectorImage class="wordmark" src="/images/brand/lynns-wordmark.svg"
       /></view>
       <view class="sidebar-platforms"><PlatformLinks /></view>
-      <view class="navigation">
+      <view
+        class="navigation"
+        accessibility-role="navigation"
+        :accessibility-label="text.navigation"
+      >
         <view
           v-for="item in navigation"
           :key="item"
@@ -131,6 +135,7 @@ watch(
             class="language-trigger"
             :class="{ 'language-trigger-open': languageOpen }"
             accessibility-role="button"
+            :accessibility-open="languageOpen ? 'open' : 'closed'"
             :accessibility-label="`${text.language}: ${languageNames[state.locale]}`"
             @tap="languageOpen = !languageOpen"
             ><VectorImage
