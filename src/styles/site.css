@@ -654,3 +654,15 @@
 .site-shell-compact .guide-area {
   height: 0px;
 }
+
+/* Doodle placeholders */
+.doodle-layers {
+  position: relative;
+}
+.doodle-layer {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+}

@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import DoodleImage from '../components/DoodleImage.vue'
 import VectorImage from '../components/VectorImage.vue'
-import { asset } from '../platform/runtime'
 import { computed } from 'vue-lynx'
 import { useSite } from '../app/context'
 import SectionTitle from '../components/SectionTitle.vue'
@@ -34,11 +34,10 @@ function step(direction: 1 | -1) {
     >
     <SectionTitle :title="`${text.drawingLabel} ${doodle.id}`" large />
     <view class="drawing-frame"
-      ><image
+      ><DoodleImage
         class="drawing-full"
-        :src="asset(doodle.src)"
-        mode="aspectFit"
-        :accessibility-label="doodle.alt[state.locale]"
+        :src="doodle.src"
+        :label="doodle.alt[state.locale]"
     /></view>
     <text class="detail-summary drawing-caption">{{
       doodle.alt[state.locale]

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { asset } from '../platform/runtime'
+import DoodleImage from './DoodleImage.vue'
 import { useSite } from '../app/context'
 import type { Doodle } from '../domain/site'
 
@@ -15,7 +15,7 @@ const { state, navigate } = useSite()
     @tap="navigate('drawing', doodle.id)"
   >
     <view class="drawing-thumb"
-      ><image class="drawing-image" :src="asset(doodle.src)" mode="aspectFit"
+      ><DoodleImage class="drawing-image" :src="doodle.src"
     /></view>
     <text class="drawing-number">{{ label }} {{ doodle.id }}</text>
     <text class="card-summary">{{ doodle.alt[state.locale] }}</text>

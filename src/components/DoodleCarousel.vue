@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import DoodleImage from './DoodleImage.vue'
 import VectorImage from './VectorImage.vue'
-import { asset } from '../platform/runtime'
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue-lynx'
 import { useSite } from '../app/context'
 import { copy } from '../content/copy'
@@ -68,7 +68,7 @@ onUnmounted(() => clearInterval(timer))
         :accessibility-label="`${text.drawingLabel} ${doodle.id}: ${doodle.alt[state.locale]}`"
         @tap="navigate('drawing', doodle.id)"
       >
-        <image class="doodle-image" :src="asset(doodle.src)" mode="aspectFit" />
+        <DoodleImage class="doodle-image" :src="doodle.src" />
       </view>
     </view>
     <view class="carousel-controls flex items-center justify-between">

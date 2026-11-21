@@ -27,7 +27,8 @@
     "test": "vitest run",
     "check": "pnpm run lint && pnpm run typecheck && pnpm run test && pnpm run format:check",
     "prepare": "husky",
-    "generate:icons": "node scripts/generate-icons.mjs"
+    "generate:icons": "node scripts/generate-icons.mjs",
+    "generate:placeholders": "node scripts/generate-placeholders.mjs"
   },
   "dependencies": {
     "@lynx-js/lynx-core": "0.1.4",
@@ -51,6 +52,7 @@
     "husky": "^9.1.7",
     "jiti": "2.7.0",
     "prettier": "^3.6.2",
+    "sharp": "0.34.5",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.4",
     "unocss": "^66.5.0",

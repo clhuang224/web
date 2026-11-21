@@ -85,6 +85,8 @@ The Drawings page lists all 14 drawings. Each drawing page shows the full image,
 
 The carousel uses the 14 cataloged drawings in manifest order. At widths above 767 pixels it displays and advances two drawings; at narrower widths it displays and advances one. It wraps at the collection boundaries, realigns the visible index when the layout changes, and normally advances every six seconds. Manual advancement restarts the interval. Pause/resume controls are present; reduced-motion preferences stop automatic advancement.
 
+Doodle images render through `DoodleImage`, which stacks the full image over a 24-pixel-wide placeholder from `src/content/doodle-placeholders.ts` and removes the placeholder once the full image reports `load`. `pnpm run generate:placeholders` regenerates that module from `public/images/doodles/` with `sharp`; the source images are not modified. The placeholders are inline data URIs, so they appear with the first render instead of waiting for a request.
+
 ## Build And Compatibility
 
 | Layer              | Current selection                                         |

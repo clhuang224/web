@@ -25,6 +25,8 @@ Filenames describe visible content for maintenance. The numeric prefixes preserv
 | 13  | [doodle-13-desk-and-music-note.png](../public/images/doodles/doodle-13-desk-and-music-note.png)         | A desk, a music note, and blue shapes         | `Property 1=Variant13.png`   |
 | 14  | [doodle-14-reclining-figure.png](../public/images/doodles/doodle-14-reclining-figure.png)               | A reclining figure against a red background   | `Property 1=Variant14.png`   |
 
+Each doodle also has a derived 24-pixel-wide PNG placeholder, generated into `src/content/doodle-placeholders.ts` by `pnpm run generate:placeholders`. Regenerate it whenever a doodle is added, renamed, or replaced.
+
 ## Brand And UI Assets
 
 | File                                                               | Purpose                               | Original export           |
