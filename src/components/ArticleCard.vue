@@ -6,7 +6,7 @@ import type { SelectedArticle } from '../content/articles'
 import TagList from './TagList.vue'
 
 defineProps<{ article: SelectedArticle }>()
-const { state, openExternal } = useSite()
+const { state, navigate } = useSite()
 const text = computed(() => copy[state.value.locale])
 </script>
 
@@ -15,7 +15,7 @@ const text = computed(() => copy[state.value.locale])
     class="card article-card"
     accessibility-role="link"
     :accessibility-label="`${article.title[state.locale]} (${text.articleLanguage})`"
-    @tap="openExternal(article.url)"
+    @tap="navigate('post', article.id)"
   >
     <view class="article-meta"
       ><text class="article-date">{{ article.date }}</text
@@ -25,7 +25,7 @@ const text = computed(() => copy[state.value.locale])
         >{{ text.articleLanguage }}</text
       ></view
     >
-    <text class="card-title">{{ article.title[state.locale] }} ↗</text>
+    <text class="card-title">{{ article.title[state.locale] }}</text>
     <text class="card-summary">{{ article.summary[state.locale] }}</text>
     <TagList :tags="article.tags" />
   </view>

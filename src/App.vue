@@ -17,7 +17,7 @@ import './styles/site.css'
 
 const site = useHost()
 provide(siteContextKey, site)
-const { state, navigate, setLocale, openExternal, browserUrl } = site
+const { state, navigate, setLocale, browserUrl } = site
 const text = computed(() => copy[state.value.locale])
 const insets = safeAreaInsets()
 const shellInsets = computed(() =>
@@ -56,12 +56,16 @@ const sections: Record<Page, NavigationItem> = {
   about: 'about',
   guide: 'guide',
   chapter: 'guide',
+  blog: 'blog',
+  post: 'blog',
 }
 const inGuide = computed(() => sections[state.value.page] === 'guide')
+const embedded = computed(
+  () => inGuide.value || sections[state.value.page] === 'blog',
+)
 
 function select(item: NavigationItem) {
-  if (item === 'blog') openExternal('https://blog.lynns.me')
-  else navigate(item)
+  navigate(item)
 }
 
 function chooseLocale(locale: Locale) {
@@ -105,7 +109,7 @@ watch(
           ><text
             class="nav-label"
             :class="{ 'nav-label-active': sections[state.page] === item }"
-            >{{ text[item] }}{{ item === 'blog' ? ' ↗' : '' }}</text
+            >{{ text[item] }}</text
           ></view
         >
       </view>
@@ -143,7 +147,7 @@ watch(
         <text class="sidebar-note">{{ text.madeWith }}</text>
       </view>
     </view>
-    <view v-if="inGuide" class="guide-area"><RouterView /></view>
+    <view v-if="embedded" class="embed-area"><RouterView /></view>
     <scroll-view v-else class="main-scroll" scroll-orientation="vertical">
       <view class="main-content"><RouterView /></view>
     </scroll-view>

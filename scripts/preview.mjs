@@ -27,7 +27,7 @@ async function isFile(path) {
 }
 
 const route =
-  /^(?:\/(?:en|ja))?(?:\/|\/(?:portfolio|drawings|about|behind-the-scenes)|\/(?:portfolio|behind-the-scenes)\/[\w-]+|\/drawing\/\d{2})?$/
+  /^(?:\/(?:en|ja))?(?:\/|\/(?:portfolio|drawings|about|behind-the-scenes|blog)|\/(?:portfolio|behind-the-scenes|blog)\/[\w-]+|\/drawing\/\d{2})?$/
 createServer(async (request, response) => {
   try {
     const path = decodeURIComponent(

@@ -9,9 +9,11 @@ export const pages = [
   'about',
   'guide',
   'chapter',
+  'blog',
+  'post',
 ] as const
 export type Page = (typeof pages)[number]
-export const detailPages = ['project', 'drawing', 'chapter'] as const
+export const detailPages = ['project', 'drawing', 'chapter', 'post'] as const
 export type DetailPage = (typeof detailPages)[number]
 export type ListPage = Exclude<Page, DetailPage>
 

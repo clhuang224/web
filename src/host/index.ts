@@ -1,5 +1,6 @@
 import '@lynx-js/web-core/client'
 import type { LynxViewElement } from '@lynx-js/web-core/client'
+import { blogUrl, selectedArticles } from '../content/articles'
 import { routeCatalog } from '../content/catalog'
 import {
   chapterFromGuidePath,
@@ -50,6 +51,7 @@ const copy = {
       drawings: '塗鴉',
       about: '關於',
       guide: '幕後',
+      blog: '網誌',
     },
     drawing: '塗鴉',
     description: "Lynn's 的作品、文章與創作入口。",
@@ -63,6 +65,7 @@ const copy = {
       drawings: 'Drawings',
       about: 'About',
       guide: 'Behind the scenes',
+      blog: 'Blog',
     },
     drawing: 'Drawing',
     description: 'Projects, selected writing, and creative work by Lynn.',
@@ -78,6 +81,7 @@ const copy = {
       drawings: '落書き',
       about: 'プロフィール',
       guide: '舞台裏',
+      blog: 'ブログ',
     },
     drawing: '落書き',
     description: 'Lynn の作品、記事、創作活動を紹介するサイト。',
@@ -142,6 +146,12 @@ function pageTitle(state: HostState): string {
       text.pages.portfolio
     )
   if (state.page === 'drawing') return `${text.drawing} ${state.id ?? ''}`
+  if (state.page === 'post')
+    return (
+      selectedArticles.find((article) => article.id === state.id)?.title[
+        state.locale
+      ] ?? text.pages.blog
+    )
   if (state.page === 'chapter')
     return (
       guideChapters.find((chapter) => chapter.slug === state.id)?.title ??
@@ -183,28 +193,42 @@ function sendState() {
   if (ready) view.sendGlobalEvent('host-state', [{ ...state }])
 }
 
-let guideFrame: HTMLIFrameElement | undefined
+let embedFrame: HTMLIFrameElement | undefined
 
-function placeGuide() {
-  const slot = view.shadowRoot?.querySelector<HTMLElement>('.guide-frame')
+function embedSource(slot: HTMLElement, state: HostState) {
+  if (slot.classList.contains('embed-blog'))
+    return blogUrl(state.page === 'post' ? state.id : null)
+  return guidePath(state.page === 'chapter' ? state.id : null)
+}
+
+function placeEmbed() {
+  const slot = view.shadowRoot?.querySelector<HTMLElement>('.embed-frame')
   if (!slot) {
-    guideFrame = undefined
+    embedFrame = undefined
     return
   }
-  if (guideFrame && slot.contains(guideFrame)) return
   const state = stateFromLocation()
+  const source = embedSource(slot, state)
+  const key = slot.classList.contains('embed-blog') ? source : 'guide'
+  if (embedFrame && slot.contains(embedFrame) && embedFrame.dataset.key === key)
+    return
+  embedFrame?.remove()
   const frame = document.createElement('iframe')
-  frame.className = 'guide-embed'
-  frame.title = copy[state.locale].pages.guide
-  frame.src = guidePath(state.page === 'chapter' ? state.id : null)
+  frame.className = 'embedded-page'
+  frame.dataset.key = key
+  frame.title =
+    copy[state.locale].pages[
+      slot.classList.contains('embed-blog') ? 'blog' : 'guide'
+    ]
+  frame.src = source
   frame.style.cssText = 'flex:1;width:100%;height:100%;border:0;display:block'
   slot.append(frame)
-  guideFrame = frame
+  embedFrame = frame
 }
 
 function followGuide(event: MessageEvent) {
   if (event.origin !== window.location.origin) return
-  if (!guideFrame || event.source !== guideFrame.contentWindow) return
+  if (!embedFrame || event.source !== embedFrame.contentWindow) return
   const data: unknown = event.data
   if (
     typeof data !== 'object' ||
@@ -297,7 +321,7 @@ view.addEventListener('error', showError)
 const loadTimeout = window.setTimeout(showError, 20_000)
 view.url = new URL('/lynx/main.web.bundle', window.location.href).href
 hostRoot.append(view)
-const guideObserver = new MutationObserver(placeGuide)
+const guideObserver = new MutationObserver(placeEmbed)
 if (view.shadowRoot)
   guideObserver.observe(view.shadowRoot, { childList: true, subtree: true })
 

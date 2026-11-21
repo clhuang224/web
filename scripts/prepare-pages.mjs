@@ -11,7 +11,14 @@ const directory = resolve('dist')
 const index = resolve(directory, 'index.html')
 const paths = new Set()
 for (const locale of locales) {
-  for (const page of ['home', 'portfolio', 'drawings', 'about', 'guide'])
+  for (const page of [
+    'home',
+    'portfolio',
+    'drawings',
+    'about',
+    'guide',
+    'blog',
+  ])
     paths.add(pathForPage(locale, page))
   for (const [page, ids] of Object.entries(routeCatalog))
     for (const id of ids) paths.add(pathForPage(locale, page, id))

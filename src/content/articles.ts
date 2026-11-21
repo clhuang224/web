@@ -82,3 +82,12 @@ export const selectedArticles: SelectedArticle[] = [
     language: 'zh-TW',
   },
 ]
+
+export const blogOrigin = 'https://blog.lynns.me'
+
+export function blogUrl(id: string | null) {
+  return (
+    selectedArticles.find((article) => article.id === id)?.url ??
+    `${blogOrigin}/`
+  )
+}

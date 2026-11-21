@@ -10,7 +10,7 @@ import { selectedArticles } from '../content/articles'
 import { copy } from '../content/copy'
 import { projects } from '../content/projects'
 
-const { state, navigate, openExternal } = useSite()
+const { state, navigate } = useSite()
 const text = computed(() => copy[state.value.locale])
 </script>
 
@@ -24,8 +24,8 @@ const text = computed(() => copy[state.value.locale])
         <view
           class="pill-button"
           accessibility-role="link"
-          @tap="openExternal('https://blog.lynns.me')"
-          ><text class="pill-label">{{ text.readBlog }} ↗</text></view
+          @tap="navigate('blog')"
+          ><text class="pill-label">{{ text.readBlog }}</text></view
         >
       </view>
     </view>
@@ -44,9 +44,6 @@ const text = computed(() => copy[state.value.locale])
         :key="article.id"
         :article="article"
     /></view>
-    <ShowMoreButton
-      :label="text.showMore"
-      @tap="openExternal('https://blog.lynns.me')"
-    />
+    <ShowMoreButton :label="text.showMore" @tap="navigate('blog')" />
   </view>
 </template>
