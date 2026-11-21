@@ -2,7 +2,7 @@
 
 點 Queener 作品卡時，應用程式要知道「顯示作品詳情，ID 是 queener」。Web 端還要讓網址變成 `/portfolio/queener`，讓重新整理、分享和上一頁能理解同一個位置。
 
-這兩件事相關，但不由同一個 Router 包辦。
+首先把頁面身分與公開網址分開，就比較容易理解這裡為什麼有兩層路由。
 
 ## 先認出頁面的身分
 
@@ -10,7 +10,7 @@
 
 `project` 是頁面種類，`queener` 是內容 ID，`portfolio` 是公開網址中的區段。它們不必用同一個字。
 
-[catalog.ts](https://github.com/clhuang224/web/blob/main/src/content/catalog.ts) 從作品和塗鴉清單產生有效 ID。這讓路由驗證可以跟著內容清單更新，避免另外手抄一份 ID 表。
+[catalog.ts](https://github.com/clhuang224/web/blob/main/src/content/catalog.ts) 從作品、塗鴉和幕後章節清單產生有效 ID。這讓路由驗證可以跟著內容清單更新，避免另外手抄一份 ID 表。
 
 ## 同一件作品可以有三種公開網址
 
@@ -21,6 +21,22 @@
 | 日文     | `/ja/portfolio/queener` |
 
 [navigation.ts](https://github.com/clhuang224/web/blob/main/src/domain/navigation.ts) 的 `pathForPage` 產生路徑，`parseSitePath` 則把路徑還原成語言、頁面和 ID，並檢查是否匹配。
+
+產生路徑的部分如下：
+
+```ts
+export function pathForPage(
+  locale: Locale,
+  page: Page,
+  id: string | null = null,
+): string {
+  const prefix = locale === 'zh-TW' ? '' : `/${locale}`
+  if (isDetailPage(page)) return `${prefix}/${detailSegments[page]}/${id}`
+  return page === 'home' ? `${prefix}/` : `${prefix}/${listSegments[page]}`
+}
+```
+
+先依語言選擇前綴。接著判斷是否是詳情頁，詳情頁會附上 ID；其餘頁面則由 `listSegments` 取得路徑。這個函式只產生字串，ID 是否存在，要交給路徑解析和內容清單驗證。
 
 對外部輸入做解析時，合法的字串形狀和真的存在的作品是兩個問題。`/portfolio/missing` 看起來像詳情路徑，但若清單沒有這個 ID，就不應視為已找到內容。
 
@@ -48,6 +64,10 @@ Web 端公開網址由瀏覽器 host 管理：收到導航要求後，驗證資�
 
 ## 幕後文件為什麼要另外處理？
 
-`/guide/` 預計屬於文件網站。它需要完整的文件頁面導航，不能直接呼叫目前只認得主站頁面種類的 `navigate()`。部署時也要讓文件靜態檔案先被處理，再套用主站的路由 fallback。
+現在側欄的幕後入口是 `/behind-the-scenes`，章節則使用 `/behind-the-scenes/<章節>`。這些也是主站頁面，因此閱讀時可以保留側欄。
+
+文件本身由 VitePress 產生，放在 `/guide/`。Web host 會在 GuidePage 的容器中放入同來源 iframe，載入對應章節。VitePress 切換章節後，再透過訊息把文件路徑交給 host，同步主站網址。
+
+因此這裡有兩種位置：`/behind-the-scenes/...` 表達主站正在閱讀哪個章節，`/guide/...` 則提供文件內容。兩邊都需要正確的靜態檔案與重新整理處理。
 
 這個例子正好說明：一個側欄連結看起來很小，卻牽涉頁面身分、平台操作與伺服器路徑三層責任。

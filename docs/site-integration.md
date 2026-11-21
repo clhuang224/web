@@ -1,62 +1,47 @@
 # Public Guide Integration
 
-Status: implemented and deployed. VitePress 1.6.4 builds the guide from `docs/.vitepress/config.mts`, and the site embeds it at `/behind-the-scenes`. The architecture guide describes the implemented behavior.
+Status: VitePress integration, embedded application routes, local preview handling, and a GitHub Pages deployment workflow are implemented. Browser and device behavior still require environment-specific verification. The current runtime contract is described in [the architecture guide](architecture.md).
 
-## Reader Experience
+## Content Ownership
 
-Expose a permanent route from the personal website into a guide about the website's own implementation. The guide should let a casual visitor understand the work and let a Vue developer follow real features into source code. It is editorial teaching content, not an agent log, generated API dump, or replacement for the blog and About page.
+The Traditional Chinese guide lives in `docs/guide/zh-TW/`. It teaches VueLynx through real website features, selected source excerpts, and design decisions. English project reference and research files remain outside the public VitePress source root.
 
-The public entry is [the Traditional Chinese guide](guide/zh-TW/index.md). It contains separate paths for a project overview, a code walkthrough, and content maintenance. The initial guide has sixteen pages, including the entry, reading map, glossary, and source map.
+[The editorial guide](editorial-guide.md) defines the reader level and writing approach. `src/content/guide.ts` owns chapter slugs, order, and titles; both the application and VitePress navigation use that catalog. Keep it aligned when adding or renaming chapters.
 
-## Sidebar Entry And Navigation
+## Application Routes And Rendering
 
-Use these labels for the main site's navigation item:
+The sidebar entry follows About and uses the labels 幕後, Behind the scenes, and 舞台裏. It opens the application's `guide` page at `/behind-the-scenes`; chapter pages use `/behind-the-scenes/<chapter>`, with the usual localized prefixes. The article prose remains Traditional Chinese.
 
-| Site locale | Label             | Destination language notice  |
-| ----------- | ----------------- | ---------------------------- |
-| zh-TW       | 幕後              | 繁體中文教學                 |
-| en          | Behind the scenes | Guide in Traditional Chinese |
-| ja          | 舞台裏            | 繁体字中国語のガイド         |
+These routes belong to the application router and catalog. They differ from `/guide/`, the standalone VitePress output. The main sidebar remains present during embedded reading.
 
-Keep Home, Blog, Portfolio, Drawings, and About together as the main navigation. Place this entry at the bottom of the sidebar, separate from them, so it reads as a secondary destination.
+On the Web, GuidePage renders an empty `.guide-frame` view. The browser host locates that view in the Lynx shadow root and appends a same-origin iframe loading the matching VitePress route. The embedded theme hides duplicate navigation and reports route changes with a `guide-route` message. The host checks the sender and origin before replacing the outer URL with the matching chapter path.
 
-Embed the guide inside the site instead of leaving it, so visitors keep the sidebar while reading. The site owns `/behind-the-scenes` and `/behind-the-scenes/<chapter>` as application pages; `/guide/` stays reserved for the documentation output that those pages embed. On the Web the browser host places a same-origin iframe in the page's content area and keeps the site URL in step with the chapter shown. In the native shell the page renders the guide's absolute HTTPS URL in a web view.
+Native shells use a webview with the matching guide URL and the embedded presentation flag. The native wrapper and Web iframe do not provide identical history synchronization; validate chapter navigation, system Back, locale changes, and focus behavior in each environment.
 
-When embedded, hide the guide's own title and return link, because the site's sidebar already provides navigation. Keep the return link for the standalone `/guide/` pages. Preserve browser Back behavior. A language switch in the main site must not invent English or Japanese guide routes that do not exist.
+The standalone `/guide/` pages retain their own reading interface and return link. Test the embedded and standalone modes separately.
 
-## Documentation Build
+## Build And Search
 
-The framework recommendation remains VitePress. Inspect the stable package metadata and dependency graph before installing it, then isolate its browser Vue/Vite configuration from the application's VueLynx/Rspeedy configuration. Keep TypeScript strict and retain the application's existing compatibility pins.
+VitePress 1.6.4 is configured in `docs/.vitepress/` with `srcDir: 'guide/zh-TW'`, `base: '/guide/'`, clean URLs, and output to `dist/guide/`. The root package owns the documentation dependency and scripts; there is no separate documentation workspace.
 
-The intended source root is `docs/guide/zh-TW/`, with configuration under `docs/.vitepress/`, `base: '/guide/'`, and a dedicated output directory. The English maintenance documents and research notes outside that source root must not become public pages automatically.
+- `pnpm run dev:guide` runs the guide service on port 3002.
+- `pnpm run check:guide` validates guide reachability, local links, source paths, and literal source excerpts.
+- `pnpm run build:guide` generates the documentation output.
+- `pnpm run build` builds the application, browser host, and guide in order, then checks required output.
+- `pnpm run build:pages` also prepares route pages, the main 404 page, and CNAME for GitHub Pages.
 
-Use the default documentation theme initially, modest teal/coral accents, a mobile contents menu, and local search. Test Chinese keywords and English API names. A framework's search capability does not establish good Chinese tokenization without testing the chosen configuration.
+Local search tokenizes Han characters individually and requires all search terms to match. Check representative Chinese and English API queries rather than assuming the tokenizer provides word-level Chinese search.
 
-Configure the chapter order as follows:
+VitePress renders browser Vue components. Lynx SFCs require their own renderer, so source display and a live Lynx demonstration remain separate concerns. A browser teaching widget can reuse a pure domain function when it clearly identifies what it demonstrates.
 
-1. Entry: `index.md`, `reading-map.md`, `design-decisions.md`.
-2. Feature walkthroughs: `vue-to-lynx.md`, `carousel.md`, `runtime-bridge.md`, `routing.md`, `content-and-i18n.md`, `github-data.md`.
-3. Engineering and maintenance: `styling-and-assets.md`, `build-and-hosting.md`, `testing-and-accessibility.md`, `maintaining-content.md`, `native-exploration.md`.
-4. Reference: `glossary.md`, `source-map.md`.
+## Development, Preview, And Hosting
 
-The guide currently uses ordinary Markdown and source links. Stable excerpts can later use VitePress source imports. Importing a `.vue` Lynx component into a VitePress page does not turn it into a working browser Vue demo; any live Lynx example needs its actual runtime. A separate browser teaching widget may reuse the pure carousel functions while stating what it demonstrates.
+The browser host proxies `/guide` to the VitePress service during development. `scripts/preview.mjs` resolves guide files and directory indexes before the application fallback and uses the guide's 404 page for unknown guide routes.
 
-## Static Output And Serving
+The Pages workflow publishes the complete `dist/` directory. `scripts/prepare-pages.mjs` generates main-site route entry files from the current route catalog, including the embedded guide routes. Those copies contain the browser host, while VitePress generates actual article HTML under `dist/guide/`.
 
-Build documentation independently and copy its output into `dist/guide/` after the application build. Do not let one build clean another's artifacts. Add a combined build only after both isolated builds pass.
+## Verification Boundaries
 
-The server must resolve guide files and nested directory indexes before the main application fallback. The current `scripts/preview.mjs` does not provide this contract automatically: a directory may fall back to the main `index.html`, and a missing guide route is not one of its recognized application routes. Development serving also needs an explicit guide service or proxy route.
+Content checks establish internal consistency and source excerpt matches. Guide builds establish that Markdown and Vue compilation complete. Neither alone verifies iframe messages, keyboard focus, browser Back, native webview behavior, or production asset loading.
 
-Verify direct entry, reload, browser Back, and static assets at `/guide/` and a nested chapter. Decide between `.html` URLs and clean URLs based on the host; configure server behavior to match. Check the documentation under the final host headers, not just on a separate development port.
-
-## Acceptance
-
-- Every chapter exists, every internal link resolves, and source paths match the reviewed repository version.
-- The main-site entry works with all three interface languages and clearly names the guide's current language.
-- Desktop and mobile readers can discover the chapter list, search, and return to the main site.
-- Web navigation uses the intended context; native navigation opens and closes the guide through its supported webview.
-- Application, documentation, and combined builds work without altering the application's runtime compatibility pins.
-- Static hosting and preview distinguish guide pages, application pages, missing pages, and missing assets.
-- No message boards, private conversation files, unpublished personal biography, or build-only files appear in the public guide output.
-
-Record actual commands and environments when these checks are performed. Authored content and an integration contract do not establish that the live sidebar or deployment is ready.
+For a rendering or navigation change, verify direct entry and reload for an embedded chapter, chapter-to-chapter navigation, Back, localized outer routes, standalone reading, missing guide assets, and an unknown chapter. Confirm that private boards and non-public maintenance documents are absent from the public output.

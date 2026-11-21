@@ -1,14 +1,26 @@
 # 從 Vue 到 Lynx
 
-先打開 [src/index.ts](https://github.com/clhuang224/web/blob/main/src/index.ts)。應用程式仍然建立 Vue app、安裝 Router、掛載根元件，但 `createApp` 來自 `vue-lynx`，`mount()` 也沒有指定 DOM 容器。
+先打開 [src/index.ts](https://github.com/clhuang224/web/blob/main/src/index.ts)。整個入口很短：
 
-這裡改變的是渲染目標。Vue 繼續處理元件與反應式資料，VueLynx 負責把結果接到 Lynx。
+```ts
+import { createApp } from 'vue-lynx'
+import App from './App.vue'
+import { router } from './app/router'
+
+const app = createApp(App)
+app.use(router)
+app.mount()
+```
+
+建立 app、安裝 Router，然後掛載。看起來跟平常寫 Vue 很接近，只是 `createApp` 換了一個來源，`mount()` 也沒有指定 `#app`。
+
+原因在渲染的那一端。Vue 繼續處理元件和反應式資料，接著由 VueLynx 把結果交給 Lynx；不用在這個入口找一個 DOM 容器來放畫面。
 
 ## 熟悉的部分留在哪裡？
 
 [DoodleCarousel.vue](https://github.com/clhuang224/web/blob/main/src/components/DoodleCarousel.vue) 使用 `ref` 記住索引與播放選擇，`computed` 推導可見圖片，`watch` 處理版面狀態變化，並在卸載時清除計時器。
 
-讀這些程式時，可以沿用 Vue 的問題：哪些是狀態？哪些只是推導？副作用何時建立、何時清除？不用因為換了 renderer 就把所有資料流重新學一遍。
+所以讀元件的時候，可以先照熟悉的方式分辨：哪些是狀態？哪些跟著狀態算出來？計時器什麼時候建立，又在哪裡清掉？先把這條資料流讀完，再來看元素和平台的差異。
 
 本專案的 Composition API 從 `vue-lynx` 匯入。[官方入門對照](https://vue.lynxjs.org/guide/introduction)也以這種方式介紹從 Vue Web 轉換過來的差異。
 
@@ -23,7 +35,7 @@
 | 圖片         | `<image>`        | 載入方式和 SVG 支援要看平台。            |
 | 捲動區       | `<scroll-view>`  | 捲動能力由 Lynx 元素提供。               |
 
-同樣寫在 `.vue` 中，不表示原本依賴 DOM 的套件就能直接用。選元件庫或工具前，先查它是否讀取 `document`、查詢 DOM 節點，或假設瀏覽器事件存在。
+這時候如果想把慣用的元件庫搬進來，就要多看一下它依賴什麼。如果裡面會呼叫 `document.querySelector()`、取得 DOM 節點或操作瀏覽器事件，光是能匯入 `.vue` 還不夠。
 
 ## 事件名稱看起來像 Vue，語意來自 Lynx
 

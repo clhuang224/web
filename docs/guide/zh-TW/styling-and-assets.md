@@ -1,6 +1,8 @@
 # 樣式、UnoCSS 與圖檔
 
-這個網站的辨識度來自原始字樣、塗鴉、淡水藍底和珊瑚粉元件。工程上要處理的是：保留素材，讓版型能調整，並確認樣式在不同 runtime 中真的成立。
+網站保留了原始字樣、塗鴉、淡水藍底和珊瑚粉元件。實作時需要把兩件事分開：來源素材如何保存，以及畫面如何使用這些素材。
+
+首先看樣式的分工，再看 UnoCSS 和原生端圖檔的處理。
 
 ## 樣式放在哪裡？
 
@@ -25,7 +27,9 @@
 
 [lynx.config.ts](https://github.com/clhuang224/web/blob/main/lynx.config.ts) 啟用 CSS inline variables 與 inheritance 支援。閱讀 `site.css` 的 `var(...)` 時，要把這個編譯設定一起考慮。
 
-目前標題描邊使用分層 `text-shadow`。應以 Web 和原生端的實際字形結果判斷效果，特別是三語字體回退，不把瀏覽器截圖當作所有平台都一致的證據。
+目前標題描邊使用分層 `text-shadow`，字體則隨專案提供 jf open huninn。瀏覽器 host 和原生樣式各自宣告字體，避免把瀏覽器的字體載入方式直接套到原生端。
+
+字體來源相同，仍需要確認三語字形、行高與容器裁切。這些是實際渲染結果，不能只看字體檔案是否存在。
 
 設計來源是 [Figma](https://www.figma.com/design/OzWLzG1nfBsVsRTJw029Y4?node-id=2-4)。對照時要區分來源元件、已確認的響應式改動，以及 runtime 上的實際呈現。
 
@@ -39,7 +43,7 @@
 
 ## 同一張 SVG 為什麼需要 VectorImage？
 
-[VectorImage.vue](https://github.com/clhuang224/web/blob/main/src/components/VectorImage.vue) 在 Web 使用 `<image>`，在 standalone 使用 `<svg>`，並透過 `asset()` 處理原生資源前綴。
+[VectorImage.vue](https://github.com/clhuang224/web/blob/main/src/components/VectorImage.vue) 在 Web 使用 `<image>`，在 standalone 使用 `<svg>`，並透過 `asset()` 取得原生端可使用的圖片位址。
 
 這個包裝來自本專案的原生端顯示需求。頁面仍然表達「這裡需要圖示」，平台差異集中在包裝元件；但每個 shell 的實際支援仍要驗證。
 

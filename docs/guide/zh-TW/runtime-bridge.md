@@ -1,6 +1,8 @@
 # 平台能力怎麼接起來
 
-頁面可以說「前往作品」，但 Web 端要更新網址，原生端不一定有瀏覽器網址列。這就是平台轉接存在的地方。
+點一下作品卡，畫面就要換成作品詳情。這件事在元件裡很好表達，不過接著就會遇到一個問題：瀏覽器要改網址，Android Explorer 裡又沒有同一個網址列，那這段邏輯要放哪裡？
+
+目前的做法，是先讓頁面使用共用操作，再由平台轉接決定怎麼完成。
 
 先讀 [src/platform/host.ts](https://github.com/clhuang224/web/blob/main/src/platform/host.ts)，再對照 [src/host/index.ts](https://github.com/clhuang224/web/blob/main/src/host/index.ts)。兩個 host 名稱相近，責任不同。
 
@@ -23,7 +25,19 @@ Web 端的操作可以沿著這條線追：
   → useHost() 接收新狀態
 ```
 
-這段 bridge 是本專案定義的介面，不是 Lynx 內建了一個名叫 SiteHost 的服務。
+這裡的 SiteHost 是專案自己定義的介面。名字看起來很像內建服務，不過它實際上是網站替自己準備的一組平台能力。
+
+取得這組能力的入口在 [runtime.ts](https://github.com/clhuang224/web/blob/main/src/platform/runtime.ts)：
+
+```ts
+export function nativeHost() {
+  return typeof NativeModules === 'undefined'
+    ? undefined
+    : NativeModules.SiteHost
+}
+```
+
+先確認 `NativeModules` 存在，再取得裡面的 SiteHost。這段只負責取得介面；目前環境是不是原生 shell，另外由 `SystemInfo.platform` 判斷。兩個問題分開，才不會把「沒有這個模組」直接當成一種平台。
 
 ## 介面限制了能要求什麼
 
@@ -31,7 +45,7 @@ Web 端的操作可以沿著這條線追：
 
 例如 `navigate` 傳送的是頁面種類、資料 ID 和語言。瀏覽器端再檢查資料格式、有效頁面和有效 ID，通過後才更新網址。
 
-型別有助於寫程式，但 runtime 收到的值仍然需要檢查。TypeScript 不會替傳入的訊息自動做驗證。
+這裡還要多做一次資料檢查。雖然兩邊都用 TypeScript，訊息真的傳進來時，仍然只是 runtime 的值；頁面種類、ID 和語言都要符合預期，才繼續操作。
 
 ## 第一次狀態如何抵達？
 
@@ -49,7 +63,9 @@ Web 端的操作可以沿著這條線追：
 
 ## 這個拆分帶來什麼價值？
 
-元件保留操作意圖，平台端決定如何完成。往後新增下載、分享或持久化功能時，可以先定義需求與回傳結果，再決定 Web 和原生端各自怎麼接。
+讀到這裡，可以再看一次作品卡的 `navigate(...)`。它只需要交代要去哪裡，平台端再決定怎麼走。
+
+之後如果要加分享、下載或儲存偏好，也可以先想清楚元件需要什麼結果，再分別處理 Web 和原生的接法。
 
 同時要付出介面維護與狀態同步的成本。不要為了每個局部計算都增加 bridge；輪播索引就能直接在應用程式內處理。
 

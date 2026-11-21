@@ -1,6 +1,8 @@
 # GitHub 資料怎麼進畫面
 
-作品頁的摘要、正式連結和原始碼來自本地內容；主要語言、星星數與更新日期則向 GitHub 取得。兩種資料分開，讓附加資訊失敗時，作品仍然能被介紹。
+作品頁已經有摘要和連結，如果再放上 GitHub 的主要語言、星星數和更新日期，好像會比較完整。不過這些資訊要打 API，也就多了等待和失敗的情況。
+
+所以作品本身的介紹先放在本地資料，GitHub 資訊再另外補上。即使請求沒有成功，作品和連結還是能看。
 
 從 [ProjectPage.vue](https://github.com/clhuang224/web/blob/main/src/pages/ProjectPage.vue) 開始，接著讀 [repository.ts](https://github.com/clhuang224/web/blob/main/src/domain/repository.ts)。
 
@@ -14,7 +16,37 @@
 
 ## 為什麼回應先當 unknown？
 
-`response.json()` 取得資料，不代表資料就符合頁面需要的型別。`parseRepository` 從外部物件中檢查名稱、語言、星星數和日期，成功後轉成較小的 `RepositorySummary`，失敗則回傳 `null`。
+先看最後想留給畫面的資料：
+
+```ts
+export interface RepositorySummary {
+  name: string
+  language: string | null
+  stars: number
+  pushedAt: string
+}
+```
+
+GitHub 回應裡的欄位很多，這裡只留下畫面會用的四個。`language` 允許 `null`，表示沒有取得主要語言時，也能保留其他資訊。
+
+再看請求的入口：
+
+```ts
+export function fetchRepository(
+  name: string,
+): Promise<RepositorySummary | null> {
+  return fetch(`https://api.github.com/repos/${name}`, {
+    headers: { Accept: 'application/vnd.github+json' },
+  })
+    .then((response) => (response.ok ? response.json() : null))
+    .then(parseRepository)
+    .catch(() => null)
+}
+```
+
+第一個 `then` 先看 HTTP 結果，成功才讀 JSON。接著交給 `parseRepository` 檢查名稱、語言、星星數和日期，轉成上面的格式。網路或解析過程出了錯，最後回傳 `null`。
+
+也就是說，`response.json()` 之後還有一步要做：確認拿到的資料真的符合頁面需要的條件。
 
 這和直接寫 `as RepositorySummary` 不同：型別斷言只告訴 TypeScript 接受這個假設，不會替實際資料補欄位或修正型別。
 
@@ -41,7 +73,7 @@ Web host 只為作品清單中已知的 repository 提供查詢。它用 Map 記
 
 ## 這個功能的延伸價值
 
-這是一個小型的資料邊界案例：外部格式先驗證，再縮成內部需要的模型，最後由畫面決定缺少資料時如何呈現。
+這個功能的程式不算很多，卻剛好經過了三件事：拿外部資料、整理成自己需要的格式、決定沒有資料時要顯示什麼。
 
 同樣的思路可以用在其他 API、原生 bridge 訊息與設定檔。關鍵不是多寫幾個型別，而是讓可信程度不同的資料有明確進入點。
 

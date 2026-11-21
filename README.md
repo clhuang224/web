@@ -27,7 +27,7 @@ The application uses Lynx elements and VueLynx components, with a small browser 
 | [Architecture](docs/architecture.md)                 | Current repository structure and implementation boundaries         |
 | [Asset catalog](docs/assets.md)                      | Asset provenance, descriptive filenames, and carousel ordering     |
 | [Behind-the-scenes guide](docs/guide/zh-TW/index.md) | Traditional Chinese feature walkthroughs and maintenance exercises |
-| [Guide integration](docs/site-integration.md)        | Proposed sidebar, documentation build, and hosting contract        |
+| [Guide integration](docs/site-integration.md)        | Embedded guide, documentation build, and hosting contract          |
 | [Contributor guide](AGENTS.md)                       | Project conventions and documentation ownership                    |
 
 ## Design Reference

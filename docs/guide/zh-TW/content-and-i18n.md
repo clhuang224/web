@@ -1,6 +1,8 @@
 # 三語內容與型別
 
-同一件作品切換語言後，網址和摘要可以變，作品目的地不應變成另一個網站。這個需求適合從資料結構開始解決。
+切換語言之後，按鈕和摘要要跟著換，不過正在看的作品還是同一件。這件事看起來很普通，放資料的時候卻滿容易把文案、網址和版型混在一起。
+
+所以先從資料長什麼樣子開始看。
 
 ## 文案與作品資料放在哪裡？
 
@@ -21,7 +23,22 @@
 export type Localized<T> = Record<Locale, T>
 ```
 
-這裡的 `Locale` 是 `zh-TW`、`en`、`ja` 三種值。`Localized<string>` 的意思是：每個語言鍵都要有一個字串。
+`Locale` 是 `zh-TW`、`en`、`ja` 三種值。把它放進 `Record`，就表示每個語言鍵都要有對應的值；所以 `Localized<string>` 就是三個語言都要有字串。
+
+接著看作品的型別：
+
+```ts
+export interface Project {
+  id: string
+  title: string
+  summary: Localized<string>
+  tags: string[]
+  website: string
+  source: string
+}
+```
+
+可以看到只有 `summary` 使用 `Localized<string>`。作品名稱、標籤和目的地仍然共用，這剛好把「要翻譯的介紹」和「介紹的是哪個作品」分開了。
 
 它可以在編譯時攔住缺少語言鍵的情況，但不能判斷翻譯是否自然、摘要是否忠於原文，也不保證字串不是空白。這些需要內容檢查與人工閱讀。
 
@@ -39,7 +56,9 @@ export type Localized<T> = Record<Locale, T>
 const text = computed(() => copy[state.value.locale])
 ```
 
-`copy` 是靜態資源，`state.locale` 是目前選擇，computed 把兩者接起來。Template 使用 `text` 的欄位，避免每個按鈕都手寫一個語言判斷。
+這行可以拆成兩個部分：`copy` 放全部文案，`state.locale` 決定目前讀哪一份。語言改變，computed 就重新選一次，template 繼續使用原本的欄位。
+
+因此每個按鈕不用自己寫三個語言的判斷。要增加一個介面詞彙時，也比較容易回到同一個地方確認有沒有漏掉翻譯。
 
 這個專案使用自己的型別化資源，並沒有因為支援三語就必須導入完整 i18n runtime。若之後需要複數、複雜插值或更多編輯流程，才根據需求評估工具。
 

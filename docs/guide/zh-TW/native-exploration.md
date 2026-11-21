@@ -1,6 +1,6 @@
 # 原生端探索
 
-Lynx 的價值可以從同一個功能在不同平台遇到的差異看出來。這個專案保留 Vue 寫作方式，同時探索瀏覽器以外的渲染與平台模型。
+前面的章節大多可以從熟悉的 Vue 資料流理解。到了 Android，元件和規則仍然可以共用，但圖檔、網址與平台 API 的差異會更明顯。這篇整理目前的接法，再說明可以如何驗證。
 
 目前專案已記錄在 Android 的 Lynx Explorer 4.2 載入原生 bundle，並加入 SVG 和外部網頁的處理。這是 Explorer 內的執行路徑，尚不是一個獨立發佈的 App。
 
@@ -45,7 +45,27 @@ LYNX_DEV_HOST=127.0.0.1 pnpm run dev
 
 這需要已安裝 Android 平台工具、已授權的裝置和合適的 Explorer 版本。`adb reverse` 的用途，是讓裝置對該埠的連線轉回開發電腦；它不會自動配置正式部署。
 
-實際 bundle URL 應以 Rspeedy 當次輸出為準。正式原生資產仍需要可存取的絕對前綴，不能把本地連線方式當成公開發佈方案。
+實際 bundle URL 應以 Rspeedy 當次輸出為準。這裡的連線設定供本地開發使用，正式建置則另外指定可公開存取的位置。
+
+## 正式圖片為什麼沒有放在 bundle 前綴下？
+
+目前原生 bundle 使用 `https://lynns.me/lynx/` 作為建置資源前綴，不過 `public/images/` 會複製到網站根目錄下的 `/images/`。這兩種來源的輸出位置不同。
+
+因此 [runtime.ts](https://github.com/clhuang224/web/blob/main/src/platform/runtime.ts) 另外處理 public 圖檔：
+
+```ts
+const publicOrigin = import.meta.env.DEV
+  ? import.meta.env.ASSET_PREFIX
+  : 'https://lynns.me'
+
+export function asset(path: string) {
+  return isStandalone() ? `${publicOrigin}${path}` : path
+}
+```
+
+開發模式沿用開發服務的資源前綴；正式模式則用網站根網址。`asset()` 在原生端把它接到 `/images/...` 前面，Web 端繼續使用原本的根路徑。
+
+如果把這些圖片也接在 `/lynx/` 下，產生的網址就不符合實際輸出位置。這個例子可以看出：bundle 能載入，和 bundle 使用的圖片能載入，需要分別確認。
 
 ## 值得做成可重現紀錄的實驗
 

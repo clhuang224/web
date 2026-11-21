@@ -1,8 +1,8 @@
 # 從下一張按鈕讀懂輪播
 
-這篇先讀現有程式，不需要先了解整套 Lynx。讀完後，你應該能追出三件事：目前顯示哪幾張圖、下一次要移動多少，以及自動播放為什麼能和手動操作共用規則。
+輪播看起來就是隔一段時間換張圖，不過這裡還有一個條件：桌面一次兩張，手機一次一張，手動按下一組也要跟著變。
 
-本篇閱讀基準為 `4350530`。以下程式片段來自現有實作；計算規則、元件互動與裝置體驗需要不同的驗證方式。
+所以先從「現在顯示哪些圖」開始，再一路看到下一張按鈕和計時器。這幾段讀完，就能看出 Vue 狀態和換組規則怎麼配合。
 
 ## 1. 先認出熟悉的 Vue 狀態
 
@@ -19,7 +19,9 @@ const visible = computed(() =>
 )
 ```
 
-`ref`、`computed` 的用途仍然熟悉。`index` 記住第一張可見圖片的位置，從 `0` 開始；`playing` 記住播放選擇；`visible` 根據位置和張數，從 [doodles.ts](https://github.com/clhuang224/web/blob/main/src/content/doodles.ts) 取出圖片。
+先看 `index`，它記住第一張可見圖片的位置，從 `0` 開始。`count` 決定一次取幾張，所以 `visible` 就能用 `slice` 從 [doodles.ts](https://github.com/clhuang224/web/blob/main/src/content/doodles.ts) 取出對應的範圍。
+
+`playing` 則是另一件事：它記住目前要不要自動播放。把位置和播放選擇分開，暫停時就可以保留原本的圖片，也仍然能手動切換。
 
 `state.compact` 來自 `useSite()` 提供的共用狀態。輪播本身不讀 `window.innerWidth`。瀏覽器端由 host 監看寬度，再傳給元件；standalone 路徑則使用 `SystemInfo` 計算初始狀態。兩條路徑仍需各自驗證，不能只因共用元件就視為行為完全相同。
 
