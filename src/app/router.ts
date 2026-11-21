@@ -17,6 +17,6 @@ export const router = createRouter({
     { path: '/drawing/:id', component: DrawingPage },
     { path: '/about', component: AboutPage },
     { path: '/behind-the-scenes/:id?', component: EmbedPage },
-    { path: '/blog/:id?', component: EmbedPage },
+    { path: '/blog/:id(.*)?', component: EmbedPage },
   ],
 })

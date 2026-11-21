@@ -2,6 +2,7 @@
 import { computed } from 'vue-lynx'
 import { useSite } from '../app/context'
 import { copy } from '../content/copy'
+import { blogPath } from '../content/articles'
 import type { SelectedArticle } from '../content/articles'
 import TagList from './TagList.vue'
 
@@ -15,7 +16,7 @@ const text = computed(() => copy[state.value.locale])
     class="card article-card"
     accessibility-role="link"
     :accessibility-label="`${article.title[state.locale]} (${text.articleLanguage})`"
-    @tap="navigate('post', article.id)"
+    @tap="navigate('post', blogPath(article.url))"
   >
     <view class="article-meta"
       ><text class="article-date">{{ article.date }}</text

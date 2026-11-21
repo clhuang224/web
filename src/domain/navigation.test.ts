@@ -12,7 +12,7 @@ const catalog: RouteCatalog = {
   project: ['queener'],
   drawing: ['01', '14'],
   chapter: ['carousel'],
-  post: ['daily-note'],
+  post: ['2026/02/03/20260203-daily-note'],
 }
 
 describe('localized locations', () => {
@@ -42,7 +42,13 @@ describe('localized locations', () => {
     ['/behind-the-scenes', 'zh-TW', 'guide', null],
     ['/en/behind-the-scenes/carousel', 'en', 'chapter', 'carousel'],
     ['/blog', 'zh-TW', 'blog', null],
-    ['/ja/blog/daily-note', 'ja', 'post', 'daily-note'],
+    [
+      '/ja/blog/2026/02/03/20260203-daily-note/',
+      'ja',
+      'post',
+      '2026/02/03/20260203-daily-note',
+    ],
+    ['/blog/archives', 'zh-TW', 'post', 'archives'],
   ])(
     'reads explicit route %s independently of preferences',
     (path, locale, page, id) => {
@@ -64,7 +70,7 @@ describe('localized locations', () => {
     '/drawing',
     '/drawings/01',
     '/behind-the-scenes/missing',
-    '/blog/missing',
+    '/blog/2026/../about',
     '//about',
     '/home',
     'about',

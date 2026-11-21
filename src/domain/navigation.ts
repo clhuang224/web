@@ -60,6 +60,10 @@ export function isHostState(value: unknown): value is HostState {
   )
 }
 
+function isBlogSegment(segment: string) {
+  return /^[\w.%-]+$/.test(segment) && segment !== '.' && segment !== '..'
+}
+
 function findListPage(segment: string): ListPage | undefined {
   return (Object.keys(listSegments) as ListPage[]).find(
     (page) => page !== 'home' && listSegments[page] === segment,
@@ -96,6 +100,13 @@ export function parseSitePath(
   if (segments.length === 1) {
     const page = findListPage(segments[0])
     return page ? { ...base, page, matched: true } : { ...base, matched: false }
+  }
+
+  if (segments.length > 1 && segments[0] === detailSegments.post) {
+    const path = segments.slice(1)
+    return path.every(isBlogSegment)
+      ? { ...base, page: 'post', id: path.join('/'), matched: true }
+      : { ...base, matched: false }
   }
 
   if (segments.length === 2) {

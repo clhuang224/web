@@ -85,9 +85,14 @@ export const selectedArticles: SelectedArticle[] = [
 
 export const blogOrigin = 'https://blog.lynns.me'
 
-export function blogUrl(id: string | null) {
-  return (
-    selectedArticles.find((article) => article.id === id)?.url ??
-    `${blogOrigin}/`
-  )
+export function blogPath(url: string) {
+  return url.replace(blogOrigin, '').replace(/^\/+|\/+$/g, '')
+}
+
+export function blogUrl(path: string | null) {
+  return path ? `${blogOrigin}/${path}/` : `${blogOrigin}/`
+}
+
+export function articleAt(path: string | null) {
+  return selectedArticles.find((article) => blogPath(article.url) === path)
 }

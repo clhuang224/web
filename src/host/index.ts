@@ -1,6 +1,6 @@
 import '@lynx-js/web-core/client'
 import type { LynxViewElement } from '@lynx-js/web-core/client'
-import { blogUrl, selectedArticles } from '../content/articles'
+import { articleAt, blogOrigin, blogPath, blogUrl } from '../content/articles'
 import { routeCatalog } from '../content/catalog'
 import {
   chapterFromGuidePath,
@@ -147,11 +147,7 @@ function pageTitle(state: HostState): string {
     )
   if (state.page === 'drawing') return `${text.drawing} ${state.id ?? ''}`
   if (state.page === 'post')
-    return (
-      selectedArticles.find((article) => article.id === state.id)?.title[
-        state.locale
-      ] ?? text.pages.blog
-    )
+    return articleAt(state.id)?.title[state.locale] ?? text.pages.blog
   if (state.page === 'chapter')
     return (
       guideChapters.find((chapter) => chapter.slug === state.id)?.title ??
@@ -226,25 +222,44 @@ function placeEmbed() {
   embedFrame = frame
 }
 
-function followGuide(event: MessageEvent) {
-  if (event.origin !== window.location.origin) return
-  if (!embedFrame || event.source !== embedFrame.contentWindow) return
-  const data: unknown = event.data
+function routeMessage(data: unknown, type: string) {
   if (
     typeof data !== 'object' ||
     data === null ||
     !('type' in data) ||
-    data.type !== 'guide-route' ||
+    data.type !== type ||
     !('path' in data) ||
     typeof data.path !== 'string'
   )
-    return
-  const state = stateFromLocation()
-  const chapter = chapterFromGuidePath(data.path)
-  const path = pathForPage(state.locale, chapter ? 'chapter' : 'guide', chapter)
+    return null
+  return data.path
+}
+
+function replaceEmbeddedPath(path: string) {
   if (window.location.pathname === path) return
   window.history.replaceState(null, '', path)
   sendState()
+}
+
+function followEmbed(event: MessageEvent) {
+  if (!embedFrame || event.source !== embedFrame.contentWindow) return
+  const { locale } = stateFromLocation()
+  if (event.origin === window.location.origin) {
+    const guide = routeMessage(event.data, 'guide-route')
+    if (guide === null) return
+    const chapter = chapterFromGuidePath(guide)
+    replaceEmbeddedPath(
+      pathForPage(locale, chapter ? 'chapter' : 'guide', chapter),
+    )
+  } else if (event.origin === blogOrigin) {
+    const blog = routeMessage(event.data, 'blog-route')
+    if (blog === null) return
+    const path = blogPath(blog)
+    embedFrame.dataset.key = blogUrl(path || null)
+    replaceEmbeddedPath(
+      pathForPage(locale, path ? 'post' : 'blog', path || null),
+    )
+  }
 }
 
 function cachedRepository(name: string): Promise<RepositorySummary | null> {
@@ -326,7 +341,7 @@ if (view.shadowRoot)
   guideObserver.observe(view.shadowRoot, { childList: true, subtree: true })
 
 window.addEventListener('popstate', sendState)
-window.addEventListener('message', followGuide)
+window.addEventListener('message', followEmbed)
 compactQuery.addEventListener('change', sendState)
 motionQuery.addEventListener('change', sendState)
 
@@ -334,7 +349,7 @@ window.addEventListener('pagehide', (event) => {
   if (event.persisted) return
   window.clearTimeout(loadTimeout)
   window.removeEventListener('popstate', sendState)
-  window.removeEventListener('message', followGuide)
+  window.removeEventListener('message', followEmbed)
   guideObserver.disconnect()
   compactQuery.removeEventListener('change', sendState)
   motionQuery.removeEventListener('change', sendState)
