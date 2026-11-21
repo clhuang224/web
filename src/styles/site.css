@@ -218,13 +218,26 @@
 }
 .carousel-frame {
   width: 100%;
-  display: flex;
-  flex-direction: row;
-  gap: 6px;
   padding: 6px;
   background-color: var(--color-coral);
   border-radius: 8px;
   box-sizing: border-box;
+}
+.carousel-viewport {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 4px;
+}
+.carousel-track {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.carousel-group {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
 }
 .doodle-panel {
   flex: 1;
