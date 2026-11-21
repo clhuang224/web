@@ -38,8 +38,6 @@ createServer(async (request, response) => {
       response.writeHead(403).end()
       return
     }
-    response.setHeader('Cross-Origin-Opener-Policy', 'same-origin')
-    response.setHeader('Cross-Origin-Embedder-Policy', 'require-corp')
     let target = file
     let status = 200
     if (path === '/guide' || path.startsWith('/guide/')) {

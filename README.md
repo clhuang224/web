@@ -50,7 +50,7 @@ pnpm run build
 pnpm run preview
 ```
 
-The preview serves `dist/` at [localhost:4173](http://localhost:4173), including localized deep links, the guide at `/guide/`, and the isolation headers used by the Web runtime. Set `PORT` to change its port.
+The preview serves `dist/` at [localhost:4173](http://localhost:4173), including localized deep links, and the guide at `/guide/`. Set `PORT` to change its port.
 
 ## Checks
 
@@ -65,4 +65,4 @@ pnpm run build
 
 The build combines a Rspeedy Web bundle with an Rsbuild browser host. Its verification step checks that the host HTML, Lynx Web bundle, bridge, and original wordmark exist. See [the architecture guide](docs/architecture.md) for the runtime boundary and compatibility pins.
 
-Production hosting must serve the complete `dist/` directory, its root-relative paths, JavaScript workers, and WASM files with appropriate MIME types. It must also support the localized page URLs and the `Cross-Origin-Opener-Policy: same-origin` and `Cross-Origin-Embedder-Policy: require-corp` headers used by the included preview. No deployment workflow or production host is configured.
+Production hosting must serve the complete `dist/` directory, its root-relative paths, JavaScript workers, and WASM files with appropriate MIME types. It must also support the localized page URLs. The `Pages` workflow deploys the site to GitHub Pages.
