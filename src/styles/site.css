@@ -387,8 +387,6 @@
   aspect-ratio: 2.7;
   border-radius: 4px;
   overflow: hidden;
-  border: 3px solid var(--color-coral);
-  box-sizing: border-box;
 }
 .drawing-image {
   width: 100%;
