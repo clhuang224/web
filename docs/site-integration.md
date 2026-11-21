@@ -6,7 +6,7 @@ Status: VitePress integration, embedded application routes, local preview handli
 
 The Traditional Chinese guide lives in `docs/guide/zh-TW/`. It teaches VueLynx through real website features, selected source excerpts, and design decisions. English project reference and research files remain outside the public VitePress source root.
 
-[The editorial guide](editorial-guide.md) defines the reader level and writing approach. `src/content/guide.ts` owns chapter slugs, order, and titles; both the application and VitePress navigation use that catalog. Keep it aligned when adding or renaming chapters.
+[The editorial guide](editorial-guide.md) defines the reader level and writing approach. `src/content/guide.ts` owns chapter slugs, order, and titles; both the application and VitePress navigation use that catalog. Keep it aligned when adding or renaming chapters. The current seventeen-page guide includes a dedicated experiments section for unimplemented extensions; its baseline, questions, and validation plans remain separate from implemented behavior.
 
 ## Application Routes And Rendering
 
@@ -14,7 +14,9 @@ The sidebar entry follows About and uses the labels 幕後, Behind the scenes, a
 
 These routes belong to the application router and catalog. They differ from `/guide/`, the standalone VitePress output. The main sidebar remains present during embedded reading.
 
-On the Web, GuidePage renders an empty `.guide-frame` view. The browser host locates that view in the Lynx shadow root and appends a same-origin iframe loading the matching VitePress route. The embedded theme hides duplicate navigation and reports route changes with a `guide-route` message. The host checks the sender and origin before replacing the outer URL with the matching chapter path.
+On the Web, `EmbedPage` renders an empty `.embed-frame` view. The browser host's `placeEmbed` function locates that view in the Lynx shadow root and appends a same-origin iframe loading the matching VitePress route. The embedded theme hides duplicate navigation and reports route changes with a `guide-route` message. The host checks the sender and origin before replacing the outer URL with the matching chapter path.
+
+The shared component also embeds the independently hosted blog at `/blog` and `/blog/<blog path>`. Blog paths preserve the original date and article path rather than using selected-article IDs. The host accepts `blog-route` messages only from the current frame at `https://blog.lynns.me`; the blog targets `https://lynns.me`, so local development does not exercise that synchronization. Guide and blog messaging use separate message types and origin checks.
 
 Native shells use a webview with the matching guide URL and the embedded presentation flag. The native wrapper and Web iframe do not provide identical history synchronization; validate chapter navigation, system Back, locale changes, and focus behavior in each environment.
 

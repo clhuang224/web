@@ -23,6 +23,8 @@
 
 掃描器需要看得到 class。動態拼出只有執行時才存在的名稱，可能無法產生對應規則。另一個邊界是：CSS 產生成功，只能證明工具有輸出，不能證明 Lynx runtime 支援每一條 CSS。
 
+另一種做法是只使用語意 CSS，把每種排列和元件樣式都集中在樣式檔。它少了一個 utility 產生步驟，但小型排列也需要建立 class。目前的實作混合兩者：常見排列使用 utility，品牌和元件規則留在 `site.css`，因此閱讀時要知道這兩種樣式來源。
+
 ## 標籤顏色如何決定？
 
 技術標籤的顏色由 [tags.ts](https://github.com/clhuang224/web/blob/main/src/content/tags.ts) 集中管理。React、Vue、TypeScript 等名稱各自對應一個顏色，未列出的名稱則使用預設值：
@@ -54,6 +56,12 @@ export function tagColor(tag: string) {
 圖片完整性與畫面呈現是不同責任。框線、留白、縮放與 `aspectFit` 可以在元件處理；更換或重新命名來源檔時，還要維護素材目錄與清單。
 
 原始檔對照與來源記錄在[素材文件](https://github.com/clhuang224/web/blob/main/docs/assets.md)。替代描述依圖片可確認內容撰寫，不補上未確認的個人故事。
+
+## 圖片載入前先顯示什麼？
+
+[DoodleImage.vue](https://github.com/clhuang224/web/blob/main/src/components/DoodleImage.vue) 會先放一張低解析度縮圖，讓原圖在同一個位置載入。原圖觸發 `load` 後，元件把 `loaded` 改成 `true`，再移除縮圖；切換 `src` 時則用 `watch` 重設狀態。
+
+縮圖由 `scripts/generate-placeholders.mjs` 讀取原始 PNG 產生，輸出到獨立的資料檔。它不會覆寫原始 artwork。這個做法提供載入期間的視覺內容，但沒有因此減少原圖本身的下載大小；載入速度與等待感仍要分開觀察。
 
 ## 同一張 SVG 為什麼需要 VectorImage？
 

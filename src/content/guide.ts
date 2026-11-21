@@ -39,6 +39,10 @@ export const guideSections: readonly GuideSection[] = [
     ],
   },
   {
+    title: '實驗',
+    chapters: [{ slug: 'experiments', title: '延伸實驗與驗證' }],
+  },
+  {
     title: '參考',
     chapters: [
       { slug: 'glossary', title: '名詞對照' },

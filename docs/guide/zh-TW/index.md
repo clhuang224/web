@@ -1,10 +1,10 @@
 # 這個網站怎麼做的
 
-Lynn’s 使用 VueLynx 製作，除了介紹作品與文章，也保留了一個可以閱讀實作的入口。
+這是 Lynn’s 網站的開發教學文件，由 Codex GPT-6.1 Sol 協助撰寫與整理。內容以本專案的實作介紹 VueLynx，說明功能的資料流、設計取捨和平台差異。
 
 從側欄進入「幕後」，就能沿著網站的功能觀察程式如何運作。例如輪播如何管理狀態與計時器、作品頁如何更新網址，以及同一套元件如何接到不同平台。
 
-這份文件以熟悉 Vue、第一次接觸 Lynx 的開發者為對象。Vue 基礎會簡單帶過，重點放在渲染環境、事件和平台能力的差異。
+這份文件以有前端經驗、第一次接觸 Lynx 的開發者為對象。用到 Vue 或 TypeScript 概念時，會補一段簡短說明，再繼續介紹渲染環境、事件和平台能力的差異。
 
 ## 想從哪裡開始？
 
@@ -29,7 +29,7 @@ Lynn’s 使用 VueLynx 製作，除了介紹作品與文章，也保留了一�
 
 程式片段會對照專案原始碼，完整檔案則連到 [GitHub](https://github.com/clhuang224/web) 的 main 分支。改過程式之後，也要回來檢查說明；這件事有一部分可以交給[文件檢查工具](testing-and-accessibility.md)，另一部分還是要讀一次。
 
-VueLynx 採用 Vue 的自訂 renderer。熟悉 Vue 的資料流會很有幫助，但 DOM、瀏覽器 API 和 Vue DOM 元件庫的相容性需要分別判斷。[官方介紹](https://vue.lynxjs.org/guide/introduction)提供了基礎對照。
+VueLynx 採用 Vue 的自訂 renderer，也就是把元件描述轉成實際畫面的渲染器。熟悉 Vue 的資料流會很有幫助，但 DOM、瀏覽器 API 和 Vue DOM 元件庫的相容性需要分別判斷。[官方介紹](https://vue.lynxjs.org/guide/introduction)提供了基礎對照，新名詞也可以查[名詞對照](glossary.md)。
 
 目前的功能包含 Web 與 Android Explorer 的執行路徑。各章會把實作方式和需要另外確認的情境放在一起，像是同一個按鈕在 Web 上能用滑鼠點，到了原生端還要看觸控、返回和輔助工具。
 
@@ -40,3 +40,5 @@ VueLynx 採用 Vue 的自訂 renderer。熟悉 Vue 的資料流會很有幫助�
 把這三件事分開之後，VueLynx 會比較容易讀，之後想換 renderer、接原生能力或整理別的專案，也比較知道要從哪裡下手。
 
 可以先從[閱讀地圖](reading-map.md)選擇路線，或直接閱讀[第一個 VueLynx 元件](vue-to-lynx.md)。
+
+尚未實作的延伸整理在[實驗章節](experiments.md)，每個題目都有研究問題和驗證方式，可以和目前功能分開閱讀。

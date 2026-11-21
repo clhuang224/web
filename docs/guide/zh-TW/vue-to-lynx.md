@@ -14,11 +14,15 @@ app.mount()
 
 建立 app、安裝 Router，然後掛載。看起來跟平常寫 Vue 很接近，只是 `createApp` 換了一個來源，`mount()` 也沒有指定 `#app`。
 
-原因在渲染的那一端。Vue 繼續處理元件和反應式資料，接著由 VueLynx 把結果交給 Lynx；不用在這個入口找一個 DOM 容器來放畫面。
+原因在[渲染器](glossary.md)那一端。Vue 繼續處理元件和反應式資料，接著由 VueLynx 把結果交給 Lynx；不用在這個入口找一個 DOM 容器來放畫面。
 
-## 熟悉的部分留在哪裡？
+## 先回顧 Composition API
+
+Composition API 是 Vue 用函式組合元件邏輯的方式。這裡的「反應式」是指資料改變時，使用它的計算與畫面可以跟著更新。
 
 [DoodleCarousel.vue](https://github.com/clhuang224/web/blob/main/src/components/DoodleCarousel.vue) 使用 `ref` 記住索引與播放選擇，`computed` 推導可見圖片，`watch` 處理版面狀態變化，並在卸載時清除計時器。
+
+`ref` 保存一個可追蹤變化的值，script 中通常透過 `.value` 讀寫；`computed` 則描述如何從其他狀態得到結果。`watch` 會在監看的資料改變時執行回呼，適合安排需要額外動作的邏輯。這幾個 API 的用途不同，接著會用輪播逐一對照；基礎規則也可以參考 [Vue 反應式說明](https://vuejs.org/guide/essentials/reactivity-fundamentals.html)。
 
 所以讀元件的時候，可以先照熟悉的方式分辨：哪些是狀態？哪些跟著狀態算出來？計時器什麼時候建立，又在哪裡清掉？先把這條資料流讀完，再來看元素和平台的差異。
 
@@ -47,7 +51,20 @@ app.mount()
 
 [App.vue](https://github.com/clhuang224/web/blob/main/src/App.vue) 呼叫 `useHost()`，透過 `provide` 提供共用物件。頁面使用 [useSite()](https://github.com/clhuang224/web/blob/main/src/app/context.ts) 取回 `state`、`navigate` 等操作。
 
-這仍然是 Vue 的 provide/inject。差別在提供的內容：它把網站頁面和平台能力接在一起，讓元件可以表達「打開作品頁」，不必自己操作瀏覽器網址。
+`provide` 讓上層元件提供一份資料，`inject` 讓下層透過相同的 key 取得它。這裡提供的是共用狀態和操作，所以頁面能表達「打開作品頁」，不用自己操作瀏覽器網址。
+
+共用介面的型別來自 [context.ts](https://github.com/clhuang224/web/blob/main/src/app/context.ts)：
+
+```ts
+type SiteContext = ReturnType<typeof useHost>
+export const siteContextKey: InjectionKey<SiteContext> = Symbol('site-context')
+```
+
+`typeof useHost` 在這裡取得函式的型別，沒有呼叫函式；`ReturnType` 再取出它的回傳型別。因此 `useHost()` 增減操作時，共用介面也會跟著改。
+
+`InjectionKey<SiteContext>` 把這份資料型別接到注入用的 key，讓提供端與讀取端能使用相同約定。`Symbol` 則建立具有獨立身分的 key，避免只靠文字名稱辨識。
+
+另一種做法是使用 props，也就是由父元件把資料逐層傳給子元件。元件層級少時，props 的來源很直接；跨越路由與多個頁面共用時，provide/inject 可以減少中間層的轉傳。這個專案採用後者，仍需要讓資料來源清楚可追。[Vue 官方說明](https://vuejs.org/guide/components/provide-inject.html)有完整的使用方式。
 
 ## 先練習分辨這三種程式
 

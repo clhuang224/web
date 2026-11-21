@@ -13,9 +13,10 @@
 | [HomePage.vue](https://github.com/clhuang224/web/blob/main/src/pages/HomePage.vue)                  | 輪播、精選作品與文章的組合。            |
 | [ProjectPage.vue](https://github.com/clhuang224/web/blob/main/src/pages/ProjectPage.vue)            | 作品資料、GitHub 資訊和外連。           |
 | [DrawingPage.vue](https://github.com/clhuang224/web/blob/main/src/pages/DrawingPage.vue)            | 單張塗鴉與前後導航。                    |
-| [GuidePage.vue](https://github.com/clhuang224/web/blob/main/src/pages/GuidePage.vue)                | 幕後文件的站內容器與原生 webview。      |
+| [EmbedPage.vue](https://github.com/clhuang224/web/blob/main/src/pages/EmbedPage.vue)                | 幕後與網誌的站內容器、原生 webview。    |
 | [DoodleCarousel.vue](https://github.com/clhuang224/web/blob/main/src/components/DoodleCarousel.vue) | 播放狀態、計時器和可見圖片。            |
 | [VectorImage.vue](https://github.com/clhuang224/web/blob/main/src/components/VectorImage.vue)       | SVG 的平台分支。                        |
+| [DoodleImage.vue](https://github.com/clhuang224/web/blob/main/src/components/DoodleImage.vue)       | 縮圖佔位、原圖載入與狀態切換。          |
 | [InAppBrowser.vue](https://github.com/clhuang224/web/blob/main/src/components/InAppBrowser.vue)     | 原生 webview 與關閉控制。               |
 
 ## 規則、資料與平台
@@ -31,7 +32,7 @@
 | [src/content/copy.ts](https://github.com/clhuang224/web/blob/main/src/content/copy.ts)             | 三語介面文案。                        |
 | [src/content/tags.ts](https://github.com/clhuang224/web/blob/main/src/content/tags.ts)             | 技術標籤的顏色對照與預設值。          |
 | [src/content/projects.ts](https://github.com/clhuang224/web/blob/main/src/content/projects.ts)     | 作品與平台目的地。                    |
-| [src/content/articles.ts](https://github.com/clhuang224/web/blob/main/src/content/articles.ts)     | 首頁精選文章。                        |
+| [src/content/articles.ts](https://github.com/clhuang224/web/blob/main/src/content/articles.ts)     | 精選文章、網誌路徑與網址轉換。        |
 | [src/content/doodles.ts](https://github.com/clhuang224/web/blob/main/src/content/doodles.ts)       | 塗鴉清單與描述。                      |
 | [src/platform/host.ts](https://github.com/clhuang224/web/blob/main/src/platform/host.ts)           | 狀態訂閱、操作和 standalone 路徑。    |
 | [src/platform/runtime.ts](https://github.com/clhuang224/web/blob/main/src/platform/runtime.ts)     | 平台判斷與資源前綴。                  |
@@ -41,23 +42,24 @@
 
 ## 建置、樣式與檢查
 
-| 原始碼                                                                                               | 找什麼                                  |
-| ---------------------------------------------------------------------------------------------------- | --------------------------------------- |
-| [package.json](https://github.com/clhuang224/web/blob/main/package.json)                             | 實際存在的 scripts 和依賴。             |
-| [lynx.config.ts](https://github.com/clhuang224/web/blob/main/lynx.config.ts)                         | Lynx/Web 目標與 CSS 支援設定。          |
-| [rsbuild.host.config.ts](https://github.com/clhuang224/web/blob/main/rsbuild.host.config.ts)         | 瀏覽器入口、代理、複製與 headers。      |
-| [uno.config.ts](https://github.com/clhuang224/web/blob/main/uno.config.ts)                           | Utility CSS 的掃描和 preset。           |
-| [src/styles/site.css](https://github.com/clhuang224/web/blob/main/src/styles/site.css)               | 元件樣式與語意色彩。                    |
-| [scripts/dev.mjs](https://github.com/clhuang224/web/blob/main/scripts/dev.mjs)                       | 多個開發程序的啟停。                    |
-| [scripts/preview.mjs](https://github.com/clhuang224/web/blob/main/scripts/preview.mjs)               | 靜態預覽、路徑和 MIME。                 |
-| [scripts/verify-build.mjs](https://github.com/clhuang224/web/blob/main/scripts/verify-build.mjs)     | 必要輸出檢查。                          |
-| [scripts/prepare-pages.mjs](https://github.com/clhuang224/web/blob/main/scripts/prepare-pages.mjs)   | GitHub Pages 的頁面副本、404 與 CNAME。 |
-| [docs/.vitepress/config.mts](https://github.com/clhuang224/web/blob/main/docs/.vitepress/config.mts) | 文件來源、章節導覽、搜尋和輸出位置。    |
-| [carousel.test.ts](https://github.com/clhuang224/web/blob/main/src/domain/carousel.test.ts)          | 一輪換組、前後與版面對齊。              |
-| [navigation.test.ts](https://github.com/clhuang224/web/blob/main/src/domain/navigation.test.ts)      | 路徑與狀態條件。                        |
-| [repository.test.ts](https://github.com/clhuang224/web/blob/main/src/domain/repository.test.ts)      | 外部資料解析案例。                      |
-| [content.test.ts](https://github.com/clhuang224/web/blob/main/src/content/content.test.ts)           | 翻譯鍵、清單和素材條件。                |
-| [.github/workflows/ci.yml](https://github.com/clhuang224/web/blob/main/.github/workflows/ci.yml)     | 主站 CI 執行哪些檢查。                  |
+| 原始碼                                                                                                             | 找什麼                                  |
+| ------------------------------------------------------------------------------------------------------------------ | --------------------------------------- |
+| [package.json](https://github.com/clhuang224/web/blob/main/package.json)                                           | 實際存在的 scripts 和依賴。             |
+| [lynx.config.ts](https://github.com/clhuang224/web/blob/main/lynx.config.ts)                                       | Lynx/Web 目標與 CSS 支援設定。          |
+| [rsbuild.host.config.ts](https://github.com/clhuang224/web/blob/main/rsbuild.host.config.ts)                       | 瀏覽器入口、代理與靜態資產複製。        |
+| [uno.config.ts](https://github.com/clhuang224/web/blob/main/uno.config.ts)                                         | Utility CSS 的掃描和 preset。           |
+| [src/styles/site.css](https://github.com/clhuang224/web/blob/main/src/styles/site.css)                             | 元件樣式與語意色彩。                    |
+| [scripts/dev.mjs](https://github.com/clhuang224/web/blob/main/scripts/dev.mjs)                                     | 多個開發程序的啟停。                    |
+| [scripts/preview.mjs](https://github.com/clhuang224/web/blob/main/scripts/preview.mjs)                             | 靜態預覽、路徑和 MIME。                 |
+| [scripts/verify-build.mjs](https://github.com/clhuang224/web/blob/main/scripts/verify-build.mjs)                   | 必要輸出檢查。                          |
+| [scripts/generate-placeholders.mjs](https://github.com/clhuang224/web/blob/main/scripts/generate-placeholders.mjs) | 從原始塗鴉產生獨立縮圖資料。            |
+| [scripts/prepare-pages.mjs](https://github.com/clhuang224/web/blob/main/scripts/prepare-pages.mjs)                 | GitHub Pages 的頁面副本、404 與 CNAME。 |
+| [docs/.vitepress/config.mts](https://github.com/clhuang224/web/blob/main/docs/.vitepress/config.mts)               | 文件來源、章節導覽、搜尋和輸出位置。    |
+| [carousel.test.ts](https://github.com/clhuang224/web/blob/main/src/domain/carousel.test.ts)                        | 一輪換組、前後與版面對齊。              |
+| [navigation.test.ts](https://github.com/clhuang224/web/blob/main/src/domain/navigation.test.ts)                    | 路徑與狀態條件。                        |
+| [repository.test.ts](https://github.com/clhuang224/web/blob/main/src/domain/repository.test.ts)                    | 外部資料解析案例。                      |
+| [content.test.ts](https://github.com/clhuang224/web/blob/main/src/content/content.test.ts)                         | 翻譯鍵、清單和素材條件。                |
+| [.github/workflows/ci.yml](https://github.com/clhuang224/web/blob/main/.github/workflows/ci.yml)                   | 主站 CI 執行哪些檢查。                  |
 
 ## 維護文件
 

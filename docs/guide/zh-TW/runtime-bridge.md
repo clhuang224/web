@@ -4,6 +4,8 @@
 
 目前的做法，是先讓頁面使用共用操作，再由平台轉接決定怎麼完成。
 
+這裡把提供執行容器與平台能力的一端稱為 host，應用程式與 host 傳遞操作、資料的介面則稱為 bridge。接下來會沿用這兩個名稱，完整對照放在[名詞頁](glossary.md)。
+
 先讀 [src/platform/host.ts](https://github.com/clhuang224/web/blob/main/src/platform/host.ts)，再對照 [src/host/index.ts](https://github.com/clhuang224/web/blob/main/src/host/index.ts)。兩個 host 名稱相近，責任不同。
 
 ## 兩個 host 各做什麼？
@@ -47,13 +49,15 @@ export function nativeHost() {
 
 這裡還要多做一次資料檢查。雖然兩邊都用 TypeScript，訊息真的傳進來時，仍然只是 runtime 的值；頁面種類、ID 和語言都要符合預期，才繼續操作。
 
+因此接收端先把值當成 `unknown`：資料可以進來，但還不能直接假設它有 `page` 或 `locale`。通過 `isHostState` 這類檢查後，TypeScript 才能把它縮小成已知的型別。這種搭配實際條件進行型別縮小的函式，稱為 type guard。
+
 ## 第一次狀態如何抵達？
 
 `useHost()` 掛載後，先訂閱 `host-state` 和 `repository` 事件，再請求 `getState`。先建立接收管道，可以減少快速回應早於訂閱的問題。
 
 瀏覽器收到 `getState`，把應用程式標成就緒、解除載入逾時，並回傳從網址與媒體查詢讀到的狀態。後續上一頁、視窗寬度或動態偏好改變，則再透過事件傳入。
 
-狀態放在 `shallowRef` 中。程式用 `state.value = { ...value }` 取代整份物件，讓使用它的 computed 和 watch 能追到新的狀態。若只在物件深處偷偷改值，就不能期待相同的追蹤方式。
+`shallowRef` 是只追蹤最外層值替換的 ref，不會把物件內部的每一層都變成深層反應式資料。程式用 `state.value = { ...value }` 取代整份物件，讓使用它的 computed 和 watch 能追到新的狀態；只改深處的欄位，不能期待相同的更新方式。
 
 ## standalone 模式怎麼處理？
 
@@ -65,8 +69,8 @@ export function nativeHost() {
 
 讀到這裡，可以再看一次作品卡的 `navigate(...)`。它只需要交代要去哪裡，平台端再決定怎麼走。
 
-之後如果要加分享、下載或儲存偏好，也可以先想清楚元件需要什麼結果，再分別處理 Web 和原生的接法。
+另一種做法，是讓各個元件自行判斷平台並呼叫對應能力。元件很少時，這樣可以少一層包裝；操作分散到多個頁面後，平台分支和驗證規則也容易重複。
 
-同時要付出介面維護與狀態同步的成本。不要為了每個局部計算都增加 bridge；輪播索引就能直接在應用程式內處理。
+目前用共用介面集中這些差異，代價是需要維護介面與同步流程。局部計算仍直接留在應用程式內，例如輪播不需要每換一張就請 host 計算索引。
 
 下一篇從[實際路由](routing.md)看瀏覽器與應用程式如何配合。

@@ -12,7 +12,7 @@
 
 它刻意處理本專案使用的來源格式，不是通用 Git URL 解析器。若未來要接受 SSH、子路徑、query 或其他平台，應先補明確需求與測試。
 
-頁面用 immediate watch 監看 repository 名稱，因此第一次進入與切換作品都能提出資料要求。
+頁面用 `watch` 監看 repository 名稱，並設定 `immediate: true`。`watch` 原本是在資料變化後執行回呼，`immediate` 則讓它建立時先執行一次，因此第一次進入與切換作品都能提出資料要求。
 
 ## 為什麼回應先當 unknown？
 
@@ -28,6 +28,8 @@ export interface RepositorySummary {
 ```
 
 GitHub 回應裡的欄位很多，這裡只留下畫面會用的四個。`language` 允許 `null`，表示沒有取得主要語言時，也能保留其他資訊。
+
+`string | null` 是聯集型別，表示值可能是字串，也可能沒有語言資料。頁面使用前需要先判斷，才能安全地依字串處理。
 
 再看請求的入口：
 
@@ -46,9 +48,13 @@ export function fetchRepository(
 
 第一個 `then` 先看 HTTP 結果，成功才讀 JSON。接著交給 `parseRepository` 檢查名稱、語言、星星數和日期，轉成上面的格式。網路或解析過程出了錯，最後回傳 `null`。
 
+`Promise<RepositorySummary | null>` 描述非同步結果：函式先回傳 Promise，完成後才得到摘要或 `null`。`then` 把完成後的值交給下一步；`catch` 處理這條鏈上的錯誤。
+
 也就是說，`response.json()` 之後還有一步要做：確認拿到的資料真的符合頁面需要的條件。
 
 這和直接寫 `as RepositorySummary` 不同：型別斷言只告訴 TypeScript 接受這個假設，不會替實際資料補欄位或修正型別。
+
+`unknown` 則保留「還不知道格式」的限制，必須先用實際條件檢查，才能讀取已知欄位。像 `isRepositorySummary(value): value is RepositorySummary` 這種宣告，會在檢查成功的分支縮小型別；條件本身仍由函式負責。可以對照 [TypeScript 的型別縮小說明](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates)。
 
 目前驗證只涵蓋程式寫出的條件。它不是完整 GitHub schema 驗證，也沒有對所有數值範圍提出保證。
 
@@ -69,7 +75,15 @@ Web host 只為作品清單中已知的 repository 提供查詢。它用 Map 記
 
 因此看不到星星數，不能立刻推論星星數為零；可能只是尚未取得資料。也不要把省略資訊描述成完整的離線功能，因為圖片、頁面資源和外部目的地仍有自己的網路需求。
 
-目前使用無憑證的公開請求，沒有在前端嵌入 GitHub token。若將來公開流量需要不同策略，可考慮建置時產生快照，但要讓讀者知道資料的更新時間與來源。
+目前使用無憑證的公開請求，沒有在前端嵌入 GitHub token。
+
+## 與建置時快照比較
+
+目前在執行時請求，能取得請求當下的 GitHub 資料，代價是頁面需要處理等待與失敗。
+
+另一種做法是在建置時取得資料，讓頁面直接讀快照。這可以減少訪客開頁時的 API 依賴，但資料更新需要重新產生，快照建立失敗也要有處理方式。
+
+本專案尚未採用快照。具體比較步驟放在[實驗章節](experiments.md)，主章節仍以現在的請求流程為準。
 
 ## 這個功能的延伸價值
 

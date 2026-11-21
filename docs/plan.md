@@ -136,14 +136,14 @@ The repository now contains the application alongside its original assets, docum
 
 Keep article selections, projects, platform destinations, and translated editorial content independent of the renderer where practical. Add shared packages only when another real consumer needs them.
 
-External profile subdomains described in the domain plan are intended entry points. Their live availability and destinations must be checked before publishing links. Historical domain configuration does not establish current hosting state. Stable redirects from paths such as `/blog` remain optional and depend on the selected host.
+External profile subdomains described in the domain plan are intended entry points. Their live availability and destinations must be checked before publishing links. Historical domain configuration does not establish current hosting state. The implemented `/blog` routes embed the independently hosted blog; they are application pages rather than redirects.
 
 Implemented structure and data flow belong in [the architecture document](architecture.md). Product decisions and their reasons belong here; [the asset catalog](assets.md) owns source-art details.
 
 ## Open Questions
 
 - Which additional projects should appear in the full portfolio?
-- Should the blog move into this site later, or remain an independent destination?
+- Should blog content and publishing eventually migrate into this project, or continue to use independent hosting?
 - Should the export order after the opening carousel pair change, and do the six-second interval and 767-pixel breakpoint need adjustment after browser review?
 - Which color values and typography adjustments preserve the original identity with sufficient readability?
 - What editorial translation and review workflow should accompany new About and article content?
@@ -162,6 +162,6 @@ Implemented structure and data flow belong in [the architecture document](archit
 
 ## Public Guide
 
-The [Traditional Chinese guide](guide/zh-TW/index.md) is authored as sixteen linked pages for visitors and Vue developers. It covers current implementation, maintenance exercises, and native exploration, with source links and explicit verification boundaries. Developer reference remains in the architecture and asset documents.
+The [Traditional Chinese guide](guide/zh-TW/index.md) is authored as seventeen linked pages for visitors and Vue developers. It covers current implementation, maintenance exercises, native comparisons, and explicitly unimplemented experiments, with source links and explicit verification boundaries. Developer reference remains in the architecture and asset documents.
 
 VitePress builds the guide independently into `dist/guide/`, and the sidebar links to it as described in the [integration contract](site-integration.md).

@@ -2,6 +2,29 @@
 
 這裡以 Lynn’s 的用法解釋名詞。需要完整 API 定義時，再沿著各章節的官方連結查閱。
 
+## Vue 與 TypeScript 基礎
+
+| 名詞             | 在這個專案裡怎麼理解                                    | 相關章節                                           |
+| ---------------- | ------------------------------------------------------- | -------------------------------------------------- |
+| Composition API  | 用函式組合 Vue 元件的狀態、計算與生命週期。             | [Vue 到 Lynx](vue-to-lynx.md)                      |
+| `ref` / `.value` | 保存反應式狀態；script 透過 `.value` 讀寫它。           | [輪播](carousel.md)                                |
+| `computed`       | 由其他反應式資料推導結果，例如目前可見的圖片。          | [輪播](carousel.md)                                |
+| `watch`          | 監看資料變化，執行需要額外動作的回呼。                  | [輪播](carousel.md)、[GitHub 資料](github-data.md) |
+| `shallowRef`     | 追蹤最外層值的替換，不自動追蹤物件所有深層欄位。        | [平台轉接](runtime-bridge.md)                      |
+| Props            | 父元件傳給子元件的資料。                                | [Vue 到 Lynx](vue-to-lynx.md)                      |
+| Provide / inject | 上層提供共用值，下層透過相同 key 取得。                 | [Vue 到 Lynx](vue-to-lynx.md)                      |
+| `interface`      | 描述物件應有的欄位與型別，不會替 runtime 自動驗證資料。 | [三語內容](content-and-i18n.md)                    |
+| 泛型 / `T`       | 讓同一個型別結構接受不同的內容型別。                    | [三語內容](content-and-i18n.md)                    |
+| `Record<K, T>`   | 描述一組鍵為 K、值為 T 的物件。                         | [三語內容](content-and-i18n.md)                    |
+| `unknown`        | 尚未確認格式的值，需要檢查後才能當成特定資料使用。      | [GitHub 資料](github-data.md)                      |
+| 聯集型別 / `\|`  | 值可能是列出的幾種型別或常值，例如字串或 null。         | [GitHub 資料](github-data.md)                      |
+| `ReturnType`     | 取得函式回傳值的型別，讓共用介面跟著函式變更。          | [Vue 到 Lynx](vue-to-lynx.md)                      |
+| Promise          | 代表稍後才完成的非同步結果。                            | [GitHub 資料](github-data.md)                      |
+
+## 渲染、平台與工程
+
+Runtime 是程式實際執行的環境，與把原始碼轉成輸出的建置工具不同。Shell 則是承載頁面的外殼；本專案用 Explorer 作為原生頁面的測試外殼。
+
 | 名詞            | 在這個專案裡怎麼理解                                                              | 相關章節                                           |
 | --------------- | --------------------------------------------------------------------------------- | -------------------------------------------------- |
 | Renderer        | 把 Vue 元件結果接到實際元素與畫面的機制。VueLynx 的目標是 Lynx。                  | [Vue 到 Lynx](vue-to-lynx.md)                      |

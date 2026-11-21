@@ -6,7 +6,7 @@
 
 ## 路線 A：先理解這件作品
 
-1. [選擇與取捨](design-decisions.md)：為什麼保留 Vue，又採用 Lynx？為什麼網誌仍是獨立網站？
+1. [選擇與取捨](design-decisions.md)：為什麼保留 Vue，又採用 Lynx？為什麼嵌入網誌，仍保留獨立的內容與部署？
 2. [從 Vue 到 Lynx](vue-to-lynx.md)：同樣的 SFC，渲染目標變了哪些事？
 3. [原生端探索](native-exploration.md)：目前 Android 路徑做到了哪裡，接下來值得驗證什麼？
 
@@ -24,7 +24,9 @@
 8. [建置、載入與部署](build-and-hosting.md)
 9. [測試與可及性](testing-and-accessibility.md)
 
-這是主要的教學路線。Vue 已經熟悉的部分會帶過，Lynx 的差異再多看一點；碰到 host、bridge、renderer 這些詞，可以先用[名詞對照](glossary.md)找回位置。
+這是主要的教學路線。Vue 與 TypeScript 概念會在用到時簡短說明，Lynx 的差異再多看一點；碰到 host、bridge、renderer 這些詞，可以先用[名詞對照](glossary.md)找回位置。
+
+讀完目前實作後，可以接著看[延伸實驗與驗證](experiments.md)。這一章獨立整理尚未實作的研究題目，不需要在第一次閱讀時一起完成。
 
 ## 路線 C：我現在只想改一個地方
 
