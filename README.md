@@ -4,7 +4,7 @@ A personal home for a frontend engineer's projects, writing, drawings, and other
 
 ## Status
 
-The first browser foundation is implemented with VueLynx: a responsive homepage, a portfolio with per-project pages, a drawings gallery with per-drawing pages, an About page shell, three-language navigation, and a doodle carousel. The project is not deployed. About copy remains editorial work; the homepage lists selected blog posts.
+The first browser foundation is implemented with VueLynx: a responsive homepage, a portfolio with per-project pages, a drawings gallery with per-drawing pages, an About page shell, three-language navigation, and a doodle carousel. The `Pages` workflow deploys it to [lynns.me](https://lynns.me) on each push to `main`. About copy remains editorial work; the homepage lists selected blog posts.
 
 ## Current Experience
 

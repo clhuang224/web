@@ -50,6 +50,7 @@ Inspect any future starter or generator output in a separate directory and merge
 
 - `pnpm run dev`: generate/watch UnoCSS and run Rspeedy, the VitePress guide, and the browser host.
 - `pnpm run build`: generate styles, build Lynx, the host, and the guide, and verify essential static output.
+- `pnpm run build:pages`: run the build and add route pages, `404.html`, and `CNAME` for GitHub Pages.
 - `pnpm run check:guide`: check the guide's chapters, local links, and source references.
 - `pnpm run preview`: serve `dist/` on port 4173 with runtime headers and deep-route handling.
 - `pnpm run lint`: run ESLint.

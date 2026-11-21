@@ -6,7 +6,7 @@ Lynn's is a personal home on the web: a place to introduce Lynn, share selected 
 
 The site idea dates to 2023, and the original visual design dates to 2024. The first release will carry that design forward while improving readability, responsive behavior, and multilingual content.
 
-The first application foundation is implemented: VueLynx pages, a browser host, three-language resources and URLs, a responsive doodle carousel, and local build/check commands. The site is not deployed. Original About copy, broader browser/accessibility verification, production hosting, and public guide integration remain unfinished. Selected article resources and the Traditional Chinese guide content exist. Concrete module and build details are documented in [the architecture guide](architecture.md).
+The first application foundation is implemented: VueLynx pages, a browser host, three-language resources and URLs, a responsive doodle carousel, and local build/check commands. The site deploys to GitHub Pages at `lynns.me`. Original About copy and broader browser/accessibility verification remain unfinished. Selected article resources and the Traditional Chinese guide content exist. Concrete module and build details are documented in [the architecture guide](architecture.md).
 
 ## Goals
 
@@ -164,4 +164,4 @@ Implemented structure and data flow belong in [the architecture document](archit
 
 The [Traditional Chinese guide](guide/zh-TW/index.md) is authored as sixteen linked pages for visitors and Vue developers. It covers current implementation, maintenance exercises, and native exploration, with source links and explicit verification boundaries. Developer reference remains in the architecture and asset documents.
 
-VitePress builds the guide independently into `dist/guide/`, and the sidebar links to it as described in the [integration contract](site-integration.md). It is not deployed yet.
+VitePress builds the guide independently into `dist/guide/`, and the sidebar links to it as described in the [integration contract](site-integration.md).

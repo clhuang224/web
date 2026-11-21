@@ -64,6 +64,9 @@ importers:
       husky:
         specifier: ^9.1.7
         version: 9.1.7
+      jiti:
+        specifier: 2.7.0
+        version: 2.7.0
       prettier:
         specifier: ^3.6.2
         version: 3.10.1
