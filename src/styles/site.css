@@ -522,10 +522,6 @@
 }
 .drawing-frame {
   width: 100%;
-  padding: 6px;
-  border-radius: 8px;
-  background-color: var(--color-coral);
-  box-sizing: border-box;
 }
 .drawing-full {
   width: 100%;
