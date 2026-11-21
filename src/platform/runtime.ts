@@ -15,8 +15,12 @@ export function isStandalone() {
   return typeof SystemInfo !== 'undefined' && SystemInfo?.platform !== 'web'
 }
 
+const publicOrigin = import.meta.env.DEV
+  ? import.meta.env.ASSET_PREFIX
+  : 'https://lynns.me'
+
 export function asset(path: string) {
-  return isStandalone() ? `${import.meta.env.ASSET_PREFIX}${path}` : path
+  return isStandalone() ? `${publicOrigin}${path}` : path
 }
 
 export const guideUrl = import.meta.env.DEV
