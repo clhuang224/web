@@ -69,8 +69,11 @@ watch(
           class="pill-button"
           accessibility-role="link"
           @tap="openExternal(project.website)"
-          ><text class="pill-label">{{ text.openProject }} ↗</text></view
-        >
+          ><text class="pill-label">{{ text.openProject }}</text
+          ><VectorImage
+            class="small-icon"
+            src="/images/icons/arrow-right-up-line.svg"
+        /></view>
         <view
           class="pill-button pill-button-outline"
           accessibility-role="link"
