@@ -11,6 +11,7 @@ import { pathForPage } from './domain/navigation'
 import { locales } from './domain/site'
 import type { Locale, Page } from './domain/site'
 import { useHost } from './platform/host'
+import { safeAreaInsets } from './platform/runtime'
 import './styles/uno.css'
 import './styles/site.css'
 
@@ -18,6 +19,18 @@ const site = useHost()
 provide(siteContextKey, site)
 const { state, navigate, setLocale, openExternal, browserUrl } = site
 const text = computed(() => copy[state.value.locale])
+const insets = safeAreaInsets()
+const shellInsets = computed(() =>
+  state.value.compact
+    ? { paddingBottom: `${insets.bottom}px` }
+    : { paddingTop: `${insets.top}px`, paddingBottom: `${insets.bottom}px` },
+)
+const sidebarInsets = computed(() =>
+  state.value.compact ? { paddingTop: `${10 + insets.top}px` } : {},
+)
+const menuInsets = computed(() =>
+  state.value.compact && insets.top ? { top: `${48 + insets.top}px` } : {},
+)
 const languageNames: Record<Locale, string> = {
   'zh-TW': '繁體中文',
   en: 'English',
@@ -66,8 +79,12 @@ watch(
 </script>
 
 <template>
-  <view class="site-shell" :class="{ 'site-shell-compact': state.compact }">
-    <view class="sidebar">
+  <view
+    class="site-shell"
+    :class="{ 'site-shell-compact': state.compact }"
+    :style="shellInsets"
+  >
+    <view class="sidebar" :style="sidebarInsets">
       <view
         class="brand-link"
         accessibility-role="link"
@@ -130,7 +147,7 @@ watch(
     <scroll-view v-else class="main-scroll" scroll-orientation="vertical">
       <view class="main-content"><RouterView /></view>
     </scroll-view>
-    <view v-if="languageOpen" class="language-menu">
+    <view v-if="languageOpen" class="language-menu" :style="menuInsets">
       <view
         v-for="locale in locales"
         :key="locale"
