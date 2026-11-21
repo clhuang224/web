@@ -15,9 +15,5 @@ export default function (_nativeModules, callHost) {
       await callHost('openExternal', input)
       callback()
     },
-    async openGuide(input, callback) {
-      await callHost('openGuide', input)
-      callback()
-    },
   }
 }

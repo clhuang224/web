@@ -27,7 +27,7 @@ The first application foundation is implemented: VueLynx pages, a browser host, 
 | Blog           | An external link to the existing blog; selected article cards link to their original posts.                                                                                  |
 | Platform links | Access to SoundCloud, Crowdin, LinkedIn, and GitHub profiles.                                                                                                                |
 | Drawings       | A gallery and per-drawing pages for the supplied original artwork.                                                                                                           |
-| Public guide   | A secondary sidebar entry into source-linked Traditional Chinese VueLynx learning material. Built with VitePress and served at `/guide/`.                                    |
+| Public guide   | Source-linked Traditional Chinese VueLynx learning material, embedded at `/behind-the-scenes` behind a secondary entry at the bottom of the sidebar.                         |
 | Languages      | Traditional Chinese, English, and Japanese for navigation, interface text, About content, and project and article metadata.                                                  |
 
 The first release does not include migrating the blog, translating full articles, a content-management backend, accounts, or a database. Project and drawing detail pages are implemented. General site search, filtering, and additional collections remain outside the committed scope; documentation search is a separate planned capability.

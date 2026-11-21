@@ -7,9 +7,11 @@ export const pages = [
   'drawings',
   'drawing',
   'about',
+  'guide',
+  'chapter',
 ] as const
 export type Page = (typeof pages)[number]
-export const detailPages = ['project', 'drawing'] as const
+export const detailPages = ['project', 'drawing', 'chapter'] as const
 export type DetailPage = (typeof detailPages)[number]
 export type ListPage = Exclude<Page, DetailPage>
 
@@ -56,5 +58,4 @@ export interface SiteHostModule {
   ): void
   getRepository(input: { name: string }, callback: () => void): void
   openExternal(input: { url: string }, callback: () => void): void
-  openGuide(input: null, callback: () => void): void
 }

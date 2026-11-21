@@ -1,6 +1,11 @@
 import '@lynx-js/web-core/client'
 import type { LynxViewElement } from '@lynx-js/web-core/client'
 import { routeCatalog } from '../content/catalog'
+import {
+  chapterFromGuidePath,
+  guideChapters,
+  guidePath,
+} from '../content/guide'
 import { projects } from '../content/projects'
 import {
   isLocale,
@@ -39,7 +44,13 @@ let stopAccessibility: (() => void) | undefined
 
 const copy = {
   'zh-TW': {
-    pages: { home: '首頁', portfolio: '作品', drawings: '塗鴉', about: '關於' },
+    pages: {
+      home: '首頁',
+      portfolio: '作品',
+      drawings: '塗鴉',
+      about: '關於',
+      guide: '幕後',
+    },
     drawing: '塗鴉',
     description: "Lynn's 的作品、文章與創作入口。",
     notFound: '找不到這個頁面。您可以從首頁繼續瀏覽。',
@@ -51,6 +62,7 @@ const copy = {
       portfolio: 'Portfolio',
       drawings: 'Drawings',
       about: 'About',
+      guide: 'Behind the scenes',
     },
     drawing: 'Drawing',
     description: 'Projects, selected writing, and creative work by Lynn.',
@@ -65,6 +77,7 @@ const copy = {
       portfolio: '作品',
       drawings: '落書き',
       about: 'プロフィール',
+      guide: '舞台裏',
     },
     drawing: '落書き',
     description: 'Lynn の作品、記事、創作活動を紹介するサイト。',
@@ -129,6 +142,11 @@ function pageTitle(state: HostState): string {
       text.pages.portfolio
     )
   if (state.page === 'drawing') return `${text.drawing} ${state.id ?? ''}`
+  if (state.page === 'chapter')
+    return (
+      guideChapters.find((chapter) => chapter.slug === state.id)?.title ??
+      text.pages.guide
+    )
   return text.pages[state.page]
 }
 
@@ -165,6 +183,46 @@ function sendState() {
   if (ready) view.sendGlobalEvent('host-state', [{ ...state }])
 }
 
+let guideFrame: HTMLIFrameElement | undefined
+
+function placeGuide() {
+  const slot = view.shadowRoot?.querySelector<HTMLElement>('.guide-frame')
+  if (!slot) {
+    guideFrame = undefined
+    return
+  }
+  if (guideFrame && slot.contains(guideFrame)) return
+  const state = stateFromLocation()
+  const frame = document.createElement('iframe')
+  frame.className = 'guide-embed'
+  frame.title = copy[state.locale].pages.guide
+  frame.src = guidePath(state.page === 'chapter' ? state.id : null)
+  frame.style.cssText = 'flex:1;width:100%;height:100%;border:0;display:block'
+  slot.append(frame)
+  guideFrame = frame
+}
+
+function followGuide(event: MessageEvent) {
+  if (event.origin !== window.location.origin) return
+  if (!guideFrame || event.source !== guideFrame.contentWindow) return
+  const data: unknown = event.data
+  if (
+    typeof data !== 'object' ||
+    data === null ||
+    !('type' in data) ||
+    data.type !== 'guide-route' ||
+    !('path' in data) ||
+    typeof data.path !== 'string'
+  )
+    return
+  const state = stateFromLocation()
+  const chapter = chapterFromGuidePath(data.path)
+  const path = pathForPage(state.locale, chapter ? 'chapter' : 'guide', chapter)
+  if (window.location.pathname === path) return
+  window.history.replaceState(null, '', path)
+  sendState()
+}
+
 function cachedRepository(name: string): Promise<RepositorySummary | null> {
   const cached = repositoryRequests.get(name)
   if (cached) return cached
@@ -194,10 +252,6 @@ function handleRequest(
     const state = stateFromLocation()
     updateMetadata(state)
     return { ...state }
-  }
-  if (name === 'openGuide') {
-    window.location.assign('/guide/')
-    return null
   }
   if (typeof data !== 'object' || data === null) return null
 
@@ -243,8 +297,12 @@ view.addEventListener('error', showError)
 const loadTimeout = window.setTimeout(showError, 20_000)
 view.url = new URL('/lynx/main.web.bundle', window.location.href).href
 hostRoot.append(view)
+const guideObserver = new MutationObserver(placeGuide)
+if (view.shadowRoot)
+  guideObserver.observe(view.shadowRoot, { childList: true, subtree: true })
 
 window.addEventListener('popstate', sendState)
+window.addEventListener('message', followGuide)
 compactQuery.addEventListener('change', sendState)
 motionQuery.addEventListener('change', sendState)
 
@@ -252,6 +310,8 @@ window.addEventListener('pagehide', (event) => {
   if (event.persisted) return
   window.clearTimeout(loadTimeout)
   window.removeEventListener('popstate', sendState)
+  window.removeEventListener('message', followGuide)
+  guideObserver.disconnect()
   compactQuery.removeEventListener('change', sendState)
   motionQuery.removeEventListener('change', sendState)
   stopAccessibility?.()

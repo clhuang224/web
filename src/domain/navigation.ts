@@ -15,11 +15,13 @@ const listSegments: Record<ListPage, string> = {
   portfolio: 'portfolio',
   drawings: 'drawings',
   about: 'about',
+  guide: 'behind-the-scenes',
 }
 
 const detailSegments: Record<DetailPage, string> = {
   project: 'portfolio',
   drawing: 'drawing',
+  chapter: 'behind-the-scenes',
 }
 
 export function isLocale(value: unknown): value is Locale {

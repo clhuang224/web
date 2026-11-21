@@ -1,6 +1,6 @@
 # Public Guide Integration
 
-Status: implemented except deployment. VitePress 1.6.4 builds the guide from `docs/.vitepress/config.mts`, the sidebar has the entry below, and the preview server resolves guide pages. The architecture guide describes the implemented behavior.
+Status: implemented and deployed. VitePress 1.6.4 builds the guide from `docs/.vitepress/config.mts`, and the site embeds it at `/behind-the-scenes`. The architecture guide describes the implemented behavior.
 
 ## Reader Experience
 
@@ -18,13 +18,11 @@ Use these labels for the main site's navigation item:
 | en          | Behind the scenes | Guide in Traditional Chinese |
 | ja          | 舞台裏            | 繁体字中国語のガイド         |
 
-Keep Home, Blog, Portfolio, Drawings, and About in their current order; place this secondary entry after About. Use a Remix Icon if an icon is needed. Do not add this guide to the existing application `Page` union merely to launch another document.
+Keep Home, Blog, Portfolio, Drawings, and About together as the main navigation. Place this entry at the bottom of the sidebar, separate from them, so it reads as a secondary destination.
 
-Reserve `/guide/` for the documentation site. On the Web, navigate to its HTML document in the same browsing context. The existing memory router and `navigate()` only recognize application pages, so they must not intercept this transition. The current `openExternal()` opens a new browser window and is not automatically equivalent to the desired same-context behavior.
+Embed the guide inside the site instead of leaving it, so visitors keep the sidebar while reading. The site owns `/behind-the-scenes` and `/behind-the-scenes/<chapter>` as application pages; `/guide/` stays reserved for the documentation output that those pages embed. On the Web the browser host places a same-origin iframe in the page's content area and keeps the site URL in step with the chapter shown. In the native shell the page renders the guide's absolute HTTPS URL in a web view.
 
-In the native shell, open the guide's configured absolute HTTPS URL through the in-app browser. Reuse platform behavior rather than embedding a documentation renderer into Lynx. A host origin must be configured before this URL is considered usable; local paths alone are insufficient there.
-
-Provide an always-discoverable return link to the main website in the guide's header and mobile navigation. Preserve browser Back behavior. A language switch in the main site must not invent English or Japanese guide routes that do not exist.
+When embedded, hide the guide's own title and return link, because the site's sidebar already provides navigation. Keep the return link for the standalone `/guide/` pages. Preserve browser Back behavior. A language switch in the main site must not invent English or Japanese guide routes that do not exist.
 
 ## Documentation Build
 

@@ -16,7 +16,7 @@ import './styles/site.css'
 
 const site = useHost()
 provide(siteContextKey, site)
-const { state, navigate, setLocale, openExternal, openGuide, browserUrl } = site
+const { state, navigate, setLocale, openExternal, browserUrl } = site
 const text = computed(() => copy[state.value.locale])
 const languageNames: Record<Locale, string> = {
   'zh-TW': '繁體中文',
@@ -33,7 +33,6 @@ const navigation: NavigationItem[] = [
   'portfolio',
   'drawings',
   'about',
-  'guide',
 ]
 const sections: Record<Page, NavigationItem> = {
   home: 'home',
@@ -42,11 +41,13 @@ const sections: Record<Page, NavigationItem> = {
   drawings: 'drawings',
   drawing: 'drawings',
   about: 'about',
+  guide: 'guide',
+  chapter: 'guide',
 }
+const inGuide = computed(() => sections[state.value.page] === 'guide')
 
 function select(item: NavigationItem) {
   if (item === 'blog') openExternal('https://blog.lynns.me')
-  else if (item === 'guide') openGuide()
   else navigate(item)
 }
 
@@ -81,11 +82,7 @@ watch(
           :key="item"
           class="nav-link"
           accessibility-role="link"
-          :accessibility-label="
-            item === 'guide'
-              ? `${text.guide} (${text.guideLanguage})`
-              : text[item]
-          "
+          :accessibility-label="text[item]"
           :accessibility-selected="String(sections[state.page] === item)"
           @tap="select(item)"
           ><text
@@ -96,6 +93,18 @@ watch(
         >
       </view>
       <view class="sidebar-bottom">
+        <view
+          class="guide-link"
+          accessibility-role="link"
+          :accessibility-label="`${text.guide} (${text.guideLanguage})`"
+          :accessibility-selected="String(inGuide)"
+          @tap="navigate('guide')"
+          ><text
+            class="guide-label"
+            :class="{ 'guide-label-active': inGuide }"
+            >{{ text.guide }}</text
+          ></view
+        >
         <view class="language-select">
           <view
             class="language-trigger"
@@ -117,7 +126,8 @@ watch(
         <text class="sidebar-note">{{ text.madeWith }}</text>
       </view>
     </view>
-    <scroll-view class="main-scroll" scroll-orientation="vertical">
+    <view v-if="inGuide" class="guide-area"><RouterView /></view>
+    <scroll-view v-else class="main-scroll" scroll-orientation="vertical">
       <view class="main-content"><RouterView /></view>
     </scroll-view>
     <view v-if="languageOpen" class="language-menu">

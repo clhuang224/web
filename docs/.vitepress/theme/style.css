@@ -22,3 +22,9 @@
   --vp-c-brand-2: #4fb8b8;
   --vp-c-brand-3: #259595;
 }
+
+.embedded .VPNavBarTitle,
+.embedded .VPNavBarMenu,
+.embedded .VPNavScreenMenu {
+  display: none;
+}

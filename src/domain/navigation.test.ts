@@ -11,6 +11,7 @@ import { detailPages, locales, pages } from './site'
 const catalog: RouteCatalog = {
   project: ['queener'],
   drawing: ['01', '14'],
+  chapter: ['carousel'],
 }
 
 describe('localized locations', () => {
@@ -18,7 +19,7 @@ describe('localized locations', () => {
     for (const locale of locales) {
       for (const page of pages) {
         const id = detailPages.some((detail) => detail === page)
-          ? catalog[page as 'project' | 'drawing'][0]
+          ? catalog[page as keyof RouteCatalog][0]
           : null
         expect(parseSitePath(pathForPage(locale, page, id), catalog)).toEqual({
           locale,
@@ -37,6 +38,8 @@ describe('localized locations', () => {
     ['/drawings', 'zh-TW', 'drawings', null],
     ['/en/portfolio/queener', 'en', 'project', 'queener'],
     ['/ja/drawing/14', 'ja', 'drawing', '14'],
+    ['/behind-the-scenes', 'zh-TW', 'guide', null],
+    ['/en/behind-the-scenes/carousel', 'en', 'chapter', 'carousel'],
   ])(
     'reads explicit route %s independently of preferences',
     (path, locale, page, id) => {
@@ -57,6 +60,7 @@ describe('localized locations', () => {
     '/drawing/15',
     '/drawing',
     '/drawings/01',
+    '/behind-the-scenes/missing',
     '//about',
     '/home',
     'about',

@@ -4,7 +4,7 @@ import { isDetailPage, isHostState, isRouteId } from '../domain/navigation'
 import { fetchRepository, isRepositorySummary } from '../domain/repository'
 import type { RepositorySummary } from '../domain/repository'
 import type { HostState, Locale, Page } from '../domain/site'
-import { guideUrl, isStandalone, nativeHost } from './runtime'
+import { isStandalone, nativeHost } from './runtime'
 
 interface GlobalEventEmitter {
   addListener(name: string, callback: (value: unknown) => void): void
@@ -99,11 +99,6 @@ export function useHost() {
     else nativeHost()?.openExternal({ url }, () => undefined)
   }
 
-  function openGuide() {
-    if (standalone) browserUrl.value = guideUrl
-    else nativeHost()?.openGuide(null, () => undefined)
-  }
-
   function closeBrowser() {
     browserUrl.value = null
   }
@@ -114,7 +109,6 @@ export function useHost() {
     navigate,
     setLocale,
     openExternal,
-    openGuide,
     requestRepository,
     browserUrl,
     closeBrowser,

@@ -1,3 +1,4 @@
+import { guidePath } from '../content/guide'
 import type { SiteHostModule } from '../domain/site'
 
 // These ambient declarations describe only the bridge this application owns.
@@ -23,6 +24,10 @@ export function asset(path: string) {
   return isStandalone() ? `${publicOrigin}${path}` : path
 }
 
-export const guideUrl = import.meta.env.DEV
-  ? 'http://127.0.0.1:3000/guide/'
-  : 'https://lynns.me/guide/'
+const guideOrigin = import.meta.env.DEV
+  ? 'http://127.0.0.1:3000'
+  : 'https://lynns.me'
+
+export function guideUrl(chapter: string | null) {
+  return `${guideOrigin}${guidePath(chapter)}?embedded`
+}
