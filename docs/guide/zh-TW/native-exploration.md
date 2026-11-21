@@ -47,6 +47,32 @@ LYNX_DEV_HOST=127.0.0.1 pnpm run dev
 
 實際 bundle URL 應以 Rspeedy 當次輸出為準。這裡的連線設定供本地開發使用，正式建置則另外指定可公開存取的位置。
 
+## 全螢幕模式與安全區
+
+在 Explorer 載入 Lynx bundle 的 URL 加上 `?fullscreen=true`，可以隱藏 Explorer 的導航列。畫面延伸到整個視窗後，也需要為狀態列與底部操作區保留空間。
+
+`safeAreaInsets()` 從 Explorer 提供的 global props 讀取這些數值：
+
+```ts
+export function safeAreaInsets() {
+  const props = typeof lynx === 'undefined' ? undefined : lynx?.__globalProps
+  if (!isStandalone() || typeof props !== 'object' || props === null)
+    return { top: 0, bottom: 0 }
+  const fullscreen = Reflect.get(props, 'fullscreen')
+  if (fullscreen !== true && fullscreen !== 'true') return { top: 0, bottom: 0 }
+  return {
+    top: globalNumber(props, 'safeAreaTop'),
+    bottom: globalNumber(props, 'safeAreaBottom'),
+  }
+}
+```
+
+首先確認目前是原生環境，且收到物件形式的 props，再檢查是否為全螢幕模式。符合條件時，讀取頂部與底部的安全區；缺少有效數值時使用 `0`。
+
+App 會把結果用在 shell、頂部導覽和語言選單的間距。這裡使用平台回報的尺寸，避免為不同裝置寫固定高度。目前數值在建立 App 時取得，旋轉、分割視窗和重新進入的結果仍需要實機確認。
+
+`fullscreen` 是載入 Lynx bundle 時的選項；文件 webview 使用的 `embedded` 則控制文件導覽的呈現，兩個參數位於不同的載入層。
+
 ## 正式圖片為什麼沒有放在 bundle 前綴下？
 
 目前原生 bundle 使用 `https://lynns.me/lynx/` 作為建置資源前綴，不過 `public/images/` 會複製到網站根目錄下的 `/images/`。這兩種來源的輸出位置不同。

@@ -50,6 +50,8 @@ The browser host creates `<lynx-view>` and loads `/lynx/main.web.bundle`. It own
 
 Native Lynx shells such as Lynx Explorer have no browser host. `src/platform/runtime.ts` detects them through `SystemInfo.platform`, because `NativeModules.SiteHost` resolves to `null` rather than `undefined` there. In that standalone mode the application keeps route and locale state itself, derives the compact layout from the screen width, and requests GitHub data directly. Files from `public/` use the development asset prefix locally and the site root in production; emitted native bundle assets such as the bundled font use the Lynx build's asset prefix. The native `<image>` element does not render SVG, so `VectorImage` uses the native `<svg>` element in shells and `<image>` on the Web. GitHub source URLs are parsed with a regular expression because the native `URL` implementation lacks `hostname` and `pathname`. Lynx Explorer loads any URL it is given as a Lynx bundle, so external links open in `InAppBrowser`, a full-screen native `<webview>` with a close button.
 
+Explorer fullscreen mode is requested with `?fullscreen=true` on the Lynx bundle URL. `safeAreaInsets()` reads positive `safeAreaTop` and `safeAreaBottom` values from the shell global props when fullscreen is enabled; the App applies these insets to the shell, top navigation, and language menu. The values are read at App setup, so dynamic device changes require separate verification.
+
 Vue Router uses memory history inside the Lynx application. It renders the selected page; the browser host remains the owner of public URLs and Back/Forward behavior. The shared route is a page (`home`, `portfolio`, `project`, `drawings`, `drawing`, `about`, `guide`, or `chapter`) plus an ID for detail pages. `src/content/catalog.ts` lists valid project, drawing, and chapter IDs; the host rejects navigation to IDs outside it.
 
 Vue Router is pinned to the 4.x line. Version 5 compares rendered elements with `getRootNode()` after each route change, which Lynx elements do not implement, so it raised runtime errors.
@@ -74,6 +76,8 @@ The host updates document language, title, description, and Open Graph title/des
 ## Content And Carousel
 
 Interface copy lives in `src/content/copy.ts`; project summaries and drawing descriptions have all three locale keys. The blog owns article bodies and original URLs. `selectedArticles` holds the posts featured on the homepage; each card opens the original post and marks it as Chinese in other locales. The About page contains artwork and platform links while awaiting the maintainer's original copy.
+
+Technology tag colors are mapped in `src/content/tags.ts`. `TagList` resolves each label through `tagColor()` and uses the fallback color for unmapped names, so color assignment remains consistent across cards.
 
 Project pages show the localized summary, tags, and links to the live site and source. When a project's source is a GitHub repository listed in `src/content/projects.ts`, the browser host requests the public repository endpoint without credentials and sends the main language, star count, and last push date to the page. Responses are validated in `src/domain/repository.ts`; failures and rate limits leave the facts hidden. The host only requests repositories that appear in the portfolio.
 

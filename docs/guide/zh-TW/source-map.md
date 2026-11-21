@@ -29,6 +29,7 @@
 | [src/content/catalog.ts](https://github.com/clhuang224/web/blob/main/src/content/catalog.ts)       | 從內容產生有效詳情 ID。               |
 | [src/content/guide.ts](https://github.com/clhuang224/web/blob/main/src/content/guide.ts)           | 幕後章節順序、標題與文件路徑。        |
 | [src/content/copy.ts](https://github.com/clhuang224/web/blob/main/src/content/copy.ts)             | 三語介面文案。                        |
+| [src/content/tags.ts](https://github.com/clhuang224/web/blob/main/src/content/tags.ts)             | 技術標籤的顏色對照與預設值。          |
 | [src/content/projects.ts](https://github.com/clhuang224/web/blob/main/src/content/projects.ts)     | 作品與平台目的地。                    |
 | [src/content/articles.ts](https://github.com/clhuang224/web/blob/main/src/content/articles.ts)     | 首頁精選文章。                        |
 | [src/content/doodles.ts](https://github.com/clhuang224/web/blob/main/src/content/doodles.ts)       | 塗鴉清單與描述。                      |

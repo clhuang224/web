@@ -23,6 +23,20 @@
 
 掃描器需要看得到 class。動態拼出只有執行時才存在的名稱，可能無法產生對應規則。另一個邊界是：CSS 產生成功，只能證明工具有輸出，不能證明 Lynx runtime 支援每一條 CSS。
 
+## 標籤顏色如何決定？
+
+技術標籤的顏色由 [tags.ts](https://github.com/clhuang224/web/blob/main/src/content/tags.ts) 集中管理。React、Vue、TypeScript 等名稱各自對應一個顏色，未列出的名稱則使用預設值：
+
+```ts
+export function tagColor(tag: string) {
+  return tagColors[tag] ?? fallbackTagColor
+}
+```
+
+`TagList` 逐一讀取標籤，呼叫這個函式取得背景色。這樣同一個技術在不同卡片上仍然使用相同顏色，增加新的名稱也只需要調整對照表。
+
+這個例子也說明了 utility 與資料對照的分工：標籤的形狀放在 CSS，隨名稱改變的顏色則由資料決定。
+
 ## CSS 變數與繼承不是理所當然
 
 [lynx.config.ts](https://github.com/clhuang224/web/blob/main/lynx.config.ts) 啟用 CSS inline variables 與 inheritance 支援。閱讀 `site.css` 的 `var(...)` 時，要把這個編譯設定一起考慮。
