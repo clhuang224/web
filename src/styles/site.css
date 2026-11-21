@@ -304,7 +304,7 @@
 .section-title-wrap {
   position: relative;
   align-self: flex-start;
-  padding: 0 6px;
+  padding: 0 3px;
   margin: 12px 0 18px -6px;
 }
 .section-title-highlight {
@@ -317,6 +317,7 @@
   background-color: var(--color-highlight);
 }
 .section-title {
+  padding: 2px 3px;
   font-size: 26px;
   color: #ffffff;
   text-shadow:
@@ -657,8 +658,8 @@
   align-items: center;
 }
 .site-shell-compact .guide-link {
+  padding: 6px 6px;
   margin-bottom: 0px;
-  margin-right: 4px;
 }
 .site-shell-compact .embed-area {
   height: 0px;
