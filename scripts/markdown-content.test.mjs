@@ -1,7 +1,7 @@
 import { readFileSync, readdirSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
-import { doodleStories } from '../src/content/doodle-stories.ts'
-import { aboutStory } from '../src/content/about.ts'
+import { doodleStories } from '../src/content/generated/doodle-stories.ts'
+import { aboutStory } from '../src/content/generated/about.ts'
 import { doodles } from '../src/content/doodles.ts'
 import { parseMarkdownStory } from './lib/markdown-content.mjs'
 

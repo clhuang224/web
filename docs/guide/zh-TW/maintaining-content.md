@@ -36,7 +36,7 @@
 
 ## 練習四：理解新增一張塗鴉的影響
 
-先看 `docs/assets.md` 和 `src/content/doodles.ts`。新素材需要保留原檔、記錄來源與檔名對照、使用穩定且不重複的 ID，並提供能從圖片確認的三語描述。
+先看 `docs/assets.md` 和 `src/content/doodles.ts`。新素材需要保留原檔、記錄來源與檔名對照、使用穩定且不重複的 ID，並以 ID 命名；有作者提供的日期時改用日期檔名。
 
 若作者提供日期與原文，編輯 `src/content/doodles/<ID>.md`，例如 `01.md`。檔案開頭的 frontmatter 是由兩條 `---` 包住的資料欄位；目前只使用可選的 `date`，需用引號包住日期字串。其餘內容直接寫 Markdown，各語言頁面共用這份中文，不需要新增標題欄位。
 
@@ -44,7 +44,7 @@
 
 About 的原文同樣直接編輯 `src/content/about.md`。
 
-`pnpm run generate:content` 將這些檔案解析為型別化區塊，再由 Lynx 元件渲染；`dev` 會監看 Markdown，`build` 會先產生內容。不要直接修改產生的 `src/content/doodle-stories.ts` 或 `src/content/about.ts`。
+`pnpm run generate:content` 將這些檔案解析為型別化區塊，再由 Lynx 元件渲染；`dev` 會監看 Markdown，`build` 會先產生內容。不要直接修改 `src/content/generated/` 裡產生的檔案。
 
 有時間資訊的圖片檔名使用 `YYYYMMddHHmmss.png`，缺少的部分補零；例如只知道到分鐘，最後兩位秒數就是 `00`。清單會依產生的時間字串取得圖片，所以補日期時也要將對應的原檔改名並更新素材目錄，再執行 `pnpm run generate:placeholders` 產生對應縮圖。完全沒有日期時保留舊檔名，`/drawing/01` 這類穩定 ID 也維持不變。
 

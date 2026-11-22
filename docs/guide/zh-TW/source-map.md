@@ -36,7 +36,7 @@
 | [src/content/tags.ts](https://github.com/clhuang224/web/blob/main/src/content/tags.ts)             | 技術標籤的顏色對照與預設值。          |
 | [src/content/projects.ts](https://github.com/clhuang224/web/blob/main/src/content/projects.ts)     | 作品與平台目的地。                    |
 | [src/content/articles.ts](https://github.com/clhuang224/web/blob/main/src/content/articles.ts)     | 精選文章、網誌路徑與網址轉換。        |
-| [src/content/doodles.ts](https://github.com/clhuang224/web/blob/main/src/content/doodles.ts)       | 塗鴉清單與描述。                      |
+| [src/content/doodles.ts](https://github.com/clhuang224/web/blob/main/src/content/doodles.ts)       | 塗鴉清單與圖檔路徑。                  |
 | [src/platform/host.ts](https://github.com/clhuang224/web/blob/main/src/platform/host.ts)           | 狀態訂閱、操作和 standalone 路徑。    |
 | [src/platform/runtime.ts](https://github.com/clhuang224/web/blob/main/src/platform/runtime.ts)     | 平台判斷與資源前綴。                  |
 | [src/host/index.ts](https://github.com/clhuang224/web/blob/main/src/host/index.ts)                 | 瀏覽器網址、bridge、載入與 metadata。 |

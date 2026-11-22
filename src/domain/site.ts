@@ -44,7 +44,6 @@ export interface Doodle {
   id: string
   number: number
   src: string
-  alt: Localized<string>
   story?: MarkdownStory
 }
 

@@ -4,32 +4,32 @@
 
 The fourteen raster illustrations are original doodles by the maintainer, previously used as Facebook covers during 2016–2023. Each supplied image is 851 × 315 pixels. Dates and original Chinese writing are supplied for IDs 01 and 13; the remaining individual dates and official artwork titles are unassigned.
 
-Dated filenames use `YYYYMMddHHmmss` with unavailable components filled with zeroes; the two supplied times have minute precision, so their seconds are `00`. Undated files retain their descriptive names. These filename tokens do not assert a timezone or precision beyond the supplied date. Two-digit IDs preserve export order independently of filenames and do not assert chronological order. They remain the drawing IDs in page URLs such as `/drawing/04`, so renumbering a drawing changes its public URL. The original image bytes, dimensions, colors, and SVG contents have been preserved.
+Dated filenames use `YYYYMMddHHmmss` with unavailable components filled with zeroes; the two supplied times have minute precision, so their seconds are `00`. Undated files are named by ID, such as `doodle-02.png`. The project does not title or describe the doodles; only the maintainer's Markdown writing is published with them. These filename tokens do not assert a timezone or precision beyond the supplied date. Two-digit IDs preserve export order independently of filenames and do not assert chronological order. They remain the drawing IDs in page URLs such as `/drawing/04`, so renumbering a drawing changes its public URL. The original image bytes, dimensions, colors, and SVG contents have been preserved.
 
 ## Doodles
 
-| ID  | File                                                                                                    | Visible content                             | Original export              |
-| --- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------- | ---------------------------- |
-| 01  | [20210730230700.png](../public/images/doodles/20210730230700.png)                                       | Kiwi characters and colorful stripes        | `Property 1=Default (1).png` |
-| 02  | [doodle-02-wide-eyes.png](../public/images/doodles/doodle-02-wide-eyes.png)                             | A close-up of a wide-eyed face              | `Property 1=Variant2.png`    |
-| 03  | [doodle-03-outline-sketch.png](../public/images/doodles/doodle-03-outline-sketch.png)                   | A black-line outline scene                  | `Property 1=Variant3.png`    |
-| 04  | [doodle-04-red-and-green-lines.png](../public/images/doodles/doodle-04-red-and-green-lines.png)         | Red looping lines with green vertical lines | `Property 1=Variant4.png`    |
-| 05  | [doodle-05-rainbow-squiggles.png](../public/images/doodles/doodle-05-rainbow-squiggles.png)             | Colorful winding shapes with small faces    | `Property 1=Variant5.png`    |
-| 06  | [doodle-06-steam-train.png](../public/images/doodles/doodle-06-steam-train.png)                         | A line-drawn steam train and figures        | `Property 1=Variant6.png`    |
-| 07  | [doodle-07-yellow-streaks.png](../public/images/doodles/doodle-07-yellow-streaks.png)                   | A figure with yellow streaks                | `Property 1=Variant7.png`    |
-| 08  | [doodle-08-sleepy-and-wide-eyed.png](../public/images/doodles/doodle-08-sleepy-and-wide-eyed.png)       | Two faces, one sleepy and one wide-eyed     | `Property 1=Variant8.png`    |
-| 09  | [doodle-09-rainbow-arc.png](../public/images/doodles/doodle-09-rainbow-arc.png)                         | A large rainbow arc and an outlined figure  | `Property 1=Variant9.png`    |
-| 10  | [doodle-10-magnifying-glass-sketch.png](../public/images/doodles/doodle-10-magnifying-glass-sketch.png) | Figures and a magnifying glass              | `Property 1=Variant10.png`   |
-| 11  | [doodle-11-riverside-city.png](../public/images/doodles/doodle-11-riverside-city.png)                   | A figure beside a river and city buildings  | `Property 1=Variant11.png`   |
-| 12  | [doodle-12-gray-and-black-blocks.png](../public/images/doodles/doodle-12-gray-and-black-blocks.png)     | Gray and black blocks on a pale ground      | `Property 1=Variant12.png`   |
-| 13  | [20210213134400.png](../public/images/doodles/20210213134400.png)                                       | A desk, a music note, and blue shapes       | `Property 1=Variant13.png`   |
-| 14  | [doodle-14-reclining-figure.png](../public/images/doodles/doodle-14-reclining-figure.png)               | A reclining figure against a red background | `Property 1=Variant14.png`   |
+| ID  | File                                                              | Original export              |
+| --- | ----------------------------------------------------------------- | ---------------------------- |
+| 01  | [20210730230700.png](../public/images/doodles/20210730230700.png) | `Property 1=Default (1).png` |
+| 02  | [doodle-02.png](../public/images/doodles/doodle-02.png)           | `Property 1=Variant2.png`    |
+| 03  | [doodle-03.png](../public/images/doodles/doodle-03.png)           | `Property 1=Variant3.png`    |
+| 04  | [doodle-04.png](../public/images/doodles/doodle-04.png)           | `Property 1=Variant4.png`    |
+| 05  | [doodle-05.png](../public/images/doodles/doodle-05.png)           | `Property 1=Variant5.png`    |
+| 06  | [doodle-06.png](../public/images/doodles/doodle-06.png)           | `Property 1=Variant6.png`    |
+| 07  | [doodle-07.png](../public/images/doodles/doodle-07.png)           | `Property 1=Variant7.png`    |
+| 08  | [doodle-08.png](../public/images/doodles/doodle-08.png)           | `Property 1=Variant8.png`    |
+| 09  | [doodle-09.png](../public/images/doodles/doodle-09.png)           | `Property 1=Variant9.png`    |
+| 10  | [doodle-10.png](../public/images/doodles/doodle-10.png)           | `Property 1=Variant10.png`   |
+| 11  | [doodle-11.png](../public/images/doodles/doodle-11.png)           | `Property 1=Variant11.png`   |
+| 12  | [doodle-12.png](../public/images/doodles/doodle-12.png)           | `Property 1=Variant12.png`   |
+| 13  | [20210213134400.png](../public/images/doodles/20210213134400.png) | `Property 1=Variant13.png`   |
+| 14  | [doodle-14.png](../public/images/doodles/doodle-14.png)           | `Property 1=Variant14.png`   |
 
-Each doodle also has a derived 24-pixel-wide PNG placeholder, generated into `src/content/doodle-placeholders.ts` by `pnpm run generate:placeholders`. Regenerate it whenever a doodle is added, renamed, or replaced.
+Each doodle also has a derived 24-pixel-wide PNG placeholder, generated into `src/content/generated/doodle-placeholders.ts` by `pnpm run generate:placeholders`. Regenerate it whenever a doodle is added, renamed, or replaced.
 
-ID 01 was previously named `doodle-01-potato-parade.png`; ID 13 was `doodle-13-desk-and-music-note.png`. Their confirmed displayed dates are `2021/07/30 23:07` and `2021/02/13 13:44`, respectively. Their story text remains Chinese in every locale, while image alternative descriptions stay localized.
+Their confirmed displayed dates are `2021/07/30 23:07` and `2021/02/13 13:44`, respectively. Their story text remains Chinese in every locale.
 
-Edit original writing in `src/content/doodles/<ID>.md`. The optional quoted `date` frontmatter produces the timestamp filename token; no date means the descriptive image filename remains in use. `pnpm run generate:content` parses these sources into `src/content/doodle-stories.ts` for Lynx rendering. Development watches the Markdown files, and the production build regenerates their data before compiling the application.
+Edit original writing in `src/content/doodles/<ID>.md`. The optional quoted `date` frontmatter produces the timestamp filename token; no date means the ID filename remains in use. `pnpm run generate:content` parses these sources into `src/content/generated/doodle-stories.ts` for Lynx rendering. Generated modules live in `src/content/generated/` and are never edited by hand. Development watches the Markdown files, and the production build regenerates their data before compiling the application.
 
 ## Brand And UI Assets
 
@@ -60,7 +60,7 @@ Twelve locally generated SVGs in `public/images/icons/` come from the Remix Icon
 ## Presentation And Content
 
 - Use the original wordmark and monogram as brand artwork; use Remix Icon for interface symbols.
-- Write descriptive alternative text in each supported site language when implementing image presentation. These inventory descriptions are not final localized alternative text.
+- Label doodles by their localized drawing name and ID for assistive technology; do not write titles or descriptions the maintainer has not supplied.
 - Keep original source files intact; any future derivatives should have distinct filenames.
 - Check actual display widths before requesting higher-resolution exports.
 - Collect actual project screenshots or representative project images after selecting the portfolio entries. The personal doodles are not software UI previews.

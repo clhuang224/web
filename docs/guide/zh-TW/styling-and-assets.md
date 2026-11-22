@@ -55,7 +55,7 @@ export function tagColor(tag: string) {
 
 圖片完整性與畫面呈現是不同責任。框線、留白、縮放與 `aspectFit` 可以在元件處理；更換或重新命名來源檔時，還要維護素材目錄與清單。
 
-原始檔對照與來源記錄在[素材文件](https://github.com/clhuang224/web/blob/main/docs/assets.md)。替代描述依圖片可確認內容撰寫，不補上未確認的個人故事。
+原始檔對照與來源記錄在[素材文件](https://github.com/clhuang224/web/blob/main/docs/assets.md)。塗鴉不另寫標題或描述，只發布作者提供的原文。
 
 ## 圖片畫廊如何使用瀑布流？
 
@@ -84,11 +84,11 @@ export function tagColor(tag: string) {
 
 另一種做法是用 `scroll-view` 配合一般排列，一次建立所有卡片，對小型清單比較直接。目前改用列表來表達畫廊與欄位配置，則需要另外確認項目回收、捲動、切換版面與鍵盤操作；建置通過本身不能證明這些互動。
 
-點進 [DrawingPage.vue](https://github.com/clhuang224/web/blob/main/src/pages/DrawingPage.vue) 才會看到作者已提供的日期和中文創作；圖片本身的替代描述則供輔助工具使用。原文與介面翻譯的分工可接著讀[三語內容](content-and-i18n.md)。
+點進 [DrawingPage.vue](https://github.com/clhuang224/web/blob/main/src/pages/DrawingPage.vue) 才會看到作者已提供的日期和中文創作；輔助工具則讀到「塗鴉」加上 ID。原文與介面翻譯的分工可接著讀[三語內容](content-and-i18n.md)。
 
 ## Markdown 怎麼變成 Lynx 畫面？
 
-塗鴉原文放在 `src/content/doodles/*.md`，About 則放在 `src/content/about.md`。`generate-content.mjs` 在建置時使用 gray-matter 讀取日期欄位，再用 markdown-it 解析正文，產生 `doodle-stories.ts` 和 `about.ts`。App 只讀取結果，不在訪客端重新解析 Markdown。
+塗鴉原文放在 `src/content/doodles/*.md`，About 則放在 `src/content/about.md`。`generate-content.mjs` 在建置時使用 gray-matter 讀取日期欄位，再用 markdown-it 解析正文，產生 `src/content/generated/` 裡的 `doodle-stories.ts` 和 `about.ts`。App 只讀取結果，不在訪客端重新解析 Markdown。
 
 `MarkdownBlock` 是用 `kind` 區分段落、標題、清單、引用與程式碼的聯集型別。`MarkdownBody` 依種類選擇 Lynx 的 view 或 text，`MarkdownInline` 再套用粗體、斜體和連結；巢狀清單與引用由元件遞迴處理。這裡的遞迴，就是用同一個元件繼續渲染區塊裡的子區塊。
 

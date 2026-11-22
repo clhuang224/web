@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue-lynx'
-import { doodlePlaceholders } from '../content/doodle-placeholders'
+import { doodlePlaceholders } from '../content/generated/doodle-placeholders'
 import { asset } from '../platform/runtime'
 
 const props = defineProps<{ src: string; label?: string }>()

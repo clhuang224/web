@@ -36,7 +36,7 @@ function step(direction: 1 | -1) {
       ><DoodleImage
         class="drawing-full"
         :src="doodle.src"
-        :label="doodle.alt[state.locale]"
+        :label="`${text.drawingLabel} ${doodle.id}`"
     /></view>
     <view v-if="doodle.story" class="drawing-story">
       <view class="drawing-story-meta">

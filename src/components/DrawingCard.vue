@@ -4,14 +4,14 @@ import { useSite } from '../app/context'
 import type { Doodle } from '../domain/site'
 
 defineProps<{ doodle: Doodle; label: string }>()
-const { state, navigate } = useSite()
+const { navigate } = useSite()
 </script>
 
 <template>
   <view
     class="drawing-card"
     accessibility-role="link"
-    :accessibility-label="`${label} ${doodle.id}: ${doodle.alt[state.locale]}`"
+    :accessibility-label="`${label} ${doodle.id}`"
     @tap="navigate('drawing', doodle.id)"
   >
     <view class="drawing-thumb"

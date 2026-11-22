@@ -1,11 +1,11 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { locales } from '../domain/site'
-import { aboutStory } from './about'
+import { aboutStory } from './generated/about'
 import { selectedArticles } from './articles'
 import { copy } from './copy'
 import { doodles } from './doodles'
-import { doodlePlaceholders } from './doodle-placeholders'
+import { doodlePlaceholders } from './generated/doodle-placeholders'
 import { platforms, projects } from './projects'
 import { tagColors } from './tags'
 
@@ -68,9 +68,6 @@ describe('published content resources', () => {
       expect([image.readUInt32BE(16), image.readUInt32BE(20)]).toEqual([
         851, 315,
       ])
-      expect(Object.keys(doodle.alt).sort()).toEqual([...locales].sort())
-      for (const locale of locales)
-        expect(doodle.alt[locale].trim().length).toBeGreaterThan(0)
       if (doodle.story?.timestamp) {
         expect(doodle.src.split('/').at(-1)).toBe(
           `${doodle.story.timestamp}.png`,

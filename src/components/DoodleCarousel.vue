@@ -129,7 +129,7 @@ onUnmounted(() => {
               :key="doodle.id"
               class="doodle-panel"
               accessibility-role="link"
-              :accessibility-label="`${text.drawingLabel} ${doodle.id}: ${doodle.alt[state.locale]}`"
+              :accessibility-label="`${text.drawingLabel} ${doodle.id}`"
               @tap="navigate('drawing', doodle.id)"
             >
               <DoodleImage class="doodle-image" :src="doodle.src" />

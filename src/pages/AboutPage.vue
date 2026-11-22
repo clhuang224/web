@@ -5,7 +5,7 @@ import { useSite } from '../app/context'
 import PlatformLinks from '../components/PlatformLinks.vue'
 import MarkdownBody from '../components/MarkdownBody.vue'
 import SectionTitle from '../components/SectionTitle.vue'
-import { aboutStory } from '../content/about'
+import { aboutStory } from '../content/generated/about'
 import { copy } from '../content/copy'
 import { doodles } from '../content/doodles'
 const { state } = useSite()
@@ -22,7 +22,7 @@ const story = aboutStory
         class="drawing-full"
         :src="asset(illustration.src)"
         mode="aspectFit"
-        :accessibility-label="illustration.alt[state.locale]"
+        :accessibility-label="`${text.drawingLabel} ${illustration.id}`"
     /></view>
     <view class="about-story">
       <text
