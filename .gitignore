@@ -8,3 +8,4 @@ src/styles/uno.css
 .DS_Store
 docs/.vitepress/cache
 docs/.vitepress/.temp
+.pnpm-store/

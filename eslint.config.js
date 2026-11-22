@@ -10,6 +10,7 @@ export default tseslint.config(
       'dist/**',
       'docs/.vitepress/cache/**',
       'docs/.vitepress/.temp/**',
+      '.pnpm-store/**',
       'node_modules/**',
       'work/**',
       'src/styles/uno.css',

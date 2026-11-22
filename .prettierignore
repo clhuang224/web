@@ -9,3 +9,4 @@ docs/.vitepress/cache
 docs/.vitepress/.temp
 codex-talk.md
 user-to-agents.md
+.pnpm-store
