@@ -8,3 +8,4 @@ overrides:
   '@lynx-js/web-core': 0.26.8
   '@lynx-js/css-extract-webpack-plugin': 0.7.0
   '@rsdoctor/rspack-plugin': 1.5.16
+  'css-minimizer-webpack-plugin>serialize-javascript': ^7.1.3
