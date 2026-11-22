@@ -10,17 +10,20 @@ const text = computed(() => copy[state.value.locale])
 </script>
 
 <template>
-  <view class="page">
+  <view class="page drawings-page">
     <SectionTitle :title="text.drawings" large />
-    <text class="page-description">{{ text.drawingsIntro }}</text>
-    <view
-      class="card-grid card-grid-wrap"
-      :class="{ 'card-grid-compact': state.compact }"
-      ><DrawingCard
+    <list
+      :key="state.compact ? 'compact' : 'wide'"
+      class="drawing-gallery"
+      :list-type="state.compact ? 'single' : 'waterfall'"
+      :span-count="state.compact ? 1 : 2"
+      scroll-orientation="vertical"
+      ><list-item
         v-for="doodle in doodles"
         :key="doodle.id"
-        :doodle="doodle"
-        :label="text.drawingLabel"
-    /></view>
+        :item-key="doodle.id"
+        ><DrawingCard :doodle="doodle" :label="text.drawingLabel"
+      /></list-item>
+    </list>
   </view>
 </template>

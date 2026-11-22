@@ -152,7 +152,9 @@ watch(
         <text class="sidebar-note">{{ text.madeWith }}</text>
       </view>
     </view>
-    <view v-if="embedded" class="embed-area"><RouterView /></view>
+    <view v-if="embedded || state.page === 'drawings'" class="embed-area"
+      ><RouterView
+    /></view>
     <scroll-view v-else class="main-scroll" scroll-orientation="vertical">
       <view class="main-content"><RouterView /></view>
     </scroll-view>

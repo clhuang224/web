@@ -9,7 +9,7 @@ const { state, navigate } = useSite()
 
 <template>
   <view
-    class="card drawing-card"
+    class="drawing-card"
     accessibility-role="link"
     :accessibility-label="`${label} ${doodle.id}: ${doodle.alt[state.locale]}`"
     @tap="navigate('drawing', doodle.id)"
@@ -17,7 +17,5 @@ const { state, navigate } = useSite()
     <view class="drawing-thumb"
       ><DoodleImage class="drawing-image" :src="doodle.src"
     /></view>
-    <text class="drawing-number">{{ label }} {{ doodle.id }}</text>
-    <text class="card-summary">{{ doodle.alt[state.locale] }}</text>
   </view>
 </template>
