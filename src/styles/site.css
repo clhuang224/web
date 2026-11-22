@@ -317,18 +317,18 @@
   background-color: var(--color-highlight);
 }
 .section-title {
+  position: relative;
   padding: 2px 3px;
   font-size: 26px;
   color: #ffffff;
-  text-shadow:
-    2px 0px 0px var(--color-coral),
-    -2px 0px 0px var(--color-coral),
-    0px 2px 0px var(--color-coral),
-    0px -2px 0px var(--color-coral),
-    2px 2px 0px var(--color-coral),
-    -2px -2px 0px var(--color-coral),
-    2px -2px 0px var(--color-coral),
-    -2px 2px 0px var(--color-coral);
+}
+.section-title-outline {
+  position: absolute;
+  left: 3px;
+  top: 0px;
+  color: var(--color-coral);
+  text-stroke: 4px var(--color-coral);
+  -webkit-text-stroke: 4px var(--color-coral);
 }
 .section-title-large .section-title {
   font-size: 34px;
