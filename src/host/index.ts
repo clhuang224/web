@@ -21,6 +21,8 @@ import type { RepositorySummary } from '../domain/repository'
 import type { HostState, ListPage, Locale } from '../domain/site'
 import { enableLynxAccessibility } from './accessibility'
 import './host.css'
+import './loader.css'
+import loaderStyles from './loader.css?raw'
 
 const localeStorageKey = 'lynns.locale'
 const knownRepositories = new Set(
@@ -134,6 +136,7 @@ function stateFromLocation(): HostState {
 function showError() {
   const state = stateFromLocation()
   hostMessage.textContent = copy[state.locale].error
+  hostStatus.classList.remove('host-status-loading')
   hostStatus.hidden = false
   hostRoot.hidden = true
 }
@@ -177,6 +180,7 @@ function updateMetadata(state: HostState) {
 
   if (!location.matched) {
     hostMessage.textContent = text.notFound
+    hostStatus.classList.remove('host-status-loading')
     hostStatus.hidden = false
   } else if (ready) {
     hostStatus.hidden = true
@@ -190,6 +194,28 @@ function sendState() {
 }
 
 let embedFrame: HTMLIFrameElement | undefined
+
+function embedLoader() {
+  const shadow = view.shadowRoot
+  if (shadow && !shadow.querySelector('style[data-loader]')) {
+    const style = document.createElement('style')
+    style.dataset.loader = ''
+    style.textContent = loaderStyles
+    shadow.append(style)
+  }
+  const overlay = document.createElement('div')
+  overlay.className = 'embed-loader'
+  const loader = document.createElement('span')
+  loader.className = 'site-loader'
+  loader.setAttribute('aria-hidden', 'true')
+  for (let index = 0; index < 3; index += 1) {
+    const dot = document.createElement('span')
+    dot.className = 'site-loader-dot'
+    loader.append(dot)
+  }
+  overlay.append(loader)
+  return overlay
+}
 
 function embedSource(slot: HTMLElement, state: HostState) {
   if (slot.classList.contains('embed-blog'))
@@ -209,6 +235,8 @@ function placeEmbed() {
   if (embedFrame && slot.contains(embedFrame) && embedFrame.dataset.key === key)
     return
   embedFrame?.remove()
+  slot.querySelector('.embed-loader')?.remove()
+  const loader = embedLoader()
   const frame = document.createElement('iframe')
   frame.className = 'embedded-page'
   frame.dataset.key = key
@@ -218,7 +246,8 @@ function placeEmbed() {
     ]
   frame.src = source
   frame.style.cssText = 'flex:1;width:100%;height:100%;border:0;display:block'
-  slot.append(frame)
+  frame.addEventListener('load', () => loader.remove(), { once: true })
+  slot.append(frame, loader)
   embedFrame = frame
 }
 

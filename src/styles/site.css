@@ -650,6 +650,7 @@
   flex-direction: column;
 }
 .embed-frame {
+  position: relative;
   flex: 1;
   width: 100%;
 }
