@@ -1,3 +1,5 @@
+import type { MarkdownStory } from './markdown'
+
 export const locales = ['zh-TW', 'en', 'ja'] as const
 export type Locale = (typeof locales)[number]
 export const pages = [
@@ -43,6 +45,7 @@ export interface Doodle {
   number: number
   src: string
   alt: Localized<string>
+  story?: MarkdownStory
 }
 
 export interface Platform {

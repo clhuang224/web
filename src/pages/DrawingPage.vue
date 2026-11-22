@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import DoodleImage from '../components/DoodleImage.vue'
+import MarkdownBody from '../components/MarkdownBody.vue'
 import VectorImage from '../components/VectorImage.vue'
 import { computed } from 'vue-lynx'
 import { useSite } from '../app/context'
-import SectionTitle from '../components/SectionTitle.vue'
 import { copy } from '../content/copy'
 import { doodles } from '../content/doodles'
 
@@ -32,16 +32,23 @@ function step(direction: 1 | -1) {
         src="/images/icons/arrow-left-line.svg"
       /><text class="back-label">{{ text.backToDrawings }}</text></view
     >
-    <SectionTitle :title="`${text.drawingLabel} ${doodle.id}`" large />
     <view class="drawing-frame"
       ><DoodleImage
         class="drawing-full"
         :src="doodle.src"
         :label="doodle.alt[state.locale]"
     /></view>
-    <text class="detail-summary drawing-caption">{{
-      doodle.alt[state.locale]
-    }}</text>
+    <view v-if="doodle.story" class="drawing-story">
+      <view class="drawing-story-meta">
+        <text v-if="doodle.story.date" class="drawing-date">{{
+          doodle.story.date
+        }}</text>
+        <text v-if="state.locale !== 'zh-TW'" class="article-language">{{
+          text.originalChinese
+        }}</text>
+      </view>
+      <MarkdownBody :blocks="doodle.story.blocks" />
+    </view>
     <view class="drawing-pager">
       <view
         class="pill-button pill-button-outline"

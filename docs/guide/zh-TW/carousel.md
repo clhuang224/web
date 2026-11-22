@@ -14,16 +14,21 @@ const text = computed(() => copy[state.value.locale])
 const count = computed(() => visibleCount(state.value.compact))
 const index = ref(0)
 const playing = ref(true)
-const visible = computed(() =>
-  doodles.slice(index.value, index.value + count.value),
-)
 ```
 
 `ref(0)` 把初始值 `0` 包成反應式狀態，所以 script 讀寫索引時會用 `index.value`。Template 讀取頂層 ref 時，Vue 通常會協助解開它，因此畫面裡常直接使用名稱。
 
-`computed` 裡的函式描述計算方式，Vue 會追蹤它使用的反應式資料。例如 `visible` 依賴 `index` 和 `count`，這些值改變後，可見圖片的結果也會跟著更新。
+`computed` 裡的函式描述計算方式，Vue 會追蹤它使用的反應式資料。例如 `count` 依賴 `state.compact`，版面狀態改變後，每組張數也會跟著更新。
 
-先看 `index`，它記住第一張可見圖片的位置，從 `0` 開始。`count` 決定一次取幾張，所以 `visible` 就能用 `slice` 從 [doodles.ts](https://github.com/clhuang224/web/blob/main/src/content/doodles.ts) 取出對應的範圍。
+先看 `index`，它記住第一張可見圖片的位置，從 `0` 開始。`count` 決定一次取幾張，元件用這個函式從 [doodles.ts](https://github.com/clhuang224/web/blob/main/src/content/doodles.ts) 取出對應的範圍：
+
+```ts
+function slice(start: number) {
+  return doodles.slice(start, start + count.value)
+}
+```
+
+目前畫面使用 `groups` 組合這些圖片。平時只有現在這組，平移動畫期間才另外保留離場的那組；`previous` 和 `direction` 記住離場位置與方向。換組索引與動畫狀態分開保存，後面先追索引怎麼更新。
 
 `playing` 則是另一件事：它記住目前要不要自動播放。把位置和播放選擇分開，暫停時就可以保留原本的圖片，也仍然能手動切換。
 

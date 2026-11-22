@@ -3,6 +3,7 @@ import { asset } from '../platform/runtime'
 import { computed } from 'vue-lynx'
 import { useSite } from '../app/context'
 import PlatformLinks from '../components/PlatformLinks.vue'
+import MarkdownBody from '../components/MarkdownBody.vue'
 import SectionTitle from '../components/SectionTitle.vue'
 import { aboutStory } from '../content/about'
 import { copy } from '../content/copy'
@@ -29,30 +30,8 @@ const story = aboutStory
         class="article-language about-language"
         >{{ text.aboutLanguage }}</text
       >
-      <view
-        v-for="(paragraph, index) in story.serious"
-        :key="`serious-${index}`"
-        class="about-paragraph"
-      >
-        <text v-for="line in paragraph" :key="line" class="about-line">{{
-          line
-        }}</text>
-      </view>
-      <view class="about-divider">
-        <view class="about-divider-rule" />
-        <text class="about-divider-label">{{ story.divider }}</text>
-        <view class="about-divider-rule" />
-      </view>
-      <view
-        v-for="(paragraph, index) in story.trivia"
-        :key="`trivia-${index}`"
-        class="about-paragraph"
-      >
-        <text v-for="line in paragraph" :key="line" class="about-line">
-          {{ line }}
-        </text>
-      </view>
-      <text class="about-date">{{ story.date }}</text>
+      <MarkdownBody :blocks="story.blocks" />
+      <text v-if="story.date" class="about-date">{{ story.date }}</text>
     </view>
     <SectionTitle :title="text.platformTitle" />
     <view class="card about-platforms"><PlatformLinks labels /></view>

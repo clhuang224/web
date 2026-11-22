@@ -57,6 +57,43 @@ export function tagColor(tag: string) {
 
 原始檔對照與來源記錄在[素材文件](https://github.com/clhuang224/web/blob/main/docs/assets.md)。替代描述依圖片可確認內容撰寫，不補上未確認的個人故事。
 
+## 圖片畫廊如何使用瀑布流？
+
+[DrawingsPage.vue](https://github.com/clhuang224/web/blob/main/src/pages/DrawingsPage.vue) 讓圖片連結直接成為 Lynx `list` 的項目。每張圖片保留可及性標籤，畫廊裡不另外顯示編號或說明文字：
+
+<!-- prettier-ignore -->
+```vue
+    <list
+      :key="state.compact ? 'compact' : 'wide'"
+      class="drawing-gallery"
+      :list-type="state.compact ? 'single' : 'waterfall'"
+      :span-count="state.compact ? 1 : 2"
+      scroll-orientation="vertical"
+      ><list-item
+        v-for="doodle in doodles"
+        :key="doodle.id"
+        :item-key="doodle.id"
+        ><DrawingCard :doodle="doodle" :label="text.drawingLabel"
+      /></list-item>
+    </list>
+```
+
+`v-for` 依序建立項目，Vue 的 `key` 用來辨認同一筆資料，`item-key` 則提供給 Lynx 列表。桌面使用兩欄 waterfall，將後續項目放入較短的欄；手機改成單欄。現在 14 張圖片都是相同比例，所以欄位高度會很整齊，圖片仍以完整比例顯示。
+
+`list` 自己擁有捲動區域，因此 [App.vue](https://github.com/clhuang224/web/blob/main/src/App.vue) 不再把畫廊放進一般頁面的 `scroll-view`；`.drawing-gallery` 由 flex 取得可用高度。這個分工對應[官方列表說明](https://lynxjs.org/api/elements/built-in/list.html)的 viewport 要求，避免在內容高度無上限的容器裡再放捲動列表。
+
+另一種做法是用 `scroll-view` 配合一般排列，一次建立所有卡片，對小型清單比較直接。目前改用列表來表達畫廊與欄位配置，則需要另外確認項目回收、捲動、切換版面與鍵盤操作；建置通過本身不能證明這些互動。
+
+點進 [DrawingPage.vue](https://github.com/clhuang224/web/blob/main/src/pages/DrawingPage.vue) 才會看到作者已提供的日期和中文創作；圖片本身的替代描述則供輔助工具使用。原文與介面翻譯的分工可接著讀[三語內容](content-and-i18n.md)。
+
+## Markdown 怎麼變成 Lynx 畫面？
+
+塗鴉原文放在 `src/content/doodles/*.md`，About 則放在 `src/content/about.md`。`generate-content.mjs` 在建置時使用 gray-matter 讀取日期欄位，再用 markdown-it 解析正文，產生 `doodle-stories.ts` 和 `about.ts`。App 只讀取結果，不在訪客端重新解析 Markdown。
+
+`MarkdownBlock` 是用 `kind` 區分段落、標題、清單、引用與程式碼的聯集型別。`MarkdownBody` 依種類選擇 Lynx 的 view 或 text，`MarkdownInline` 再套用粗體、斜體和連結；巢狀清單與引用由元件遞迴處理。這裡的遞迴，就是用同一個元件繼續渲染區塊裡的子區塊。
+
+另一種方式是使用 host 提供的原生 Markdown 元素，但[官方說明](https://lynxjs.org/next/api/elements/built-in/markdown)要求 host 整合並註冊，Web 也有自己的支援邊界。目前使用共用 Lynx 元件，讓這份有限的 Markdown 格式在相同元件結構裡顯示；代價是要維護區塊轉換與呈現。支援的語法與編輯步驟列在[內容維護練習](maintaining-content.md)。
+
 ## 圖片載入前先顯示什麼？
 
 [DoodleImage.vue](https://github.com/clhuang224/web/blob/main/src/components/DoodleImage.vue) 會先放一張低解析度縮圖，讓原圖在同一個位置載入。原圖觸發 `load` 後，元件把 `loaded` 改成 `true`，再移除縮圖；切換 `src` 時則用 `watch` 重設狀態。

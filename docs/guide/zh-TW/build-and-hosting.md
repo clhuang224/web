@@ -15,14 +15,15 @@
 目前 `pnpm run build` 依序執行：
 
 ```text
-UnoCSS 產生樣式
+Markdown 產生塗鴉內容資料
+    → UnoCSS 產生樣式
     → Rspeedy 建置 Lynx 與 Web 輸出到 dist/lynx
     → Rsbuild 建置瀏覽器外殼到 dist
     → VitePress 建置幕後文件到 dist/guide
     → verify-build.mjs 檢查必要輸出
 ```
 
-首先產生 utility CSS，再建置需要使用它的應用程式。瀏覽器外殼與文件的建置會保留前面的輸出，避免後一個步驟把前一個步驟的檔案清掉。
+首先解析塗鴉 Markdown 並產生 utility CSS，再建置需要使用它們的應用程式。瀏覽器外殼與文件的建置會保留前面的輸出，避免後一個步驟把前一個步驟的檔案清掉。
 
 最後的輸出檢查確認必要檔案存在，包含主站 HTML、Lynx bundle、bridge 和文件首頁。它可以找出漏掉產物的問題，但實際載入仍要由預覽與部署環境確認。
 
@@ -45,7 +46,7 @@ UnoCSS 產生樣式
 
 ## 開發服務如何配合？
 
-`pnpm run dev` 會先產生樣式，再啟動樣式 watch、Rspeedy、VitePress 與瀏覽器 host。
+`pnpm run dev` 會先產生塗鴉內容與樣式，再啟動內容／樣式 watch、Rspeedy、VitePress 與瀏覽器 host。
 
 | 服務        | 預設位置                | 提供的內容                      |
 | ----------- | ----------------------- | ------------------------------- |

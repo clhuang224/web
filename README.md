@@ -43,7 +43,7 @@ pnpm install
 pnpm run dev
 ```
 
-The development command starts UnoCSS generation, Rspeedy on port 3001, VitePress on port 3002, and the browser host on [localhost:3000](http://localhost:3000). The host proxies `/lynx` to Rspeedy and `/guide` to VitePress. To inspect the static build:
+The development command generates and watches original Markdown content and UnoCSS, and starts Rspeedy on port 3001, VitePress on port 3002, and the browser host on [localhost:3000](http://localhost:3000). The host proxies `/lynx` to Rspeedy and `/guide` to VitePress. To inspect the static build:
 
 ```bash
 pnpm run build
@@ -51,6 +51,8 @@ pnpm run preview
 ```
 
 The preview serves `dist/` at [localhost:4173](http://localhost:4173), including localized deep links, and the guide at `/guide/`. Set `PORT` to change its port.
+
+Edit original writing in [About Markdown](src/content/about.md) and per-drawing files such as [drawing 01](src/content/doodles/01.md). These sources stay Chinese in every locale and have an optional quoted `date` frontmatter field. Development and production builds regenerate their typed content; `pnpm run generate:content` also runs that step directly. See the [content maintenance guide](docs/guide/zh-TW/maintaining-content.md) for supported Markdown and date-based image names.
 
 ## Checks
 

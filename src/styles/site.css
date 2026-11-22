@@ -552,8 +552,87 @@
   border-radius: 4px;
   background-color: var(--color-surface);
 }
-.drawing-caption {
+.drawing-story {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   margin-top: 16px;
+}
+.drawing-story-meta {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.drawing-date {
+  font-size: 14px;
+  color: var(--color-muted);
+}
+.markdown-body,
+.markdown-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.markdown-inline,
+.markdown-marker,
+.markdown-code {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+.markdown-bold,
+.markdown-heading {
+  font-weight: 700;
+}
+.markdown-italic {
+  font-style: italic;
+}
+.markdown-link {
+  color: var(--color-accent-ink);
+  text-decoration: underline;
+}
+.markdown-code-inline,
+.markdown-code {
+  font-family: monospace;
+  background-color: var(--color-selected);
+}
+.markdown-code {
+  padding: 12px;
+  border-radius: 4px;
+}
+.markdown-heading {
+  font-size: 20px;
+}
+.markdown-h1 {
+  font-size: 26px;
+}
+.markdown-h2 {
+  font-size: 24px;
+}
+.markdown-h3 {
+  font-size: 22px;
+}
+.markdown-quote {
+  border-left: 3px solid var(--color-accent);
+  padding-left: 16px;
+}
+.markdown-list-item {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+.markdown-marker {
+  min-width: 18px;
+}
+.markdown-list-content {
+  flex: 1;
+  min-width: 0px;
+}
+.markdown-rule {
+  height: 1px;
+  background-color: var(--color-line);
 }
 .drawing-pager {
   display: flex;
@@ -580,31 +659,6 @@
 }
 .about-language {
   align-self: flex-start;
-}
-.about-paragraph {
-  display: flex;
-  flex-direction: column;
-}
-.about-line {
-  color: var(--color-ink);
-  font-size: 16px;
-  line-height: 1.7;
-}
-.about-divider {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 12px;
-  margin: 8px 0;
-}
-.about-divider-rule {
-  flex: 1;
-  height: 1px;
-  background-color: var(--color-line);
-}
-.about-divider-label {
-  color: var(--color-muted);
-  font-size: 13px;
 }
 .about-date {
   align-self: flex-end;

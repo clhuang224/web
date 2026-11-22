@@ -1,13 +1,12 @@
 import type { Doodle } from '../domain/site'
-
-// FIXME: 塗鴉列表希望不要有文字，改用 waterfall 畫廊排版，點進詳情才有文字說明
+import { doodleStories } from './doodle-stories'
 
 const illustrations = [
   [
     'potato-parade',
-    '馬鈴薯造型角色與彩色線條',
-    'Potato-shaped characters and colorful stripes',
-    'ジャガイモのようなキャラクターとカラフルな線',
+    '奇異果角色與彩色線條',
+    'Kiwi characters and colorful stripes',
+    'キウイのキャラクターとカラフルな線',
   ],
   [
     'wide-eyes',
@@ -92,11 +91,13 @@ const illustrations = [
 export const doodles: Doodle[] = illustrations.map(
   ([slug, zh, en, ja], index) => {
     const id = String(index + 1).padStart(2, '0')
+    const story = doodleStories[id]
     return {
       id,
       number: index + 1,
-      src: `/images/doodles/doodle-${id}-${slug}.png`,
+      src: `/images/doodles/${story?.timestamp ? `${story.timestamp}.png` : `doodle-${id}-${slug}.png`}`,
       alt: { 'zh-TW': zh, en, ja },
+      story,
     }
   },
 )

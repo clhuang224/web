@@ -38,6 +38,7 @@ interface SiteCopy {
   postsTitle: string
   articleLanguage: string
   aboutLanguage: string
+  originalChinese: string
   copyright: string
 }
 
@@ -80,6 +81,7 @@ export const copy = {
     postsTitle: '精選文章',
     articleLanguage: '中文文章',
     aboutLanguage: '中文原文',
+    originalChinese: '中文原文',
     copyright: 'Copyright © Lynn Huang',
   },
   en: {
@@ -121,6 +123,7 @@ export const copy = {
     postsTitle: 'Selected posts',
     articleLanguage: 'Article in Chinese',
     aboutLanguage: 'Written in Chinese',
+    originalChinese: 'Written in Chinese',
     copyright: 'Copyright © Lynn Huang',
   },
   ja: {
@@ -162,6 +165,7 @@ export const copy = {
     postsTitle: 'ピックアップ記事',
     articleLanguage: '中国語の記事',
     aboutLanguage: '中国語の原文',
+    originalChinese: '中国語の原文',
     copyright: 'Copyright © Lynn Huang',
   },
 } satisfies Localized<SiteCopy>

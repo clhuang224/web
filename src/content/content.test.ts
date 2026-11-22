@@ -5,6 +5,7 @@ import { aboutStory } from './about'
 import { selectedArticles } from './articles'
 import { copy } from './copy'
 import { doodles } from './doodles'
+import { doodlePlaceholders } from './doodle-placeholders'
 import { platforms, projects } from './projects'
 import { tagColors } from './tags'
 
@@ -23,13 +24,8 @@ describe('published content resources', () => {
   })
 
   it('keeps the About story in its original Chinese', () => {
-    expect(
-      [
-        ...aboutStory.serious.flat(),
-        ...aboutStory.trivia.flat(),
-        aboutStory.divider,
-      ].every((line) => line.trim().length > 0),
-    ).toBe(true)
+    expect(aboutStory.blocks.length).toBeGreaterThan(0)
+    expect(aboutStory.date).toBeTruthy()
   })
 
   it('features the three selected projects with shared destinations and translated summaries', () => {
@@ -59,6 +55,9 @@ describe('published content resources', () => {
     expect(
       doodles.map((doodle) => doodle.src.split('/').at(-1)).sort(),
     ).toEqual(files)
+    expect(Object.keys(doodlePlaceholders).sort()).toEqual(
+      doodles.map((doodle) => doodle.src).sort(),
+    )
     expect(doodles.map((doodle) => doodle.id)).toEqual(
       Array.from({ length: 14 }, (_, index) =>
         String(index + 1).padStart(2, '0'),
@@ -72,6 +71,12 @@ describe('published content resources', () => {
       expect(Object.keys(doodle.alt).sort()).toEqual([...locales].sort())
       for (const locale of locales)
         expect(doodle.alt[locale].trim().length).toBeGreaterThan(0)
+      if (doodle.story?.timestamp) {
+        expect(doodle.src.split('/').at(-1)).toBe(
+          `${doodle.story.timestamp}.png`,
+        )
+      }
+      if (doodle.story) expect(doodle.story.blocks.length).toBeGreaterThan(0)
     }
   })
 

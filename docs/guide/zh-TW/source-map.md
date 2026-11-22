@@ -13,10 +13,13 @@
 | [HomePage.vue](https://github.com/clhuang224/web/blob/main/src/pages/HomePage.vue)                  | 輪播、精選作品與文章的組合。            |
 | [ProjectPage.vue](https://github.com/clhuang224/web/blob/main/src/pages/ProjectPage.vue)            | 作品資料、GitHub 資訊和外連。           |
 | [DrawingPage.vue](https://github.com/clhuang224/web/blob/main/src/pages/DrawingPage.vue)            | 單張塗鴉與前後導航。                    |
+| [DrawingsPage.vue](https://github.com/clhuang224/web/blob/main/src/pages/DrawingsPage.vue)          | 圖片式瀑布流列表與欄位切換。            |
 | [EmbedPage.vue](https://github.com/clhuang224/web/blob/main/src/pages/EmbedPage.vue)                | 幕後與網誌的站內容器、原生 webview。    |
 | [DoodleCarousel.vue](https://github.com/clhuang224/web/blob/main/src/components/DoodleCarousel.vue) | 播放狀態、計時器和可見圖片。            |
 | [VectorImage.vue](https://github.com/clhuang224/web/blob/main/src/components/VectorImage.vue)       | SVG 的平台分支。                        |
 | [DoodleImage.vue](https://github.com/clhuang224/web/blob/main/src/components/DoodleImage.vue)       | 縮圖佔位、原圖載入與狀態切換。          |
+| [MarkdownBody.vue](https://github.com/clhuang224/web/blob/main/src/components/MarkdownBody.vue)     | Markdown 區塊與巢狀內容的 Lynx 呈現。   |
+| [MarkdownInline.vue](https://github.com/clhuang224/web/blob/main/src/components/MarkdownInline.vue) | 粗斜體、行內程式碼與連結。              |
 | [InAppBrowser.vue](https://github.com/clhuang224/web/blob/main/src/components/InAppBrowser.vue)     | 原生 webview 與關閉控制。               |
 
 ## 規則、資料與平台
@@ -53,6 +56,8 @@
 | [scripts/preview.mjs](https://github.com/clhuang224/web/blob/main/scripts/preview.mjs)                             | 靜態預覽、路徑和 MIME。                 |
 | [scripts/verify-build.mjs](https://github.com/clhuang224/web/blob/main/scripts/verify-build.mjs)                   | 必要輸出檢查。                          |
 | [scripts/generate-placeholders.mjs](https://github.com/clhuang224/web/blob/main/scripts/generate-placeholders.mjs) | 從原始塗鴉產生獨立縮圖資料。            |
+| [scripts/generate-content.mjs](https://github.com/clhuang224/web/blob/main/scripts/generate-content.mjs)           | 原創 Markdown 來源與產生內容的整合。    |
+| [scripts/lib/markdown-content.mjs](https://github.com/clhuang224/web/blob/main/scripts/lib/markdown-content.mjs)   | Frontmatter、Markdown 區塊及日期解析。  |
 | [scripts/prepare-pages.mjs](https://github.com/clhuang224/web/blob/main/scripts/prepare-pages.mjs)                 | GitHub Pages 的頁面副本、404 與 CNAME。 |
 | [docs/.vitepress/config.mts](https://github.com/clhuang224/web/blob/main/docs/.vitepress/config.mts)               | 文件來源、章節導覽、搜尋和輸出位置。    |
 | [carousel.test.ts](https://github.com/clhuang224/web/blob/main/src/domain/carousel.test.ts)                        | 一輪換組、前後與版面對齊。              |
