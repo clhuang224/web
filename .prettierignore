@@ -6,5 +6,6 @@ public/images/ui
 pnpm-lock.yaml
 src/styles/uno.css
 docs/.vitepress/cache
+docs/.vitepress/.temp
 codex-talk.md
 user-to-agents.md

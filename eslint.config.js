@@ -9,6 +9,7 @@ export default tseslint.config(
     ignores: [
       'dist/**',
       'docs/.vitepress/cache/**',
+      'docs/.vitepress/.temp/**',
       'node_modules/**',
       'work/**',
       'src/styles/uno.css',
