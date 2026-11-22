@@ -8,7 +8,7 @@ import { aboutStory } from '../content/about'
 import { copy } from '../content/copy'
 import { doodles } from '../content/doodles'
 const { state } = useSite()
-const illustration = doodles.find((doodle) => doodle.id === '11')
+const illustration = doodles.find((doodle) => doodle.id === '02')
 const text = computed(() => copy[state.value.locale])
 const story = computed(() => aboutStory[state.value.locale])
 </script>
