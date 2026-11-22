@@ -1,6 +1,7 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { locales } from '../domain/site'
+import { aboutStory } from './about'
 import { selectedArticles } from './articles'
 import { copy } from './copy'
 import { doodles } from './doodles'
@@ -17,6 +18,24 @@ describe('published content resources', () => {
       expect(Object.keys(copy[locale]).sort()).toEqual(keys)
       expect(
         Object.values(copy[locale]).every((value) => value.trim().length > 0),
+      ).toBe(true)
+    }
+  })
+
+  it('tells the About story with the same structure in every language', () => {
+    const shape = (locale: (typeof locales)[number]) => ({
+      serious: aboutStory[locale].serious.map((paragraph) => paragraph.length),
+      trivia: aboutStory[locale].trivia.map((paragraph) => paragraph.length),
+    })
+    for (const locale of locales) {
+      expect(shape(locale)).toEqual(shape('zh-TW'))
+      expect(aboutStory[locale].date).toBe(aboutStory['zh-TW'].date)
+      expect(
+        [
+          ...aboutStory[locale].serious.flat(),
+          ...aboutStory[locale].trivia.flat(),
+          aboutStory[locale].divider,
+        ].every((line) => line.trim().length > 0),
       ).toBe(true)
     }
   })

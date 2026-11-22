@@ -6,7 +6,7 @@ Lynn's is a personal home on the web: a place to introduce Lynn, share selected 
 
 The site idea dates to 2023, and the original visual design dates to 2024. The first release will carry that design forward while improving readability, responsive behavior, and multilingual content.
 
-The first application foundation is implemented: VueLynx pages, a browser host, three-language resources and URLs, a responsive doodle carousel, and local build/check commands. The site deploys to GitHub Pages at `lynns.me`. Original About copy and broader browser/accessibility verification remain unfinished. Selected article resources and the Traditional Chinese guide content exist. Concrete module and build details are documented in [the architecture guide](architecture.md).
+The first application foundation is implemented: VueLynx pages, a browser host, three-language resources and URLs, a responsive doodle carousel, and local build/check commands. The site deploys to GitHub Pages at `lynns.me`. Broader browser and accessibility verification remains unfinished. Selected article resources and the Traditional Chinese guide content exist. Concrete module and build details are documented in [the architecture guide](architecture.md).
 
 ## Goals
 

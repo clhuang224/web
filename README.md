@@ -4,7 +4,7 @@ A personal home for a frontend engineer's projects, writing, drawings, and other
 
 ## Status
 
-The first browser foundation is implemented with VueLynx: a responsive homepage, a portfolio with per-project pages, a drawings gallery with per-drawing pages, an About page shell, three-language navigation, and a doodle carousel. The `Pages` workflow deploys it to [lynns.me](https://lynns.me) on each push to `main`. About copy remains editorial work; the homepage lists selected blog posts.
+The first browser foundation is implemented with VueLynx: a responsive homepage, a portfolio with per-project pages, a drawings gallery with per-drawing pages, an About page, three-language navigation, and a doodle carousel. The `Pages` workflow deploys it to [lynns.me](https://lynns.me) on each push to `main`. The homepage lists selected blog posts.
 
 ## Current Experience
 
@@ -12,7 +12,7 @@ The first browser foundation is implemented with VueLynx: a responsive homepage,
 - Homepage project selections: Finding the Bus, Queener, and PrePrompt.
 - A portfolio listing and a page per project with its summary, tags, live-site and source links, and public GitHub details (main language, stars, last update) when available.
 - A Drawings gallery of all 14 doodles and a page per drawing at `/drawing/{id}`; selecting a carousel image opens it.
-- A dedicated About page prepared for copy supplied by the maintainer.
+- An About page with an illustration and the maintainer's own story, translated into all three languages.
 - Traditional Chinese, English, and Japanese interface and introductory content, with Traditional Chinese as the initial language.
 - A link to the independently hosted [blog](https://blog.lynns.me). The homepage lists selected posts with localized titles and summaries; full articles remain Chinese.
 - Links to music, translation contributions, professional profiles, and project destinations.

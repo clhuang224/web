@@ -2,7 +2,7 @@
 
 ## Current State
 
-The site is a frontend-only VueLynx application with a browser host. Home, Portfolio with per-project pages, Drawings with per-drawing pages, and the About page shell exist in Traditional Chinese, English, and Japanese. There is no backend, CMS, deployment configuration, or dedicated native application; the native bundle has been checked only in Lynx Explorer.
+The site is a frontend-only VueLynx application with a browser host. Home, Portfolio with per-project pages, Drawings with per-drawing pages, and the About page exist in Traditional Chinese, English, and Japanese. There is no backend, CMS, deployment configuration, or dedicated native application; the native bundle has been checked only in Lynx Explorer.
 
 ## Repository Structure
 
@@ -75,7 +75,7 @@ The host updates document language, title, description, and Open Graph title/des
 
 ## Content And Carousel
 
-Interface copy lives in `src/content/copy.ts`; project summaries and drawing descriptions have all three locale keys. The blog owns article bodies and original URLs. `selectedArticles` holds the posts featured on the homepage; each card opens the original post and marks it as Chinese in other locales. The About page contains artwork and platform links while awaiting the maintainer's original copy.
+Interface copy lives in `src/content/copy.ts`; project summaries and drawing descriptions have all three locale keys. The blog owns article bodies and original URLs. `selectedArticles` holds the posts featured on the homepage; each card opens the original post and marks it as Chinese in other locales. The About page shows an illustration, the maintainer's story from `src/content/about.ts`, and platform links. The story is stored per locale as paragraphs of lines, so the original line breaks survive in every language, and a test keeps the three translations in the same shape.
 
 Technology tag colors are mapped in `src/content/tags.ts`. `TagList` resolves each label through `tagColor()` and uses the fallback color for unmapped names, so color assignment remains consistent across cards.
 

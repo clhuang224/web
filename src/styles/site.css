@@ -563,6 +563,42 @@
 .about-platforms {
   padding: 18px 20px;
 }
+.about-story {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 8px 0 28px;
+}
+.about-paragraph {
+  display: flex;
+  flex-direction: column;
+}
+.about-line {
+  color: var(--color-ink);
+  font-size: 16px;
+  line-height: 1.7;
+}
+.about-divider {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  margin: 8px 0;
+}
+.about-divider-rule {
+  flex: 1;
+  height: 1px;
+  background-color: var(--color-line);
+}
+.about-divider-label {
+  color: var(--color-muted);
+  font-size: 13px;
+}
+.about-date {
+  align-self: flex-end;
+  color: var(--color-muted);
+  font-size: 14px;
+}
 
 /* Narrow layout */
 .site-shell-compact {
