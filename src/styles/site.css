@@ -582,6 +582,9 @@
   line-height: 1.5;
   color: var(--color-ink);
 }
+.markdown-inline {
+  white-space: pre-wrap;
+}
 .markdown-bold,
 .markdown-heading {
   font-weight: 700;
