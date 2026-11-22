@@ -10,7 +10,7 @@ import { doodles } from '../content/doodles'
 const { state } = useSite()
 const illustration = doodles.find((doodle) => doodle.id === '02')
 const text = computed(() => copy[state.value.locale])
-const story = computed(() => aboutStory[state.value.locale])
+const story = aboutStory
 </script>
 
 <template>
@@ -24,6 +24,11 @@ const story = computed(() => aboutStory[state.value.locale])
         :accessibility-label="illustration.alt[state.locale]"
     /></view>
     <view class="about-story">
+      <text
+        v-if="state.locale !== 'zh-TW'"
+        class="article-language about-language"
+        >{{ text.aboutLanguage }}</text
+      >
       <view
         v-for="(paragraph, index) in story.serious"
         :key="`serious-${index}`"

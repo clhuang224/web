@@ -569,6 +569,9 @@
   gap: 16px;
   margin: 8px 0 28px;
 }
+.about-language {
+  align-self: flex-start;
+}
 .about-paragraph {
   display: flex;
   flex-direction: column;

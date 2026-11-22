@@ -12,7 +12,7 @@ The first browser foundation is implemented with VueLynx: a responsive homepage,
 - Homepage project selections: Finding the Bus, Queener, and PrePrompt.
 - A portfolio listing and a page per project with its summary, tags, live-site and source links, and public GitHub details (main language, stars, last update) when available.
 - A Drawings gallery of all 14 doodles and a page per drawing at `/drawing/{id}`; selecting a carousel image opens it.
-- An About page with an illustration and the maintainer's own story, translated into all three languages.
+- An About page with an illustration and the maintainer's own story, kept in its original Chinese in every language.
 - Traditional Chinese, English, and Japanese interface and introductory content, with Traditional Chinese as the initial language.
 - A link to the independently hosted [blog](https://blog.lynns.me). The homepage lists selected posts with localized titles and summaries; full articles remain Chinese.
 - Links to music, translation contributions, professional profiles, and project destinations.

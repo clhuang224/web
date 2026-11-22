@@ -1,5 +1,7 @@
 import type { Doodle } from '../domain/site'
 
+// FIXME: 塗鴉列表希望不要有文字，改用 waterfall 畫廊排版，點進詳情才有文字說明
+
 const illustrations = [
   [
     'potato-parade',

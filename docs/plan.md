@@ -19,16 +19,16 @@ The first application foundation is implemented: VueLynx pages, a browser host, 
 
 ## First-Release Scope
 
-| Area           | Planned behavior                                                                                                                                                             |
-| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Home           | Personal introduction, a paired-doodle carousel with automatic and manual playback, selected articles, and Finding the Bus, Queener, and PrePrompt as the featured projects. |
-| Portfolio      | A dedicated listing with per-project pages, summaries, live-site and source links, and optional public GitHub details.                                                       |
-| About          | A standalone page with original content supplied by the maintainer for the personal website.                                                                                 |
-| Blog           | The existing blog embedded inside the site; selected article cards open their original posts in place.                                                                       |
-| Platform links | Access to SoundCloud, Crowdin, LinkedIn, and GitHub profiles.                                                                                                                |
-| Drawings       | A gallery and per-drawing pages for the supplied original artwork.                                                                                                           |
-| Public guide   | Source-linked Traditional Chinese VueLynx learning material, embedded at `/behind-the-scenes` behind a secondary entry at the bottom of the sidebar.                         |
-| Languages      | Traditional Chinese, English, and Japanese for navigation, interface text, About content, and project and article metadata.                                                  |
+| Area           | Planned behavior                                                                                                                                                                      |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Home           | Personal introduction, a paired-doodle carousel with automatic and manual playback, selected articles, and Finding the Bus, Queener, and PrePrompt as the featured projects.          |
+| Portfolio      | A dedicated listing with per-project pages, summaries, live-site and source links, and optional public GitHub details.                                                                |
+| About          | A standalone page with original content supplied by the maintainer for the personal website.                                                                                          |
+| Blog           | The existing blog embedded inside the site; selected article cards open their original posts in place.                                                                                |
+| Platform links | Access to SoundCloud, Crowdin, LinkedIn, and GitHub profiles.                                                                                                                         |
+| Drawings       | A gallery and per-drawing pages for the supplied original artwork.                                                                                                                    |
+| Public guide   | Source-linked Traditional Chinese VueLynx learning material, embedded at `/behind-the-scenes` behind a secondary entry at the bottom of the sidebar.                                  |
+| Languages      | Traditional Chinese, English, and Japanese for navigation, interface text, and project and article metadata. The maintainer's own writing, such as the About story, stays in Chinese. |
 
 The first release does not include migrating the blog, translating full articles, a content-management backend, accounts, or a database. Project and drawing detail pages are implemented. General site search, filtering, and additional collections remain outside the committed scope; the documentation guide already provides its own local search.
 

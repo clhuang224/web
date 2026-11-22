@@ -37,6 +37,7 @@ interface SiteCopy {
   closePage: string
   postsTitle: string
   articleLanguage: string
+  aboutLanguage: string
   copyright: string
 }
 
@@ -78,6 +79,7 @@ export const copy = {
     closePage: '關閉',
     postsTitle: '精選文章',
     articleLanguage: '中文文章',
+    aboutLanguage: '中文原文',
     copyright: 'Copyright © Lynn Huang',
   },
   en: {
@@ -118,6 +120,7 @@ export const copy = {
     closePage: 'Close',
     postsTitle: 'Selected posts',
     articleLanguage: 'Article in Chinese',
+    aboutLanguage: 'Written in Chinese',
     copyright: 'Copyright © Lynn Huang',
   },
   ja: {
@@ -158,6 +161,7 @@ export const copy = {
     closePage: '閉じる',
     postsTitle: 'ピックアップ記事',
     articleLanguage: '中国語の記事',
+    aboutLanguage: '中国語の原文',
     copyright: 'Copyright © Lynn Huang',
   },
 } satisfies Localized<SiteCopy>

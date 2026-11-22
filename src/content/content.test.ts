@@ -22,22 +22,14 @@ describe('published content resources', () => {
     }
   })
 
-  it('tells the About story with the same structure in every language', () => {
-    const shape = (locale: (typeof locales)[number]) => ({
-      serious: aboutStory[locale].serious.map((paragraph) => paragraph.length),
-      trivia: aboutStory[locale].trivia.map((paragraph) => paragraph.length),
-    })
-    for (const locale of locales) {
-      expect(shape(locale)).toEqual(shape('zh-TW'))
-      expect(aboutStory[locale].date).toBe(aboutStory['zh-TW'].date)
-      expect(
-        [
-          ...aboutStory[locale].serious.flat(),
-          ...aboutStory[locale].trivia.flat(),
-          aboutStory[locale].divider,
-        ].every((line) => line.trim().length > 0),
-      ).toBe(true)
-    }
+  it('keeps the About story in its original Chinese', () => {
+    expect(
+      [
+        ...aboutStory.serious.flat(),
+        ...aboutStory.trivia.flat(),
+        aboutStory.divider,
+      ].every((line) => line.trim().length > 0),
+    ).toBe(true)
   })
 
   it('features the three selected projects with shared destinations and translated summaries', () => {
