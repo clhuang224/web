@@ -29,13 +29,13 @@ Web 端的操作可以沿著這條線追：
 
 這裡的 SiteHost 是專案自己定義的介面。名字看起來很像內建服務，不過它實際上是網站替自己準備的一組平台能力。
 
-取得這組能力的入口在 [runtime.ts](https://github.com/clhuang224/web/blob/main/src/platform/runtime.ts)：
+取得這組能力的入口在 [globals.ts](https://github.com/clhuang224/web/blob/main/src/platform/globals.ts)，Lynx 執行環境提供的全域變數都集中在這個檔案宣告：
 
 ```ts
-export function nativeHost() {
+export function siteHostModule(): SiteHostModule | null | undefined {
   return typeof NativeModules === 'undefined'
     ? undefined
-    : NativeModules.SiteHost
+    : NativeModules?.SiteHost
 }
 ```
 

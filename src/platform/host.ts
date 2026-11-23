@@ -2,22 +2,12 @@ import { nextTick, onMounted, onUnmounted, shallowRef } from 'vue-lynx'
 import { routeCatalog } from '../content/catalog'
 import { isDetailPage, isHostState, isRouteId } from '../domain/navigation'
 import type { HostState, Locale, Page } from '../domain/site'
+import { lynxGlobal, systemInfo } from './globals'
+import type { GlobalEventEmitter } from './globals'
 import { isStandalone, nativeHost } from './runtime'
 
-interface GlobalEventEmitter {
-  addListener(name: string, callback: (value: unknown) => void): void
-  removeListener(name: string, callback: (value: unknown) => void): void
-}
-
-declare const lynx: {
-  getJSModule(name: 'GlobalEventEmitter'): GlobalEventEmitter | undefined
-}
-declare const SystemInfo:
-  { pixelWidth?: number; pixelRatio?: number } | undefined
-
 function standaloneCompact() {
-  if (typeof SystemInfo === 'undefined') return false
-  const { pixelWidth, pixelRatio } = SystemInfo ?? {}
+  const { pixelWidth, pixelRatio } = systemInfo() ?? {}
   return !!pixelWidth && !!pixelRatio && pixelWidth / pixelRatio < 768
 }
 
@@ -45,10 +35,7 @@ export function useHost() {
   let emitter: GlobalEventEmitter | undefined
 
   onMounted(() => {
-    emitter =
-      typeof lynx === 'undefined'
-        ? undefined
-        : lynx.getJSModule('GlobalEventEmitter')
+    emitter = lynxGlobal()?.getJSModule?.('GlobalEventEmitter')
     emitter?.addListener('host-state', receiveState)
     // Request initial state after subscribing so fast host updates cannot be lost.
     void nextTick(() => nativeHost()?.getState(null, receiveState))

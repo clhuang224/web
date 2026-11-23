@@ -57,7 +57,7 @@ LYNX_DEV_HOST=127.0.0.1 pnpm run dev
 
 ```ts
 export function safeAreaInsets() {
-  const props = typeof lynx === 'undefined' ? undefined : lynx?.__globalProps
+  const props = lynxGlobal()?.__globalProps
   if (!isStandalone() || typeof props !== 'object' || props === null)
     return { top: 0, bottom: 0 }
   const fullscreen = Reflect.get(props, 'fullscreen')

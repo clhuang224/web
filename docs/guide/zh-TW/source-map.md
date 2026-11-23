@@ -39,6 +39,7 @@
 | [src/content/doodles.ts](https://github.com/clhuang224/web/blob/main/src/content/doodles.ts)       | 塗鴉清單與圖檔路徑。                  |
 | [src/platform/host.ts](https://github.com/clhuang224/web/blob/main/src/platform/host.ts)           | 狀態訂閱、操作和 standalone 路徑。    |
 | [src/platform/runtime.ts](https://github.com/clhuang224/web/blob/main/src/platform/runtime.ts)     | 平台判斷與資源前綴。                  |
+| [src/platform/globals.ts](https://github.com/clhuang224/web/blob/main/src/platform/globals.ts)     | Lynx 執行環境全域變數的宣告與存取。   |
 | [src/host/index.ts](https://github.com/clhuang224/web/blob/main/src/host/index.ts)                 | 建立 `lynx-view`、bridge 與載入狀態。 |
 | [src/host/location.ts](https://github.com/clhuang224/web/blob/main/src/host/location.ts)           | 從網址讀狀態、記住語言。              |
 | [src/host/metadata.ts](https://github.com/clhuang224/web/blob/main/src/host/metadata.ts)           | 分頁標題與 meta 標籤。                |

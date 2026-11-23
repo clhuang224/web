@@ -1,19 +1,13 @@
 import { guidePath } from '../content/guide'
-import type { SiteHostModule } from '../domain/site'
-
-// These ambient declarations describe only the bridge this application owns.
-declare const NativeModules: { SiteHost?: SiteHostModule | null }
+import { lynxGlobal, siteHostModule, systemInfo } from './globals'
 
 export function nativeHost() {
-  return typeof NativeModules === 'undefined'
-    ? undefined
-    : NativeModules.SiteHost
+  return siteHostModule()
 }
 
-declare const SystemInfo: { platform?: string } | undefined
-
 export function isStandalone() {
-  return typeof SystemInfo !== 'undefined' && SystemInfo?.platform !== 'web'
+  const info = systemInfo()
+  return info !== undefined && info.platform !== 'web'
 }
 
 const publicOrigin = import.meta.env.DEV
@@ -32,15 +26,13 @@ export function guideUrl(chapter: string | null) {
   return `${guideOrigin}${guidePath(chapter)}?embedded`
 }
 
-declare const lynx: { __globalProps?: unknown } | undefined
-
 function globalNumber(props: object, key: string) {
   const value: unknown = Reflect.get(props, key)
   return typeof value === 'number' && value > 0 ? value : 0
 }
 
 export function safeAreaInsets() {
-  const props = typeof lynx === 'undefined' ? undefined : lynx?.__globalProps
+  const props = lynxGlobal()?.__globalProps
   if (!isStandalone() || typeof props !== 'object' || props === null)
     return { top: 0, bottom: 0 }
   const fullscreen = Reflect.get(props, 'fullscreen')
