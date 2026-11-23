@@ -70,4 +70,18 @@ export const doodleStories: Readonly<Partial<Record<string, MarkdownStory>>> = {
       },
     ],
   },
+  '04': {
+    date: '2017/09/28 20:06',
+    timestamp: '20170928200600',
+    blocks: [
+      {
+        kind: 'paragraph',
+        spans: [
+          {
+            text: '日常',
+          },
+        ],
+      },
+    ],
+  },
 }

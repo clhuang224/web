@@ -66,7 +66,7 @@ The desktop layout should retain the left navigation and a main content area. Th
 The main visual is a responsive carousel: **desktop displays two doodles and advances by two; mobile displays one doodle and advances by one**. Automatic advancement and manual previous/next controls use the same step size for the active layout.
 
 - The supplied collection contains 14 drawings, originally used as Facebook covers during 2016–2023.
-- Each source image is 851 × 315 pixels. Dates and original notes are supplied for drawings 01, 02, and 13; other individual dates remain unassigned.
+- Each source image is 851 × 315 pixels. Dates and original notes are supplied for drawings 01, 02, 04, and 13; other individual dates remain unassigned.
 - The first pair is the kiwi-group drawing followed by the big-eyes drawing.
 - Fourteen drawings allow seven desktop pairs or fourteen mobile slides. The order after the opening desktop pair remains to be decided; export order is provisional.
 - Asset descriptions and file references belong in [the asset catalog](./assets.md).

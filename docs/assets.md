@@ -2,9 +2,9 @@
 
 ## Provenance And Preservation
 
-The fourteen raster illustrations are original doodles by the maintainer, previously used as Facebook covers during 2016–2023. Each supplied image is 851 × 315 pixels. Dates and original writing are supplied for IDs 01, 02, and 13; the remaining individual dates and official artwork titles are unassigned.
+The fourteen raster illustrations are original doodles by the maintainer, previously used as Facebook covers during 2016–2023. Each supplied image is 851 × 315 pixels. Dates and original writing are supplied for IDs 01, 02, 04, and 13; the remaining individual dates and official artwork titles are unassigned.
 
-Dated filenames use `YYYYMMddHHmmss` with unavailable components filled with zeroes; the three supplied times have minute precision, so their seconds are `00`. Undated files are named by ID, such as `doodle-03.png`. The project does not title or describe the doodles; only the maintainer's Markdown writing is published with them. These filename tokens do not assert a timezone or precision beyond the supplied date. Two-digit IDs preserve export order independently of filenames and do not assert chronological order. They remain the drawing IDs in page URLs such as `/drawing/04`, so renumbering a drawing changes its public URL. The original image bytes, dimensions, colors, and SVG contents have been preserved.
+Dated filenames use `YYYYMMddHHmmss` with unavailable components filled with zeroes; the four supplied times have minute precision, so their seconds are `00`. Undated files are named by ID, such as `doodle-03.png`. The project does not title or describe the doodles; only the maintainer's Markdown writing is published with them. These filename tokens do not assert a timezone or precision beyond the supplied date. Two-digit IDs preserve export order independently of filenames and do not assert chronological order. They remain the drawing IDs in page URLs such as `/drawing/04`, so renumbering a drawing changes its public URL. The original image bytes, dimensions, colors, and SVG contents have been preserved.
 
 ## Doodles
 
@@ -13,7 +13,7 @@ Dated filenames use `YYYYMMddHHmmss` with unavailable components filled with zer
 | 01  | [20210730230700.png](../public/images/doodles/20210730230700.png) | `Property 1=Default (1).png` |
 | 02  | [20180505211400.png](../public/images/doodles/20180505211400.png) | `Property 1=Variant2.png`    |
 | 03  | [doodle-03.png](../public/images/doodles/doodle-03.png)           | `Property 1=Variant3.png`    |
-| 04  | [doodle-04.png](../public/images/doodles/doodle-04.png)           | `Property 1=Variant4.png`    |
+| 04  | [20170928200600.png](../public/images/doodles/20170928200600.png) | `Property 1=Variant4.png`    |
 | 05  | [doodle-05.png](../public/images/doodles/doodle-05.png)           | `Property 1=Variant5.png`    |
 | 06  | [doodle-06.png](../public/images/doodles/doodle-06.png)           | `Property 1=Variant6.png`    |
 | 07  | [doodle-07.png](../public/images/doodles/doodle-07.png)           | `Property 1=Variant7.png`    |
@@ -27,7 +27,7 @@ Dated filenames use `YYYYMMddHHmmss` with unavailable components filled with zer
 
 Each doodle also has a derived 24-pixel-wide PNG placeholder, generated into `src/content/generated/doodle-placeholders.ts` by `pnpm run generate:placeholders`. Regenerate it whenever a doodle is added, renamed, or replaced.
 
-The confirmed displayed dates are `2021/07/30 23:07` for ID 01, `2018/05/05 21:14` for ID 02, and `2021/02/13 13:44` for ID 13. ID 02 was renamed from `doodle-02.png`. Story text retains its original language and wording in every interface locale; ID 02's supplied note is English.
+The confirmed displayed dates are `2021/07/30 23:07` for ID 01, `2018/05/05 21:14` for ID 02, `2017/09/28 20:06` for ID 04, and `2021/02/13 13:44` for ID 13. ID 02 was renamed from `doodle-02.png`; ID 04 was renamed from `doodle-04.png`. Story text retains its original language and wording in every interface locale; ID 02's supplied note is English.
 
 Edit original writing in `src/content/doodles/<ID>.md`. The optional quoted `date` frontmatter produces the timestamp filename token; no date means the ID filename remains in use. `pnpm run generate:content` parses these sources into `src/content/generated/doodle-stories.ts` for Lynx rendering. Generated modules live in `src/content/generated/` and are never edited by hand. Development watches the Markdown files, and the production build regenerates their data before compiling the application.
 
