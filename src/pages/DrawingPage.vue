@@ -44,7 +44,7 @@ function step(direction: 1 | -1) {
           doodle.story.date
         }}</text>
         <text v-if="state.locale !== 'zh-TW'" class="article-language">{{
-          text.originalChinese
+          text.originalText
         }}</text>
       </view>
       <MarkdownBody :blocks="doodle.story.blocks" />

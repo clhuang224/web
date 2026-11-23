@@ -38,7 +38,7 @@ interface SiteCopy {
   postsTitle: string
   articleLanguage: string
   aboutLanguage: string
-  originalChinese: string
+  originalText: string
   copyright: string
   siteDescription: string
   pageNotFound: string
@@ -84,7 +84,7 @@ export const copy = {
     postsTitle: '精選文章',
     articleLanguage: '中文文章',
     aboutLanguage: '中文原文',
-    originalChinese: '中文原文',
+    originalText: '原文',
     copyright: 'Copyright © Lynn Huang',
     siteDescription: "Lynn's 的作品、文章與創作入口。",
     pageNotFound: '找不到這個頁面。您可以從首頁繼續瀏覽。',
@@ -129,7 +129,7 @@ export const copy = {
     postsTitle: 'Selected posts',
     articleLanguage: 'Article in Chinese',
     aboutLanguage: 'Written in Chinese',
-    originalChinese: 'Written in Chinese',
+    originalText: 'Original text',
     copyright: 'Copyright © Lynn Huang',
     siteDescription: 'Projects, selected writing, and creative work by Lynn.',
     pageNotFound:
@@ -176,7 +176,7 @@ export const copy = {
     postsTitle: 'ピックアップ記事',
     articleLanguage: '中国語の記事',
     aboutLanguage: '中国語の原文',
-    originalChinese: '中国語の原文',
+    originalText: '原文',
     copyright: 'Copyright © Lynn Huang',
     siteDescription: 'Lynn の作品、記事、創作活動を紹介するサイト。',
     pageNotFound: 'ページが見つかりません。ホームからご覧ください。',

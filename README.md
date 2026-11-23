@@ -52,7 +52,7 @@ pnpm run preview
 
 The preview serves `dist/` at [localhost:4173](http://localhost:4173), including localized deep links, and the guide at `/guide/`. Set `PORT` to change its port.
 
-Edit original writing in [About Markdown](src/content/about.md) and per-drawing files such as [drawing 01](src/content/doodles/01.md). These sources stay Chinese in every locale and have an optional quoted `date` frontmatter field. Development and production builds regenerate their typed content; `pnpm run generate:content` also runs that step directly. See the [content maintenance guide](docs/guide/zh-TW/maintaining-content.md) for supported Markdown and date-based image names.
+Edit original writing in [About Markdown](src/content/about.md) and per-drawing files such as [drawing 01](src/content/doodles/01.md). These sources retain their original wording in every locale and have an optional quoted `date` frontmatter field. Development and production builds regenerate their typed content; `pnpm run generate:content` also runs that step directly. See the [content maintenance guide](docs/guide/zh-TW/maintaining-content.md) for supported Markdown and date-based image names.
 
 ## Checks
 
