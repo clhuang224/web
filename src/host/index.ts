@@ -2,6 +2,7 @@ import '@lynx-js/web-core/client'
 import type { LynxViewElement } from '@lynx-js/web-core/client'
 import { articleAt, blogOrigin, blogPath, blogUrl } from '../content/articles'
 import { routeCatalog } from '../content/catalog'
+import { copy } from '../content/copy'
 import {
   chapterFromGuidePath,
   guideChapters,
@@ -16,7 +17,7 @@ import {
   parseSitePath,
   pathForPage,
 } from '../domain/navigation'
-import type { HostState, ListPage, Locale } from '../domain/site'
+import type { HostState, Locale } from '../domain/site'
 import { enableLynxAccessibility } from './accessibility'
 import './host.css'
 import './loader.css'
@@ -38,63 +39,6 @@ const hostMessage = message
 const view = document.createElement('lynx-view') as LynxViewElement
 let ready = false
 let stopAccessibility: (() => void) | undefined
-
-const copy = {
-  'zh-TW': {
-    pages: {
-      home: '首頁',
-      portfolio: '作品',
-      drawings: '塗鴉',
-      about: '關於',
-      guide: '幕後',
-      blog: '網誌',
-    },
-    drawing: '塗鴉',
-    description: "Lynn's 的作品、文章與創作入口。",
-    notFound: '找不到這個頁面。您可以從首頁繼續瀏覽。',
-    error: '網站暫時無法載入。您仍可以閱讀網誌，或重新整理後再試。',
-  },
-  en: {
-    pages: {
-      home: 'Home',
-      portfolio: 'Portfolio',
-      drawings: 'Drawings',
-      about: 'About',
-      guide: 'Behind the scenes',
-      blog: 'Blog',
-    },
-    drawing: 'Drawing',
-    description: 'Projects, selected writing, and creative work by Lynn.',
-    notFound:
-      'This page could not be found. You can continue from the homepage.',
-    error:
-      'The site could not load. You can still read the blog, or refresh to try again.',
-  },
-  ja: {
-    pages: {
-      home: 'ホーム',
-      portfolio: '作品',
-      drawings: '落書き',
-      about: 'プロフィール',
-      guide: '舞台裏',
-      blog: 'ブログ',
-    },
-    drawing: '落書き',
-    description: 'Lynn の作品、記事、創作活動を紹介するサイト。',
-    notFound: 'ページが見つかりません。ホームからご覧ください。',
-    error:
-      'サイトを読み込めませんでした。ブログをご覧いただくか、再読み込みしてください。',
-  },
-} satisfies Record<
-  Locale,
-  {
-    pages: Record<ListPage, string>
-    drawing: string
-    description: string
-    notFound: string
-    error: string
-  }
->
 
 function rememberLocale(locale: Locale) {
   try {
@@ -129,7 +73,7 @@ function stateFromLocation(): HostState {
 
 function showError() {
   const state = stateFromLocation()
-  hostMessage.textContent = copy[state.locale].error
+  hostMessage.textContent = copy[state.locale].loadError
   hostStatus.classList.remove('host-status-loading')
   hostStatus.hidden = false
   hostRoot.hidden = true
@@ -140,17 +84,17 @@ function pageTitle(state: HostState): string {
   if (state.page === 'project')
     return (
       projects.find((project) => project.id === state.id)?.title ??
-      text.pages.portfolio
+      text.portfolio
     )
-  if (state.page === 'drawing') return `${text.drawing} ${state.id ?? ''}`
+  if (state.page === 'drawing') return `${text.drawingLabel} ${state.id ?? ''}`
   if (state.page === 'post')
-    return articleAt(state.id)?.title[state.locale] ?? text.pages.blog
+    return articleAt(state.id)?.title[state.locale] ?? text.blog
   if (state.page === 'chapter')
     return (
       guideChapters.find((chapter) => chapter.slug === state.id)?.title ??
-      text.pages.guide
+      text.guide
     )
-  return text.pages[state.page]
+  return text[state.page]
 }
 
 function updateMetadata(state: HostState) {
@@ -164,16 +108,16 @@ function updateMetadata(state: HostState) {
   document.title = title
   document
     .querySelector<HTMLMetaElement>('meta[name="description"]')
-    ?.setAttribute('content', text.description)
+    ?.setAttribute('content', text.siteDescription)
   document
     .querySelector<HTMLMetaElement>('meta[property="og:title"]')
     ?.setAttribute('content', title)
   document
     .querySelector<HTMLMetaElement>('meta[property="og:description"]')
-    ?.setAttribute('content', text.description)
+    ?.setAttribute('content', text.siteDescription)
 
   if (!location.matched) {
-    hostMessage.textContent = text.notFound
+    hostMessage.textContent = text.pageNotFound
     hostStatus.classList.remove('host-status-loading')
     hostStatus.hidden = false
   } else if (ready) {
@@ -235,9 +179,7 @@ function placeEmbed() {
   frame.className = 'embedded-page'
   frame.dataset.key = key
   frame.title =
-    copy[state.locale].pages[
-      slot.classList.contains('embed-blog') ? 'blog' : 'guide'
-    ]
+    copy[state.locale][slot.classList.contains('embed-blog') ? 'blog' : 'guide']
   frame.src = source
   frame.style.cssText = 'flex:1;width:100%;height:100%;border:0;display:block'
   frame.addEventListener('load', () => loader.remove(), { once: true })

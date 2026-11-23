@@ -71,7 +71,7 @@ Japanese uses the same paths with the `/ja` prefix. Project IDs are slugs such a
 
 An explicit page URL determines its language. Only entry at bare `/` may restore a previously selected language from `lynns.locale`; absent that preference, it starts in Traditional Chinese. Language switching retains the current page, including detail pages. Storage failures leave explicit URLs usable.
 
-The host updates document language, title, description, and Open Graph title/description after reading the URL. This is client-side metadata, not prerendered page content or a guarantee about crawlers and share-preview services. Unknown paths and unknown IDs display a host-level not-found message. The preview server matches route patterns, so it returns a 404 for unknown page names but not for an unknown ID inside a valid pattern.
+The host updates document language, title, description, and Open Graph title/description after reading the URL. Page titles, the site description, and the not-found and load-error messages come from `src/content/copy.ts`, the same resource the application uses, so the tab title always matches the navigation label. This is client-side metadata, not prerendered page content or a guarantee about crawlers and share-preview services. Unknown paths and unknown IDs display a host-level not-found message. The preview server matches route patterns, so it returns a 404 for unknown page names but not for an unknown ID inside a valid pattern.
 
 ## Content And Carousel
 

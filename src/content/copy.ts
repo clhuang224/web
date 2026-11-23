@@ -40,6 +40,9 @@ interface SiteCopy {
   aboutLanguage: string
   originalChinese: string
   copyright: string
+  siteDescription: string
+  pageNotFound: string
+  loadError: string
 }
 
 export const copy = {
@@ -83,6 +86,9 @@ export const copy = {
     aboutLanguage: '中文原文',
     originalChinese: '中文原文',
     copyright: 'Copyright © Lynn Huang',
+    siteDescription: "Lynn's 的作品、文章與創作入口。",
+    pageNotFound: '找不到這個頁面。您可以從首頁繼續瀏覽。',
+    loadError: '網站暫時無法載入。您仍可以閱讀網誌，或重新整理後再試。',
   },
   en: {
     home: 'Home',
@@ -125,6 +131,11 @@ export const copy = {
     aboutLanguage: 'Written in Chinese',
     originalChinese: 'Written in Chinese',
     copyright: 'Copyright © Lynn Huang',
+    siteDescription: 'Projects, selected writing, and creative work by Lynn.',
+    pageNotFound:
+      'This page could not be found. You can continue from the homepage.',
+    loadError:
+      'The site could not load. You can still read the blog, or refresh to try again.',
   },
   ja: {
     home: 'ホーム',
@@ -167,5 +178,9 @@ export const copy = {
     aboutLanguage: '中国語の原文',
     originalChinese: '中国語の原文',
     copyright: 'Copyright © Lynn Huang',
+    siteDescription: 'Lynn の作品、記事、創作活動を紹介するサイト。',
+    pageNotFound: 'ページが見つかりません。ホームからご覧ください。',
+    loadError:
+      'サイトを読み込めませんでした。ブログをご覧いただくか、再読み込みしてください。',
   },
 } satisfies Localized<SiteCopy>
