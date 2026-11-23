@@ -49,7 +49,7 @@ The doodle numbers are stable catalog identifiers, not creation years. Do not in
 Inspect any future starter or generator output in a separate directory and merge deliberately without overwriting existing work.
 
 - `pnpm run dev`: generate/watch UnoCSS and run Rspeedy, the VitePress guide, and the browser host.
-- `pnpm run build`: generate styles, build Lynx, the host, and the guide, and verify essential static output.
+- `pnpm run build`: clear `dist/`, generate content, the font subset, and styles, build Lynx, the host, and the guide, and verify essential static output.
 - `pnpm run build:pages`: run the build and add route pages, `404.html`, and `CNAME` for GitHub Pages.
 - `pnpm run generate:placeholders`: regenerate the blurred doodle placeholders after adding or replacing a doodle.
 - `pnpm run check:guide`: check the guide's chapters, local links, and source references.
