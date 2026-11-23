@@ -55,7 +55,7 @@ Twelve locally generated SVGs in `public/images/icons/` come from the Remix Icon
 
 ## Font
 
-`src/assets/fonts/jf-openhuninn-2.1.ttf` is jf open huninn 2.1, downloaded unmodified from the [justfont release](https://github.com/justfont/open-huninn-font/releases/tag/v2.1). It is licensed under the SIL Open Font License 1.1; `src/assets/fonts/OFL.txt` is the upstream license text, which also credits Kosugi Maru and Varela Round.
+`src/assets/fonts/jf-openhuninn-2.1.ttf` is jf open huninn 2.1. Native bundles use it as is; Web pages load a WOFF2 subset derived from it at build time. The source file was downloaded unmodified from the [justfont release](https://github.com/justfont/open-huninn-font/releases/tag/v2.1). It is licensed under the SIL Open Font License 1.1; `src/assets/fonts/OFL.txt` is the upstream license text, which also credits Kosugi Maru and Varela Round.
 
 ## Presentation And Content
 

@@ -14,6 +14,11 @@ export default defineConfig({
   cleanUrls: true,
   head: [
     [
+      'style',
+      {},
+      "@font-face { font-family: 'jf-openhuninn'; src: url('/fonts/jf-openhuninn.woff2') format('woff2'); font-display: swap; }",
+    ],
+    [
       'link',
       {
         rel: 'icon',

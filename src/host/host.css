@@ -1,9 +1,3 @@
-@font-face {
-  font-family: 'jf-openhuninn';
-  src: url('../assets/fonts/jf-openhuninn-2.1.ttf') format('truetype');
-  font-display: swap;
-}
-
 :root {
   color-scheme: light;
   font-family: system-ui, sans-serif;

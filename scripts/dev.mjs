@@ -2,7 +2,7 @@ import { spawn } from 'node:child_process'
 
 const run = (args) =>
   spawn('pnpm', args, { stdio: 'inherit', shell: process.platform === 'win32' })
-for (const command of ['generate:content', 'build:styles']) {
+for (const command of ['generate:content', 'generate:font', 'build:styles']) {
   const preparation = run(['run', command])
   const exitCode = await new Promise((resolve) =>
     preparation.on('exit', resolve),
