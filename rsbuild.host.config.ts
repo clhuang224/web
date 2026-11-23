@@ -11,6 +11,7 @@ export default defineConfig({
   server: {
     port: 3000,
     strictPort: true,
+    host: process.env.LYNX_DEV_HOST,
     proxy: {
       '/guide': { target: 'http://127.0.0.1:3002', ws: true },
       '/lynx': {

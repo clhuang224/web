@@ -19,7 +19,7 @@ export function asset(path: string) {
 }
 
 const guideOrigin = import.meta.env.DEV
-  ? 'http://127.0.0.1:3000'
+  ? import.meta.env.DEV_HOST_ORIGIN
   : 'https://lynns.me'
 
 export function guideUrl(chapter: string | null) {
