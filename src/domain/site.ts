@@ -2,22 +2,36 @@ import type { MarkdownStory } from './markdown'
 
 export const locales = ['zh-TW', 'en', 'ja'] as const
 export type Locale = (typeof locales)[number]
-export const pages = [
+export const listPages = [
   'home',
   'portfolio',
-  'project',
   'drawings',
-  'drawing',
   'about',
   'guide',
-  'chapter',
   'blog',
-  'post',
 ] as const
-export type Page = (typeof pages)[number]
+export type ListPage = (typeof listPages)[number]
 export const detailPages = ['project', 'drawing', 'chapter', 'post'] as const
 export type DetailPage = (typeof detailPages)[number]
-export type ListPage = Exclude<Page, DetailPage>
+export const pages = [...listPages, ...detailPages] as const
+export type Page = ListPage | DetailPage
+
+const sections: Record<Page, ListPage> = {
+  home: 'home',
+  portfolio: 'portfolio',
+  project: 'portfolio',
+  drawings: 'drawings',
+  drawing: 'drawings',
+  about: 'about',
+  guide: 'guide',
+  chapter: 'guide',
+  blog: 'blog',
+  post: 'blog',
+}
+
+export function sectionOf(page: Page): ListPage {
+  return sections[page]
+}
 
 export type SiteRoute =
   { page: ListPage; id: null } | { page: DetailPage; id: string }

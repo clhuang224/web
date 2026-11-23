@@ -6,7 +6,7 @@ import {
   pathForPage,
 } from './navigation'
 import type { RouteCatalog } from './navigation'
-import { detailPages, locales, pages } from './site'
+import { detailPages, listPages, locales, pages, sectionOf } from './site'
 
 const catalog: RouteCatalog = {
   project: ['queener'],
@@ -140,4 +140,19 @@ describe('host boundary', () => {
   ])('rejects an unsupported external destination: %s', (url) =>
     expect(isSafeExternalUrl(url)).toBe(false),
   )
+})
+
+describe('page sections', () => {
+  it('keeps list pages as their own section', () => {
+    for (const page of listPages) expect(sectionOf(page)).toBe(page)
+  })
+
+  it('places each detail page under its listing', () => {
+    expect(detailPages.map(sectionOf)).toEqual([
+      'portfolio',
+      'drawings',
+      'guide',
+      'blog',
+    ])
+  })
 })

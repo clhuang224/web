@@ -8,8 +8,8 @@ import InAppBrowser from './components/InAppBrowser.vue'
 import PlatformLinks from './components/PlatformLinks.vue'
 import { copy } from './content/copy'
 import { pathForPage } from './domain/navigation'
-import { locales } from './domain/site'
-import type { Locale, Page } from './domain/site'
+import { locales, sectionOf } from './domain/site'
+import type { ListPage, Locale } from './domain/site'
 import { useHost } from './platform/host'
 import { safeAreaInsets } from './platform/runtime'
 import './styles/uno.css'
@@ -38,33 +38,18 @@ const languageNames: Record<Locale, string> = {
 }
 const languageOpen = ref(false)
 
-type NavigationItem =
-  'home' | 'blog' | 'portfolio' | 'drawings' | 'about' | 'guide'
-const navigation: NavigationItem[] = [
+const navigation: ListPage[] = [
   'home',
   'blog',
   'portfolio',
   'drawings',
   'about',
 ]
-const sections: Record<Page, NavigationItem> = {
-  home: 'home',
-  portfolio: 'portfolio',
-  project: 'portfolio',
-  drawings: 'drawings',
-  drawing: 'drawings',
-  about: 'about',
-  guide: 'guide',
-  chapter: 'guide',
-  blog: 'blog',
-  post: 'blog',
-}
-const inGuide = computed(() => sections[state.value.page] === 'guide')
-const embedded = computed(
-  () => inGuide.value || sections[state.value.page] === 'blog',
-)
+const section = computed(() => sectionOf(state.value.page))
+const inGuide = computed(() => section.value === 'guide')
+const embedded = computed(() => inGuide.value || section.value === 'blog')
 
-function select(item: NavigationItem) {
+function select(item: ListPage) {
   navigate(item)
 }
 
@@ -108,11 +93,11 @@ watch(
           class="nav-link"
           accessibility-role="link"
           :accessibility-label="text[item]"
-          :accessibility-selected="String(sections[state.page] === item)"
+          :accessibility-selected="String(section === item)"
           @tap="select(item)"
           ><text
             class="nav-label"
-            :class="{ 'nav-label-active': sections[state.page] === item }"
+            :class="{ 'nav-label-active': section === item }"
             >{{ text[item] }}</text
           ></view
         >
