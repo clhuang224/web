@@ -39,7 +39,10 @@
 | [src/content/doodles.ts](https://github.com/clhuang224/web/blob/main/src/content/doodles.ts)       | 塗鴉清單與圖檔路徑。                  |
 | [src/platform/host.ts](https://github.com/clhuang224/web/blob/main/src/platform/host.ts)           | 狀態訂閱、操作和 standalone 路徑。    |
 | [src/platform/runtime.ts](https://github.com/clhuang224/web/blob/main/src/platform/runtime.ts)     | 平台判斷與資源前綴。                  |
-| [src/host/index.ts](https://github.com/clhuang224/web/blob/main/src/host/index.ts)                 | 瀏覽器網址、bridge、載入與 metadata。 |
+| [src/host/index.ts](https://github.com/clhuang224/web/blob/main/src/host/index.ts)                 | 建立 `lynx-view`、bridge 與載入狀態。 |
+| [src/host/location.ts](https://github.com/clhuang224/web/blob/main/src/host/location.ts)           | 從網址讀狀態、記住語言。              |
+| [src/host/metadata.ts](https://github.com/clhuang224/web/blob/main/src/host/metadata.ts)           | 分頁標題與 meta 標籤。                |
+| [src/host/embed.ts](https://github.com/clhuang224/web/blob/main/src/host/embed.ts)                 | 網誌與幕後的 iframe 嵌入。            |
 | [src/host/site-host.mjs](https://github.com/clhuang224/web/blob/main/src/host/site-host.mjs)       | NativeModule 呼叫的轉送。             |
 | [src/host/accessibility.ts](https://github.com/clhuang224/web/blob/main/src/host/accessibility.ts) | Web 的語意與鍵盤轉接。                |
 

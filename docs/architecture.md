@@ -14,7 +14,7 @@ src/
   app/          Shared site context and memory router
   components/   Carousel, cards, section titles, buttons, tags, platform links
   pages/        Home, Portfolio, Project, Drawings, Drawing, and About pages
-  host/         Browser entry, HTML, fallback UI, and bridge module
+  host/         Browser entry and bridge, URL state, metadata, embeds, and fallback UI
   styles/       Semantic styles and generated UnoCSS utilities
 public/images/  Preserved source artwork and generated interface icons
 scripts/        Development, static preview, icon export, build verification
