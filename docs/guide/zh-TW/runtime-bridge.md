@@ -43,7 +43,7 @@ export function nativeHost() {
 
 ## 介面限制了能要求什麼
 
-[SiteHostModule](https://github.com/clhuang224/web/blob/main/src/domain/site.ts) 列出 `getState`、`navigate`、`getRepository` 和 `openExternal`。元件提出有意義的操作，不直接傳一段任意 JavaScript 給瀏覽器執行。
+[SiteHostModule](https://github.com/clhuang224/web/blob/main/src/domain/site.ts) 列出 `getState`、`navigate` 和 `openExternal`。元件提出有意義的操作，不直接傳一段任意 JavaScript 給瀏覽器執行。
 
 例如 `navigate` 傳送的是頁面種類、資料 ID 和語言。瀏覽器端再檢查資料格式、有效頁面和有效 ID，通過後才更新網址。
 

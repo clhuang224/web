@@ -36,28 +36,3 @@ export function parseRepository(value: unknown): RepositorySummary | null {
     pushedAt: pushed_at,
   }
 }
-
-export function fetchRepository(
-  name: string,
-): Promise<RepositorySummary | null> {
-  return fetch(`https://api.github.com/repos/${name}`, {
-    headers: { Accept: 'application/vnd.github+json' },
-  })
-    .then((response) => (response.ok ? response.json() : null))
-    .then(parseRepository)
-    .catch(() => null)
-}
-
-export function isRepositorySummary(
-  value: unknown,
-): value is RepositorySummary {
-  return (
-    isRecord(value) &&
-    parseRepository({
-      full_name: value.name,
-      language: value.language,
-      stargazers_count: value.stars,
-      pushed_at: value.pushedAt,
-    }) !== null
-  )
-}

@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import VectorImage from '../components/VectorImage.vue'
-import { computed, watch } from 'vue-lynx'
+import { computed } from 'vue-lynx'
 import { useSite } from '../app/context'
 import SectionTitle from '../components/SectionTitle.vue'
 import TagList from '../components/TagList.vue'
 import { copy } from '../content/copy'
+import { repositories } from '../content/generated/repositories'
 import { projects } from '../content/projects'
 import { repositoryFromSource } from '../domain/repository'
 
-const { state, repositories, navigate, openExternal, requestRepository } =
-  useSite()
+const { state, navigate, openExternal } = useSite()
 const text = computed(() => copy[state.value.locale])
 const project = computed(() =>
   projects.find((candidate) => candidate.id === state.value.id),
@@ -18,20 +18,12 @@ const repositoryName = computed(() =>
   project.value ? repositoryFromSource(project.value.source) : null,
 )
 const repository = computed(() =>
-  repositoryName.value ? repositories.value[repositoryName.value] : undefined,
+  repositoryName.value ? repositories[repositoryName.value] : undefined,
 )
 const updated = computed(() =>
   repository.value
     ? new Date(repository.value.pushedAt).toISOString().slice(0, 10)
     : '',
-)
-
-watch(
-  repositoryName,
-  (name) => {
-    if (name) requestRepository(name)
-  },
-  { immediate: true },
 )
 </script>
 

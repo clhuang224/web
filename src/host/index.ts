@@ -16,8 +16,6 @@ import {
   parseSitePath,
   pathForPage,
 } from '../domain/navigation'
-import { fetchRepository, repositoryFromSource } from '../domain/repository'
-import type { RepositorySummary } from '../domain/repository'
 import type { HostState, ListPage, Locale } from '../domain/site'
 import { enableLynxAccessibility } from './accessibility'
 import './host.css'
@@ -25,10 +23,6 @@ import './loader.css'
 import loaderStyles from './loader.css?raw'
 
 const localeStorageKey = 'lynns.locale'
-const knownRepositories = new Set(
-  projects.flatMap((project) => repositoryFromSource(project.source) ?? []),
-)
-const repositoryRequests = new Map<string, Promise<RepositorySummary | null>>()
 const compactQuery = window.matchMedia('(max-width: 767px)')
 const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
 const root = document.querySelector<HTMLElement>('#site-root')
@@ -291,21 +285,6 @@ function followEmbed(event: MessageEvent) {
   }
 }
 
-function cachedRepository(name: string): Promise<RepositorySummary | null> {
-  const cached = repositoryRequests.get(name)
-  if (cached) return cached
-  const request = fetchRepository(name)
-  repositoryRequests.set(name, request)
-  return request
-}
-
-function sendRepository(name: string) {
-  void cachedRepository(name).then((repository) => {
-    if (repository && ready)
-      view.sendGlobalEvent('repository', [{ ...repository }])
-  })
-}
-
 function handleRequest(
   name: string,
   data: unknown,
@@ -338,15 +317,6 @@ function handleRequest(
       window.history.pushState(null, '', path)
     rememberLocale(data.locale)
     sendState()
-  }
-
-  if (
-    name === 'getRepository' &&
-    'name' in data &&
-    typeof data.name === 'string' &&
-    knownRepositories.has(data.name)
-  ) {
-    sendRepository(data.name)
   }
 
   if (name === 'openExternal' && 'url' in data && isSafeExternalUrl(data.url)) {

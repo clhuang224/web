@@ -46,4 +46,4 @@ Runtime 是程式實際執行的環境，與把原始碼轉成輸出的建置工
 | Webview         | App 內顯示網頁內容的元件。它和載入 Lynx bundle 是不同用途。                       | [原生探索](native-exploration.md)                  |
 | 可及性          | 讓不同輸入方式與輔助工具能理解並操作網站的能力。                                  | [測試與可及性](testing-and-accessibility.md)       |
 
-`src/domain/` 是專案的目錄命名，不代表裡面每個函式都是純函式。例如 `fetchRepository` 仍會發出網路請求。閱讀時以實際依賴和行為判斷，不只依賴資料夾名稱。
+`src/domain/` 是專案的目錄命名，不代表裡面每個函式都是純函式。例如 `repositoryFromSource` 只處理字串，但資料夾裡也可能放和外部格式打交道的解析函式。閱讀時以實際依賴和行為判斷，不只依賴資料夾名稱。

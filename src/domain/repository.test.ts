@@ -1,9 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import {
-  isRepositorySummary,
-  parseRepository,
-  repositoryFromSource,
-} from './repository'
+import { parseRepository, repositoryFromSource } from './repository'
 
 describe('GitHub repository data', () => {
   it('derives repository names only from GitHub source URLs', () => {
@@ -29,7 +25,6 @@ describe('GitHub repository data', () => {
       stars: 3,
       pushedAt: '2026-11-01T08:00:00Z',
     })
-    expect(isRepositorySummary(summary)).toBe(true)
   })
 
   it.each([

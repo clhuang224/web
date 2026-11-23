@@ -1,8 +1,6 @@
 import { nextTick, onMounted, onUnmounted, shallowRef } from 'vue-lynx'
 import { routeCatalog } from '../content/catalog'
 import { isDetailPage, isHostState, isRouteId } from '../domain/navigation'
-import { fetchRepository, isRepositorySummary } from '../domain/repository'
-import type { RepositorySummary } from '../domain/repository'
 import type { HostState, Locale, Page } from '../domain/site'
 import { isStandalone, nativeHost } from './runtime'
 
@@ -38,16 +36,10 @@ export function useHost() {
     reducedMotion: false,
   })
 
-  const repositories = shallowRef<Record<string, RepositorySummary>>({})
   const browserUrl = shallowRef<string | null>(null)
 
   function receiveState(value: unknown) {
     if (isHostState(value)) state.value = { ...value }
-  }
-
-  function receiveRepository(value: unknown) {
-    if (isRepositorySummary(value))
-      repositories.value = { ...repositories.value, [value.name]: value }
   }
 
   let emitter: GlobalEventEmitter | undefined
@@ -58,14 +50,12 @@ export function useHost() {
         ? undefined
         : lynx.getJSModule('GlobalEventEmitter')
     emitter?.addListener('host-state', receiveState)
-    emitter?.addListener('repository', receiveRepository)
     // Request initial state after subscribing so fast host updates cannot be lost.
     void nextTick(() => nativeHost()?.getState(null, receiveState))
   })
 
   onUnmounted(() => {
     emitter?.removeListener('host-state', receiveState)
-    emitter?.removeListener('repository', receiveRepository)
   })
 
   function navigate(page: Page, id: string | null = null) {
@@ -88,12 +78,6 @@ export function useHost() {
     nativeHost()?.navigate({ page, id, locale }, () => undefined)
   }
 
-  function requestRepository(name: string) {
-    if (repositories.value[name]) return
-    if (standalone) void fetchRepository(name).then(receiveRepository)
-    else nativeHost()?.getRepository({ name }, () => undefined)
-  }
-
   function openExternal(url: string) {
     if (standalone) browserUrl.value = url
     else nativeHost()?.openExternal({ url }, () => undefined)
@@ -105,11 +89,9 @@ export function useHost() {
 
   return {
     state,
-    repositories,
     navigate,
     setLocale,
     openExternal,
-    requestRepository,
     browserUrl,
     closeBrowser,
   }
